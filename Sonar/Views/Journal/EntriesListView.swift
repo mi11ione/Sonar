@@ -70,7 +70,7 @@ struct EntriesListView: View {
             EntryDetailView(entry: entry)
         } label: {
             VStack(alignment: .leading, spacing: 6) {
-                highlightedText(entry.summary ?? String(entry.transcript.prefix(80)), query: query)
+                highlightedText(displayText(for: entry, matchedBy: query), query: query)
                     .font(.headline)
                 HStack(spacing: 12) {
                     if let label = entry.moodLabel {
@@ -115,17 +115,84 @@ struct EntriesListView: View {
         }
     }
 
-    @ViewBuilder private func highlightedText(_ text: String, query: String) -> some View {
-        if query.isEmpty { Text(text) }
-        else {
-            let parts = text.components(separatedBy: query)
-            let intersperse: [Text] = parts.enumerated().flatMap { idx, part -> [Text] in
-                var res: [Text] = [Text(part)]
-                if idx < parts.count - 1 { res.append(Text(query).bold().foregroundStyle(Color.accentColor)) }
-                return res
-            }
-            intersperse.dropFirst().reduce(Text(parts.first ?? "")) { acc, nxt in acc + nxt }
+    private func highlightedText(_ text: String, query: String) -> Text {
+        guard !query.isEmpty else { return Text(text) }
+
+        let lowercasedText = text.lowercased()
+        let lowercasedQuery = query.lowercased()
+        var ranges: [Range<String.Index>] = []
+        var searchStartLower = lowercasedText.startIndex
+        while let foundLower = lowercasedText.range(of: lowercasedQuery, options: [], range: searchStartLower ..< lowercasedText.endIndex) {
+            let startOffset = lowercasedText.distance(from: lowercasedText.startIndex, to: foundLower.lowerBound)
+            let endOffset = lowercasedText.distance(from: lowercasedText.startIndex, to: foundLower.upperBound)
+            let start = text.index(text.startIndex, offsetBy: startOffset)
+            let end = text.index(text.startIndex, offsetBy: endOffset)
+            ranges.append(start ..< end)
+            searchStartLower = foundLower.upperBound
         }
+
+        guard !ranges.isEmpty else { return Text(text) }
+
+        var current = text.startIndex
+        var combined = Text("")
+        for r in ranges {
+            if current < r.lowerBound {
+                combined = combined + Text(String(text[current ..< r.lowerBound]))
+            }
+            combined = combined + Text(String(text[r])).bold().foregroundStyle(Color.accentColor)
+            current = r.upperBound
+        }
+        if current < text.endIndex {
+            combined = combined + Text(String(text[current ..< text.endIndex]))
+        }
+        return combined
+    }
+
+    private func displayText(for entry: JournalEntry, matchedBy query: String, maxLength: Int = 160) -> String {
+        guard !query.isEmpty else {
+            return entry.summary ?? String(entry.transcript.prefix(80))
+        }
+
+        let summary = entry.summary ?? ""
+        if let snippet = contextualSnippet(from: summary, query: query, maxLength: maxLength), !snippet.isEmpty {
+            return snippet
+        }
+        if let snippet = contextualSnippet(from: entry.transcript, query: query, maxLength: maxLength), !snippet.isEmpty {
+            return snippet
+        }
+        return entry.summary ?? String(entry.transcript.prefix(80))
+    }
+
+    private func contextualSnippet(from text: String, query: String, maxLength: Int) -> String? {
+        guard !text.isEmpty else { return nil }
+        guard let matchRange = text.range(of: query, options: [.caseInsensitive, .diacriticInsensitive]) else {
+            return nil
+        }
+
+        let matchLength = text.distance(from: matchRange.lowerBound, to: matchRange.upperBound)
+        let availableContext = max(0, maxLength - matchLength)
+        var leftContext = availableContext / 2
+        var rightContext = availableContext - leftContext
+
+        let startIndex = text.startIndex
+        let endIndex = text.endIndex
+
+        let startCandidate = text.index(matchRange.lowerBound, offsetBy: -leftContext, limitedBy: startIndex) ?? startIndex
+        let endCandidate = text.index(matchRange.upperBound, offsetBy: rightContext, limitedBy: endIndex) ?? endIndex
+
+        var actualStart = startCandidate
+        var actualEnd = endCandidate
+
+        let currentLength = text.distance(from: actualStart, to: actualEnd)
+        if currentLength > maxLength {
+            let overflow = currentLength - maxLength
+            actualEnd = text.index(actualEnd, offsetBy: -overflow)
+        }
+
+        var snippet = String(text[actualStart ..< actualEnd])
+        if actualStart > startIndex { snippet = "…" + snippet }
+        if actualEnd < endIndex { snippet += "…" }
+        return snippet
     }
 
     private func moveWithinOthers(others: [JournalEntry], source: IndexSet, destination: Int) {

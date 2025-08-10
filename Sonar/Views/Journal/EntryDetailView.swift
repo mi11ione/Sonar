@@ -65,6 +65,7 @@ struct EntryDetailView: View {
             entry.summary = newSummary
             try? ctx.save()
         }
+        Task { await indexing.index(entry: entry) }
     }
 
     private func deleteEntry() {
