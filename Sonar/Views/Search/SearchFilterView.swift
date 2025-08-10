@@ -7,11 +7,20 @@ struct SearchFilterView: View {
 
     var body: some View {
         List(filtered(entries), id: \.id) { entry in
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 6) {
                 Text(entry.summary ?? String(entry.transcript.prefix(80)))
                     .font(.headline)
-                Text(entry.createdAt, style: .date)
-                    .foregroundStyle(.secondary)
+                HStack(spacing: 12) {
+                    if let label = entry.moodLabel {
+                        Text(label)
+                            .font(.caption)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(.quaternary, in: Capsule())
+                    }
+                    Text(entry.createdAt, style: .date)
+                        .foregroundStyle(.secondary)
+                }
             }
         }
         .searchable(text: $query)

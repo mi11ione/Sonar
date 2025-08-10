@@ -11,31 +11,55 @@ struct RecordView: View {
     enum ViewState: Equatable { case idle, recording, processing, saved, error(String) }
     @State private var state: ViewState = .idle
     @State private var liveTranscript: String = ""
+    @State private var startTime: Date? = nil
 
     var body: some View {
         VStack(spacing: 16) {
-            switch state {
-            case .idle:
-                MicButton(title: "Start Recording") { state = .recording }
-            case .recording:
-                VStack(spacing: 12) {
-                    ScrollView { Text(liveTranscript).frame(maxWidth: .infinity, alignment: .leading) }
-                    Button(role: .destructive) { Task { await transcription.stop(); state = .processing } } label: {
-                        Label("Stop", systemImage: "stop.fill")
-                    }
-                    .buttonStyle(.borderedProminent)
+            Group {
+                switch state {
+                case .recording:
+                    if let startTime { Text(startTime, style: .timer).font(.title3.monospacedDigit()) }
+                case .processing:
+                    ProgressView().progressViewStyle(.circular)
+                case .saved:
+                    Label("Saved", systemImage: "checkmark.circle")
+                        .foregroundStyle(.green)
+                        .font(.headline)
+                default:
+                    EmptyView()
                 }
-            case .processing:
-                ProgressView("Processing…")
-            case .saved:
-                ContentUnavailableView("Saved", systemImage: "checkmark.circle")
-            case let .error(message):
-                ContentUnavailableView("Error", systemImage: "exclamationmark.triangle", description: Text(message))
             }
+
+            ScrollView { Text(liveTranscript).frame(maxWidth: .infinity, alignment: .leading) }
+
+            micControl
         }
         .padding()
         .navigationTitle("Record")
+        .sensoryFeedback(.impact(weight: .light), trigger: state == .recording)
+        .sensoryFeedback(.impact(weight: .light), trigger: state == .processing)
+        .sensoryFeedback(.success, trigger: state == .saved)
         .task(id: state) { await handleStateChange() }
+    }
+
+    @ViewBuilder private var micControl: some View {
+        switch state {
+        case .idle:
+            MicButton(title: "Start Recording") { state = .recording }
+        case .recording:
+            MicButton(title: "Stop", systemImageName: "stop.fill", tint: .red) {
+                Task { await transcription.stop(); state = .processing }
+            }
+        case .processing:
+            MicButton(title: "Processing…", systemImageName: "hourglass", tint: .gray, isDisabled: true) {}
+        case .saved:
+            MicButton(title: "Start Recording") { state = .recording }
+        case .error:
+            MicButton(title: "Try Again", systemImageName: "arrow.clockwise") {
+                state = .idle
+                liveTranscript = ""
+            }
+        }
     }
 
     private func handleStateChange() async {
@@ -43,7 +67,9 @@ struct RecordView: View {
         case .recording:
             liveTranscript = ""
             do {
+                try await transcription.requestAuthorization()
                 let stream = try await transcription.startStreamingTranscription(onDeviceOnly: true)
+                if startTime == nil { startTime = .now }
                 for await chunk in stream {
                     liveTranscript = chunk
                 }
@@ -52,6 +78,10 @@ struct RecordView: View {
             }
         case .processing:
             await saveEntry(from: liveTranscript)
+        case .saved:
+            // Auto-reset to idle shortly after showing saved state
+            try? await Task.sleep(for: .seconds(1.2))
+            if state == .saved { state = .idle; liveTranscript = "" }
         default:
             break
         }
@@ -59,18 +89,25 @@ struct RecordView: View {
 
     private func saveEntry(from transcript: String) async {
         do {
-            let summary = await summarization.summarize(text: transcript, maxSentences: 3, toneHint: nil)
-            let result = await mood.analyze(text: transcript)
-
+            // Save immediately to keep UI responsive
             let entry = JournalEntry(transcript: transcript)
-            entry.summary = summary
-            entry.moodScore = result.score
-            entry.moodLabel = result.label
             modelContext.insert(entry)
             try modelContext.save()
-
-            await indexing.index(entry: entry)
             state = .saved
+            startTime = nil
+
+            // Background processing for summary, mood, and indexing
+            Task(priority: .utility) {
+                let summary = await summarization.summarize(text: transcript, maxSentences: 3, toneHint: nil)
+                let result = await mood.analyze(text: transcript)
+                await MainActor.run {
+                    entry.summary = summary
+                    entry.moodScore = result.score
+                    entry.moodLabel = result.label
+                    try? modelContext.save()
+                }
+                await indexing.index(entry: entry)
+            }
         } catch {
             state = .error(error.localizedDescription)
         }
