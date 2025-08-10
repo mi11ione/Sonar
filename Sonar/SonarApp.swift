@@ -11,6 +11,10 @@ import SwiftUI
 @main
 struct SonarApp: App {
     private var container: ModelContainer = {
+        // Ensure Application Support directory exists before initializing the persistent store
+        if let appSupportURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
+            try? FileManager.default.createDirectory(at: appSupportURL, withIntermediateDirectories: true)
+        }
         let schema = Schema([
             JournalEntry.self,
             AudioAsset.self,
@@ -35,6 +39,14 @@ struct SonarApp: App {
                         context.insert(PromptStyle(displayName: "Concise", maxSentences: 3, includeActionItems: false, toneHint: nil, isPremium: false))
                         context.insert(PromptStyle(displayName: "Reflective", maxSentences: 4, includeActionItems: false, toneHint: "gentle, reflective tone", isPremium: false))
                         context.insert(PromptStyle(displayName: "Bulleted", maxSentences: 5, includeActionItems: true, toneHint: "bullet points with short phrases", isPremium: true))
+                        try? context.save()
+                    }
+
+                    // Ensure a single UserSettings row exists
+                    let settingsRequest = FetchDescriptor<UserSettings>()
+                    let settings = (try? context.fetch(settingsRequest)) ?? []
+                    if settings.isEmpty {
+                        context.insert(UserSettings())
                         try? context.save()
                     }
                 }

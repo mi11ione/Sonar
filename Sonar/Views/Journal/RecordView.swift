@@ -7,11 +7,14 @@ struct RecordView: View {
     @Environment(\.moodAnalysis) private var mood
     @Environment(\.indexing) private var indexing
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.purchases) private var purchases
 
     enum ViewState: Equatable { case idle, recording, processing, saved, error(String) }
     @State private var state: ViewState = .idle
     @State private var liveTranscript: String = ""
     @State private var startTime: Date? = nil
+    @AppStorage("freeCount") private var freeCount: Int = 0
+    @State private var showPaywall: Bool = false
 
     var body: some View {
         VStack(spacing: 16) {
@@ -30,6 +33,8 @@ struct RecordView: View {
                 }
             }
 
+            if state == .recording { WaveformView(transcript: liveTranscript) }
+
             ScrollView { Text(liveTranscript).frame(maxWidth: .infinity, alignment: .leading) }
 
             micControl
@@ -40,12 +45,13 @@ struct RecordView: View {
         .sensoryFeedback(.impact(weight: .light), trigger: state == .processing)
         .sensoryFeedback(.success, trigger: state == .saved)
         .task(id: state) { await handleStateChange() }
+        .sheet(isPresented: $showPaywall) { PaywallView() }
     }
 
     @ViewBuilder private var micControl: some View {
         switch state {
         case .idle:
-            MicButton(title: "Start Recording") { state = .recording }
+            MicButton(title: "Start Recording") { Task { await startRecordingOrGate() } }
         case .recording:
             MicButton(title: "Stop", systemImageName: "stop.fill", tint: .red) {
                 Task { await transcription.stop(); state = .processing }
@@ -96,9 +102,16 @@ struct RecordView: View {
             state = .saved
             startTime = nil
 
-            // Background processing for summary, mood, and indexing
+            // Background processing for summary, mood, and indexing with style preference
             Task(priority: .utility) {
-                let summary = await summarization.summarize(text: transcript, maxSentences: 3, toneHint: nil)
+                // Load preferred prompt style if available from UserSettings
+                let settings: UserSettings? = try? modelContext.fetch(FetchDescriptor<UserSettings>()).first
+                let styleId = settings?.selectedPromptStyleId
+                let allStyles: [PromptStyle] = (try? modelContext.fetch(FetchDescriptor<PromptStyle>())) ?? []
+                let preferred = allStyles.first { $0.id == styleId } ?? allStyles.first
+                let maxSentences = preferred?.maxSentences ?? 3
+                let tone = preferred?.toneHint
+                let summary = await summarization.summarize(text: transcript, maxSentences: maxSentences, toneHint: tone)
                 let result = await mood.analyze(text: transcript)
                 await MainActor.run {
                     entry.summary = summary
@@ -108,8 +121,27 @@ struct RecordView: View {
                 }
                 await indexing.index(entry: entry)
             }
+            await gateUsagePostSave()
         } catch {
             state = .error(error.localizedDescription)
+        }
+    }
+
+    private func startRecordingOrGate() async {
+        // Gate if free tier exhausted and not subscribed
+        let subscribed = await purchases.isSubscriber()
+        if !subscribed && freeCount >= 3 {
+            showPaywall = true
+            return
+        }
+        state = .recording
+    }
+
+    private func gateUsagePostSave() async {
+        let subscribed = await purchases.isSubscriber()
+        if !subscribed {
+            freeCount += 1
+            if freeCount >= 3 { showPaywall = true }
         }
     }
 }

@@ -809,30 +809,38 @@ Phase A — Skeleton & models (STOP if capabilities or targets are needed)
 4) Implement `EnvironmentKeys.swift` with default service stubs.
 5) Build `ContentView` shell with tabs and placeholder screens.
 
+Status: Implemented — Models present; `ModelContainer` configured; Environment keys wired for transcription/summarization/mood/indexing; `ContentView` with tab bar.
+
 Phase B — Capture and transcription
 6) Implement `DefaultTranscriptionService` using `AVAudioEngine` + `SFSpeechRecognizer` with on‑device flag.
 7) Build `RecordView` with `MicButton`, waveform visualization, and live transcript.
 8) Handle permission flows and interruptions; add haptics.
+
+Status: Implemented — Transcription service on-device; `RecordView` live transcript, timer, waveform, haptics.
 
 Phase C — NLP pipeline (summary styles & mood)
 9) Implement `DefaultSummarizationService` (embeddings + centroid ranking) and `DefaultMoodAnalysisService`.
 10) Wire `RecordView` save path: compute summary/mood → save `JournalEntry` → index Spotlight.
 11) Build `EntriesListView` and `EntryDetailView`.
 
+Status: Implemented — Services exist; background post-save summary/mood; Spotlight indexing; `EntriesListView` and `EntryDetailView` added.
+
 Phase D — Widgets, Live Activity, and Shortcuts (STOP before creating Widget/Live Activity targets)
-12) Add Widget Extension with Quick Record + Daily Prompt.
-13) Add Live Activity for recording with stop action.
-14) Add AppIntents for StartRecording, SummarizeLastEntry, SearchEntries.
+12) Add Widget Extension with Quick Record + Daily Prompt. [PROPOSED — STOP GATE]
+13) Add Live Activity for recording with stop action. [PROPOSED — STOP GATE]
+14) Add AppIntents for StartRecording, SummarizeLastEntry, SearchEntries. [PROPOSED]
 
 Phase E — Paywall and settings (trial/promo offers)
 15) Implement StoreKit 2 products and subscription gating in views.
 16) Build `PaywallView` and Settings (subscription management, iCloud, encryption toggle, export, contact).
 17) Add onboarding (≤ 3 screens) tracked with `@AppStorage`.
 
+Status: Implemented — Purchases service; `PaywallView`; gating after 3 free saves; Settings section shows status/restore; onboarding flow with permissions and preferences.
+
 Phase F — Polish and QA (STOP before adding non‑Swift resource files; propose plan first)
-18) Add OSLog, MetricKit, and Instruments signposts.
-19) Add localization keys and initial English strings.
-20) Write unit tests for summarization, mood, encryption; UI tests for main flows.
+18) Add OSLog, MetricKit, and Instruments signposts. [OSLog implemented; others pending]
+19) Add localization keys and initial English strings. [PROPOSED — STOP GATE for adding files]
+20) Write unit tests for summarization, mood, encryption; UI tests for main flows. [PROPOSED]
 
 ---
 

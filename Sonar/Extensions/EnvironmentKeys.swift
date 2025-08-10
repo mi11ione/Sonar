@@ -1,9 +1,11 @@
 import SwiftUI
+import StoreKit
 
 private struct TranscriptionKey: EnvironmentKey { static let defaultValue: any SpeechTranscriptionService = DefaultTranscriptionService() }
 private struct SummarizationKey: EnvironmentKey { static let defaultValue: any SummarizationService = DefaultSummarizationService() }
 private struct MoodKey: EnvironmentKey { static let defaultValue: any MoodAnalysisService = DefaultMoodAnalysisService() }
 private struct IndexingKey: EnvironmentKey { static let defaultValue: any SearchIndexingService = DefaultSearchIndexingService() }
+private struct PurchasesKey: EnvironmentKey { static let defaultValue: any PurchasesService = DefaultPurchasesService() }
 
 extension EnvironmentValues {
     var transcription: any SpeechTranscriptionService {
@@ -24,5 +26,10 @@ extension EnvironmentValues {
     var indexing: any SearchIndexingService {
         get { self[IndexingKey.self] }
         set { self[IndexingKey.self] = newValue }
+    }
+
+    var purchases: any PurchasesService {
+        get { self[PurchasesKey.self] }
+        set { self[PurchasesKey.self] = newValue }
     }
 }

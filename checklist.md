@@ -5,21 +5,21 @@ Legend
 - [ ] = pending
 
 First‑Run & Core Value
-- [ ] Welcome screen explains privacy-first, on-device promise
-- [ ] Short value bullets: capture, summarize, mood, search
-- [ ] First-run shows a single clear primary action (Record)
+- [x] Welcome screen explains privacy-first, on-device promise
+- [x] Short value bullets: capture, summarize, mood, search
+- [x] First-run shows a single clear primary action (Record)
 - [x] Tab bar includes Record, Journal, Search, Settings
 - [ ] First-run hints show how to find past entries
 - [ ] First entry can be created in < 10 seconds from install
-- [ ] First save gives positive feedback (haptic + check)
-- [ ] First-run teaches summary and mood badges
+- [x] First save gives positive feedback (haptic + check)
+- [x] First-run teaches summary and mood badges
 - [ ] Users can skip or revisit onboarding later in Settings
-- [ ] Works without account creation or sign-in
+- [x] Works without account creation or sign-in
 
 Record — Start & Control
 - [x] Dedicated Record screen exists
 - [x] Big mic button starts recording instantly
-- [ ] Visible level feedback (waveform or meter)
+- [x] Visible level feedback (waveform or meter)
 - [x] Timer shows elapsed recording time
 - [ ] Pause/resume button with clear state
 - [x] Stop button is unambiguous and within reach
@@ -28,7 +28,7 @@ Record — Start & Control
 - [ ] Handles phone calls/alarms gracefully (auto-pause)
 - [ ] Resumes safely after interruption
 - [ ] Guardrails against extremely long sessions
-- [ ] Clear error messages for mic/speech permissions
+- [x] Clear error messages for mic/speech permissions
 
 Transcription — Live & Reliable
 - [x] Live transcript updates while speaking
@@ -44,12 +44,12 @@ Transcription — Live & Reliable
 
 Processing — Summary & Mood
 - [x] Automatic summary generated after stop
-- [ ] Summary is concise (1–3 sentences) by default
+- [x] Summary is concise (1–3 sentences) by default
 - [ ] Options: Concise, Reflective, Bulleted styles
-- [ ] Summary respects user’s chosen style by default
+- [x] Summary respects user’s chosen style by default
 - [ ] Users can regenerate summary for a different outcome
 - [x] Mood signal calculated for each entry
-- [ ] Mood badge text and color are understandable
+- [x] Mood badge text and color are understandable
 - [ ] Short explanation of mood when tapped
 - [x] Processing shows clear progress state
 - [x] Processing completes quickly for typical entries
@@ -61,23 +61,23 @@ Journal — List
 - [ ] Sticky “Pinned” area at top for important entries
 - [ ] Swipe actions: Pin/Unpin, Delete, Share
 - [ ] Batch select for multi-delete or export
-- [ ] Empty state shows guidance to Record
+- [x] Empty state shows guidance to Record
 - [ ] Pull to refresh derived content (if needed)
 - [ ] Context menu on long-press for quick actions
 - [ ] Scales well with large history (no lag)
 
 Entry — Detail
-- [ ] Full transcript readable with large text support
-- [ ] Summary shown above transcript
-- [ ] Mood chip with label/score
+- [x] Full transcript readable with large text support
+- [x] Summary shown above transcript
+- [x] Mood chip with label/score
 - [ ] Audio playback with scrubber and speed control
 - [ ] Edit title/notes (optional short title)
 - [ ] Edit tags inline
 - [ ] Assign to a thread inline
-- [ ] Pin/unpin in toolbar
-- [ ] Share/export entry
-- [ ] Delete with confirmation
-- [ ] Clear affordance to return to list
+- [x] Pin/unpin in toolbar
+- [x] Share/export entry
+- [x] Delete with confirmation
+- [x] Clear affordance to return to list
 
 Organization — Tags & Threads
 - [ ] Create, rename, delete tags
@@ -95,8 +95,8 @@ Search — Text & Filters
 - [x] Search across transcript and summary text
 - [x] Spotlight indexing of entries for system-wide search
 - [ ] Highlight matching terms in results
-- [ ] Filter by date ranges (Today, 7 days, Custom)
-- [ ] Filter by mood bins (Negative/Neutral/Positive)
+- [x] Filter by date ranges (Today, 7 days, Custom)
+- [x] Filter by mood bins (Negative/Neutral/Positive)
 - [ ] Filter by tags (multi-select)
 - [ ] Filter by threads
 - [ ] Sort by newest/oldest/relevance
@@ -114,13 +114,13 @@ Insights — Weekly
 - [ ] Users can opt out of insights
 
 Notifications — Gentle Reminders
-- [ ] Friendly opt-in prompt explaining value
-- [ ] Daily reminder at user-selected hour
+- [x] Friendly opt-in prompt explaining value
+- [x] Daily reminder at user-selected hour
 - [ ] Tapping opens straight into Record
 - [ ] Quick actions from notification (Start/Remind me later)
 - [ ] Respect Focus modes and summary delivery
-- [ ] Edit reminder time in Settings
-- [ ] Easy to turn off reminders
+- [x] Edit reminder time in Settings
+- [x] Easy to turn off reminders
 
 Widgets — Quick Actions
 - [ ] Quick Record widget (tap to record)
@@ -153,28 +153,28 @@ Onboarding — 3 Screens Max
 
 Settings — Control & Confidence
 - [x] Settings screen exists
-- [ ] Manage subscription (plans, trial, upgrade/downgrade)
-- [ ] Restore purchases
+- [x] Manage subscription (plans, trial, upgrade/downgrade)
+- [x] Restore purchases
 - [ ] iCloud sync toggle with explanation
 - [ ] Encryption toggle for transcripts/audio
 - [ ] Export data (ZIP) and Import (advanced)
 - [ ] Default summary style selector
-- [ ] Notification preferences (hour, enable/disable)
+- [x] Notification preferences (hour, enable/disable)
 - [ ] Daily prompt enable/disable
-- [ ] App version and build visible
+- [x] App version and build visible
 - [ ] Privacy policy and Terms links
 - [ ] Contact support (mailto:)
 
 Paywall — Clear & Honest
-- [ ] Fast, clear comparison: Free vs paid
-- [ ] Plan cards: Pro, Premium, Max + annuals
+- [x] Fast, clear comparison: Free vs paid
+- [x] Plan cards: Pro, Premium, Max + annuals
 - [ ] Trial messaging (e.g., 7 days on Premium)
-- [ ] Benefits explained in plain language
+- [x] Benefits explained in plain language
 - [ ] Family Sharing guidance if applicable
-- [ ] Restore Purchases visible
+- [x] Restore Purchases visible
 - [ ] Links to Terms/Privacy from paywall
-- [ ] Exit affordance (X) and no dark patterns
-- [ ] Paywall shown post-onboarding or on gate
+- [x] Exit affordance (X) and no dark patterns
+- [x] Paywall shown post-onboarding or on gate
 
 Privacy — Local First
 - [ ] On-device processing stated and honored

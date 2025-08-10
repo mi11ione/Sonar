@@ -6,19 +6,19 @@ struct EntriesListView: View {
 
     var body: some View {
         List(entries, id: \.id) { entry in
-            VStack(alignment: .leading, spacing: 6) {
-                Text(entry.summary ?? String(entry.transcript.prefix(80)))
-                    .font(.headline)
-                HStack(spacing: 12) {
-                    if let label = entry.moodLabel {
-                        Text(label)
-                            .font(.caption)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(.quaternary, in: Capsule())
+            NavigationLink {
+                EntryDetailView(entry: entry)
+            } label: {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(entry.summary ?? String(entry.transcript.prefix(80)))
+                        .font(.headline)
+                    HStack(spacing: 12) {
+                        if let label = entry.moodLabel {
+                            MoodBadge(label: label, score: entry.moodScore ?? 0)
+                        }
+                        Text(entry.createdAt, style: .date)
+                            .foregroundStyle(.secondary)
                     }
-                    Text(entry.createdAt, style: .date)
-                        .foregroundStyle(.secondary)
                 }
             }
         }
