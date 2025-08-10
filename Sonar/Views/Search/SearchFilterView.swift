@@ -13,7 +13,7 @@ struct SearchFilterView: View {
     var body: some View {
         List(filtered(entries), id: \.id) { entry in
             VStack(alignment: .leading, spacing: 6) {
-                Text(entry.summary ?? String(entry.transcript.prefix(80)))
+                highlightedText(entry.summary ?? String(entry.transcript.prefix(120)), query: query)
                     .font(.headline)
                 HStack(spacing: 12) {
                     if let label = entry.moodLabel {
@@ -26,6 +26,15 @@ struct SearchFilterView: View {
         }
         .searchable(text: $query)
         .navigationTitle("Search")
+        .overlay {
+            if filtered(entries).isEmpty {
+                ContentUnavailableView(
+                    "No results",
+                    systemImage: "magnifyingglass",
+                    description: Text("Try broadening your query or clearing filters.")
+                )
+            }
+        }
         .toolbar {
             Menu {
                 Picker("Mood", selection: $moodBin) {
@@ -82,6 +91,19 @@ struct SearchFilterView: View {
         case 1: return abs(score) <= 0.2
         case 2: return score > 0.2
         default: return true
+        }
+    }
+
+    @ViewBuilder private func highlightedText(_ text: String, query: String) -> some View {
+        if query.isEmpty { Text(text) }
+        else {
+            let parts = text.components(separatedBy: query)
+            let intersperse: [Text] = parts.enumerated().flatMap { idx, part -> [Text] in
+                var res: [Text] = [Text(part)]
+                if idx < parts.count - 1 { res.append(Text(query).bold().foregroundStyle(Color.accentColor)) }
+                return res
+            }
+            intersperse.dropFirst().reduce(Text(parts.first ?? "")) { acc, nxt in acc + nxt }
         }
     }
 }

@@ -4,7 +4,8 @@ import NaturalLanguage
 struct DefaultSummarizationService: SummarizationService, Sendable {
     func summarize(text: String, maxSentences: Int, toneHint: String?) async -> String {
         let sentences = SentenceSplitter.split(text)
-        guard !sentences.isEmpty, let embedding = NLEmbedding.sentenceEmbedding(for: .english) else {
+        // Reuse embedding instance to avoid repeated allocations
+        guard !sentences.isEmpty, let embedding = Self.embedding else {
             return text
         }
 
@@ -21,4 +22,6 @@ struct DefaultSummarizationService: SummarizationService, Sendable {
         let joined = ordered.joined(separator: " ")
         return Rewriter.rewrite(joined, toneHint: toneHint)
     }
+
+    private static let embedding = NLEmbedding.sentenceEmbedding(for: .english)
 }

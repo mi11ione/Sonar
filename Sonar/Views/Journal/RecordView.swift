@@ -9,20 +9,30 @@ struct RecordView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.purchases) private var purchases
 
-    enum ViewState: Equatable { case idle, recording, processing, saved, error(String) }
+    enum ViewState: Equatable { case idle, recording, review, processing, saved, error(String) }
     @State private var state: ViewState = .idle
     @State private var liveTranscript: String = ""
+    @State private var committedTranscript: String = ""
     @State private var startTime: Date? = nil
+    @State private var lastResumeAt: Date? = nil
+    @State private var elapsedBeforePause: TimeInterval = 0
+    @State private var reviewText: String = ""
     @AppStorage("freeCount") private var freeCount: Int = 0
+    @AppStorage("deeplink.startRecording") private var deepLinkStart: Bool = false
     @State private var showPaywall: Bool = false
     @State private var isPaused: Bool = false
+    @State private var didDiscardToggle: Bool = false
 
     var body: some View {
         VStack(spacing: 16) {
             Group {
                 switch state {
                 case .recording:
-                    if let startTime { Text(startTime, style: .timer).font(.title3.monospacedDigit()) }
+                    TimelineView(.periodic(from: .now, by: 1)) { context in
+                        let runningElapsed = lastResumeAt.map { context.date.timeIntervalSince($0) } ?? 0
+                        let total = isPaused ? elapsedBeforePause : elapsedBeforePause + runningElapsed
+                        Text(formatElapsed(total)).font(.title3.monospacedDigit())
+                    }
                 case .processing:
                     ProgressView().progressViewStyle(.circular)
                 case .saved:
@@ -36,7 +46,16 @@ struct RecordView: View {
 
             if state == .recording { WaveformView(transcript: liveTranscript) }
 
-            ScrollView { Text(liveTranscript).frame(maxWidth: .infinity, alignment: .leading) }
+            if state == .review {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Review transcript").font(.headline)
+                    TextEditor(text: $reviewText)
+                        .frame(minHeight: 160)
+                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(.quaternary))
+                }
+            } else {
+                ScrollView { Text(liveTranscript).frame(maxWidth: .infinity, alignment: .leading) }
+            }
 
             micControl
         }
@@ -45,8 +64,16 @@ struct RecordView: View {
         .sensoryFeedback(.impact(weight: .light), trigger: state == .recording)
         .sensoryFeedback(.impact(weight: .light), trigger: state == .processing)
         .sensoryFeedback(.success, trigger: state == .saved)
+        .sensoryFeedback(.impact(weight: .light), trigger: isPaused)
+        .sensoryFeedback(.impact(weight: .light), trigger: didDiscardToggle)
         .task(id: state) { await handleStateChange() }
         .sheet(isPresented: $showPaywall) { PaywallView() }
+        .task {
+            if deepLinkStart {
+                deepLinkStart = false
+                await startRecordingOrGate()
+            }
+        }
     }
 
     @ViewBuilder private var micControl: some View {
@@ -56,10 +83,36 @@ struct RecordView: View {
         case .recording:
             HStack(spacing: 12) {
                 MicButton(title: isPaused ? "Resume" : "Pause", systemImageName: isPaused ? "play.fill" : "pause.fill", tint: .orange) {
-                    isPaused.toggle()
+                    if !isPaused {
+                        committedTranscript = liveTranscript
+                        if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
+                        isPaused = true
+                        Task { await transcription.stop() }
+                    } else {
+                        isPaused = false
+                        lastResumeAt = Date()
+                        Task { await streamTranscription() }
+                    }
                 }
                 MicButton(title: "Stop", systemImageName: "stop.fill", tint: .red) {
-                    Task { await transcription.stop(); state = .processing }
+                    if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
+                    Task { await transcription.stop(); state = .review }
+                }
+            }
+        case .review:
+            HStack(spacing: 12) {
+                MicButton(title: "Save", systemImageName: "checkmark", tint: .green) {
+                    liveTranscript = reviewText
+                    state = .processing
+                }
+                MicButton(title: "Discard", systemImageName: "xmark", tint: .gray) {
+                    didDiscardToggle.toggle()
+                    state = .idle
+                    liveTranscript = ""
+                    startTime = nil
+                    isPaused = false
+                    lastResumeAt = nil
+                    elapsedBeforePause = 0
                 }
             }
         case .processing:
@@ -78,19 +131,18 @@ struct RecordView: View {
         switch state {
         case .recording:
             liveTranscript = ""
+            committedTranscript = ""
             do {
                 try await transcription.requestAuthorization()
-                let stream = try await transcription.startStreamingTranscription(onDeviceOnly: true)
                 if startTime == nil { startTime = .now }
-                for await chunk in stream {
-                    if isPaused { continue }
-                    if liveTranscript.isEmpty { liveTranscript = chunk }
-                    else if chunk.hasPrefix(liveTranscript) { /* incremental */ liveTranscript = chunk }
-                    else { liveTranscript += " " + chunk }
-                }
+                lastResumeAt = Date()
+                elapsedBeforePause = 0
+                await streamTranscription()
             } catch {
                 state = .error(error.localizedDescription)
             }
+        case .review:
+            reviewText = liveTranscript
         case .processing:
             await saveEntry(from: liveTranscript)
         case .saved:
@@ -100,6 +152,33 @@ struct RecordView: View {
         default:
             break
         }
+    }
+
+    private func streamTranscription() async {
+        do {
+            let stream = try await transcription.startStreamingTranscription(onDeviceOnly: true)
+            for await chunk in stream {
+                if isPaused { break }
+                // Merge partial with committed prefix to avoid losing prior text across pauses
+                if chunk.hasPrefix(committedTranscript) {
+                    let suffix = String(chunk.dropFirst(committedTranscript.count)).trimmingCharacters(in: .whitespacesAndNewlines)
+                    liveTranscript = suffix.isEmpty ? committedTranscript : committedTranscript + (committedTranscript.isEmpty ? "" : " ") + suffix
+                } else {
+                    // If recognizer restarts and drops context, keep both committed and new chunk
+                    liveTranscript = committedTranscript.isEmpty ? chunk : committedTranscript + " " + chunk
+                }
+            }
+        } catch {
+            state = .error(error.localizedDescription)
+        }
+    }
+
+    private func formatElapsed(_ seconds: TimeInterval) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = seconds >= 3600 ? [.hour, .minute, .second] : [.minute, .second]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = [.pad]
+        return formatter.string(from: max(0, seconds)) ?? "0:00"
     }
 
     private func saveEntry(from transcript: String) async {

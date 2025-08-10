@@ -6,6 +6,7 @@ struct PaywallView: View {
     @State private var isLoading: Bool = true
     @Environment(\.dismiss) private var dismiss
     @Environment(\.purchases) private var purchases
+    @Environment(\.openURL) private var openURL
 
     private let productIds: [String] = [
         "sonar.pro.monthly",
@@ -45,6 +46,12 @@ struct PaywallView: View {
                         .padding(.top, 4)
                 }
                 Spacer()
+                VStack(spacing: 6) {
+                    Button("Terms of Service") { openLegal(urlString: "https://example.com/terms") }
+                        .buttonStyle(.plain)
+                    Button("Privacy Policy") { openLegal(urlString: "https://example.com/privacy") }
+                        .buttonStyle(.plain)
+                }
             }
             .padding()
             .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Close") { dismiss() } } }
@@ -60,6 +67,11 @@ struct PaywallView: View {
         } catch {
             products = []
         }
+    }
+
+    private func openLegal(urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        openURL(url)
     }
 }
 

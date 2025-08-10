@@ -18,6 +18,10 @@ struct EntryDetailView: View {
                 if let score = entry.moodScore, let label = entry.moodLabel {
                     MoodBadge(label: label, score: score)
                 }
+                if let audio = entry.audio {
+                    Divider()
+                    AudioPlayerView(url: audio.fileURL)
+                }
                 Divider()
                 Text(entry.transcript)
                     .font(.body)
@@ -52,6 +56,20 @@ struct EntryDetailView: View {
         try? modelContext.save()
         Task { await indexing.deleteIndex(for: entry.id) }
         dismiss()
+    }
+}
+
+private struct AudioPlayerView: View {
+    let url: URL
+    @State private var isPlaying = false
+    @State private var rate: Float = 1.0
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Button { isPlaying.toggle() } label: { Image(systemName: isPlaying ? "pause.fill" : "play.fill") }
+                Stepper("Speed: \(String(format: "%.1fx", rate))", value: $rate, in: 0.5 ... 2.0, step: 0.25)
+            }
+        }
     }
 }
 

@@ -5,11 +5,13 @@
 //  Created by mi11ion on 10/8/25.
 //
 
+import MetricKit
 import SwiftData
 import SwiftUI
 
 @main
 struct SonarApp: App {
+    @State private var mxObserver = MXObserver()
     private var container: ModelContainer = {
         // Ensure Application Support directory exists before initializing the persistent store
         if let appSupportURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
@@ -31,6 +33,7 @@ struct SonarApp: App {
         WindowGroup {
             ContentView()
                 .modelContainer(container)
+                .onAppear { MXMetricManager.shared.add(mxObserver) }
                 .task {
                     // Preload default prompt styles on first launch
                     let context = ModelContext(container)
@@ -52,4 +55,9 @@ struct SonarApp: App {
                 }
         }
     }
+}
+
+final class MXObserver: NSObject, MXMetricManagerSubscriber {
+    func didReceive(_: [MXMetricPayload]) {}
+    func didReceive(_: [MXDiagnosticPayload]) {}
 }

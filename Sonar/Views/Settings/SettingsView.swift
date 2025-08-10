@@ -58,6 +58,9 @@ struct SettingsView: View {
             }
             Section("About") {
                 LabeledContent("Version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-")
+                Button("Privacy Policy") { open(url: "https://example.com/privacy") }
+                Button("Terms of Service") { open(url: "https://example.com/terms") }
+                Button("Contact Support") { open(url: "mailto:support@example.com?subject=Sonar%20Support") }
             }
         }
         .navigationTitle("Settings")
@@ -68,6 +71,8 @@ struct SettingsView: View {
         }
         .sheet(isPresented: $showPaywall) { PaywallView() }
     }
+
+    private func open(url: String) { if let u = URL(string: url) { openURL(u) } }
 }
 
 #Preview {

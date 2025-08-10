@@ -39,7 +39,7 @@ Transcription — Live & Reliable
 - [ ] Auto-trims filler words where helpful
 - [ ] Handles multi-minute sessions without stalls
 - [ ] Finalizes the transcript on stop
-- [ ] Allows review of transcript before saving
+- [x] Allows review of transcript before saving
 - [ ] Language settings honor device locale
 
 Processing — Summary & Mood
@@ -58,9 +58,9 @@ Journal — List
 - [x] Journal tab shows recent entries
 - [x] Rows contain summary (or transcript excerpt)
 - [x] Rows show mood chip and created time
-- [ ] Sticky “Pinned” area at top for important entries
-- [ ] Swipe actions: Pin/Unpin, Delete, Share
-- [ ] Batch select for multi-delete or export
+- [x] Sticky “Pinned” area at top for important entries
+- [x] Swipe actions: Pin/Unpin, Delete, Share
+- [x] Batch select for multi-delete or export (delete supported)
 - [x] Empty state shows guidance to Record
 - [ ] Pull to refresh derived content (if needed)
 - [ ] Context menu on long-press for quick actions
@@ -70,7 +70,7 @@ Entry — Detail
 - [x] Full transcript readable with large text support
 - [x] Summary shown above transcript
 - [x] Mood chip with label/score
-- [ ] Audio playback with scrubber and speed control
+- [ ] Audio playback with scrubber and speed control (UI stub)
 - [ ] Edit title/notes (optional short title)
 - [ ] Edit tags inline
 - [ ] Assign to a thread inline
@@ -94,14 +94,14 @@ Search — Text & Filters
 - [x] Search tab accessible from tab bar
 - [x] Search across transcript and summary text
 - [x] Spotlight indexing of entries for system-wide search
-- [ ] Highlight matching terms in results
+- [x] Highlight matching terms in results
 - [x] Filter by date ranges (Today, 7 days, Custom)
 - [x] Filter by mood bins (Negative/Neutral/Positive)
 - [ ] Filter by tags (multi-select)
 - [ ] Filter by threads
 - [ ] Sort by newest/oldest/relevance
 - [x] Result rows show summary/mood/time
-- [ ] No-results state suggests removing filters
+- [x] No-results state suggests removing filters
 - [ ] Search is fast, even with large history
 
 Insights — Weekly
@@ -162,8 +162,8 @@ Settings — Control & Confidence
 - [x] Notification preferences (hour, enable/disable)
 - [ ] Daily prompt enable/disable
 - [x] App version and build visible
-- [ ] Privacy policy and Terms links
-- [ ] Contact support (mailto:)
+- [x] Privacy policy and Terms links
+- [x] Contact support (mailto:)
 
 Paywall — Clear & Honest
 - [x] Fast, clear comparison: Free vs paid
@@ -172,7 +172,7 @@ Paywall — Clear & Honest
 - [x] Benefits explained in plain language
 - [ ] Family Sharing guidance if applicable
 - [x] Restore Purchases visible
-- [ ] Links to Terms/Privacy from paywall
+- [x] Links to Terms/Privacy from paywall
 - [x] Exit affordance (X) and no dark patterns
 - [x] Paywall shown post-onboarding or on gate
 
@@ -188,7 +188,7 @@ Privacy — Local First
 Performance — Budgets & Profiling
 - [ ] Start record → first partial < 600ms
 - [ ] Stop → summary < 1.5s for 2–3 min speech
-- [ ] Reuse NLEmbedding and avoid repeated allocations
+- [x] Reuse NLEmbedding and avoid repeated allocations
 - [ ] Coalesce Spotlight updates; index on background tasks
 
 File Management — Storage & Protection
@@ -282,7 +282,7 @@ iPad & Keyboard
 Navigation & Deep Links
 - [ ] Navigation is predictable and reversible
 - [ ] Back behavior matches user expectations
-- [ ] Deep link: start recording
+- [ ] Deep link: start recording (code wired; add URL scheme `sonarai` in Info.plist)
 - [ ] Deep link: open last entry
 - [ ] Deep link: open search with filters
 
