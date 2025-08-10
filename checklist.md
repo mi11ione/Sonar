@@ -4,6 +4,13 @@ Legend
 - [x] = done
 - [ ] = pending
 
+AI Agent — API Verification (keep this green before edits)
+- [ ] Use `framework-sources/` as canonical reference for framework symbols
+- [ ] Verify function/type names, parameters, and availability in the relevant `*.md`
+- [ ] Add inline citation(s) to the exact lines used from `framework-sources/`
+- [ ] Prefer iOS 18+ modern APIs; avoid deprecated items in the sources
+- [ ] If symbol missing or unclear, pause and request updated sources or cite Apple docs
+
 First‑Run & Core Value
 - [x] Welcome screen explains privacy-first, on-device promise
 - [x] Short value bullets: capture, summarize, mood, search

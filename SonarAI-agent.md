@@ -21,6 +21,17 @@ Non‑goals:
 Platform constraints:
 - iOS 18+. SwiftUI only. Services injected via `EnvironmentValues`. THE VIEW architecture (views coordinate, services are protocol‑oriented and stateless). Use SwiftData for persistence.
 
+### Canonical API reference & verification workflow
+
+- Source of truth: `framework-sources/` contains the extracted Swift interfaces for Apple frameworks used (e.g., `AVFAudio.md`, `Speech.md`, `NaturalLanguage.md`, `StoreKit.md`, `SwiftUI.md`, `SwiftData.md`, `CoreSpotlight.md`, `UniformTypeIdentifiers.md`, `CoreGraphics.md`, `Metal.md`, `Foundation.md`). Treat these files as authoritative for symbols, signatures, and availability.
+- Order of precedence when writing code: (1) `framework-sources/` local interfaces; (2) Apple docs for clarification; (3) Xcode Quick Help. Do not invent APIs.
+- Preflight before any code edit that touches Apple frameworks:
+  1) Identify the frameworks required and locate the symbol(s) in the corresponding `framework-sources/{Framework}.md`.
+  2) Verify the exact names, signatures, enums/options, and iOS availability (target is iOS 18+, no `@available` guards).
+  3) Cite the relevant lines inline when proposing or writing code using the citing format, and ensure `import` statements match the module names used in the interfaces.
+  4) If a symbol isn’t present or appears deprecated, stop and either request an updated dump or propose a standards‑compliant alternative with citations.
+- Coding constraints: prefer modern APIs present in these sources; avoid deprecated APIs; no Combine/GCD/completion handlers; Swift Concurrency only.
+
 ### STOP gates (copilot oversight — do not proceed without approval)
 
 The agent must FULL STOP and ask for approval with a step‑by‑step plan before:
