@@ -1,5 +1,5 @@
-import SwiftUI
 import SwiftData
+import SwiftUI
 import UserNotifications
 
 struct OnboardingFlow: View {
@@ -33,9 +33,27 @@ struct OnboardingFlow: View {
         VStack(spacing: 16) {
             Text("Welcome to Sonar")
                 .font(.largeTitle.bold())
-            Text("Private, on-device voice journaling with instant summaries and mood insights.")
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.secondary)
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Private, on-device voice journaling.")
+                    .foregroundStyle(.secondary)
+                HStack(alignment: .top, spacing: 8) {
+                    Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
+                    Text("Tap to record. Low-latency, on-device transcription.")
+                }
+                HStack(alignment: .top, spacing: 8) {
+                    Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
+                    Text("Instant summaries tailored to your style.")
+                }
+                HStack(alignment: .top, spacing: 8) {
+                    Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
+                    Text("Mood insight at a glance. Fast search across your thoughts.")
+                }
+                HStack(spacing: 8) {
+                    MoodBadge(label: "Positive", score: 0.6)
+                    Text("Mood badges summarize tone without sharing your data.")
+                        .foregroundStyle(.secondary)
+                }
+            }
             Toggle("On-device transcription only", isOn: $onDeviceOnly)
             Spacer(minLength: 8)
             Button("Continue") { step = 1 }
@@ -72,11 +90,11 @@ struct OnboardingFlow: View {
             HStack {
                 Text("Daily reminder")
                 Spacer()
-                Stepper("\(reminderHour):00", value: $reminderHour, in: 5...22)
+                Stepper("\(reminderHour):00", value: $reminderHour, in: 5 ... 22)
                     .labelsHidden()
             }
             Picker("Summary style", selection: $selectedPromptStyleId) {
-                Text("Default").tag(Optional<UUID>.none)
+                Text("Default").tag(UUID?.none)
                 ForEach(promptStyles, id: \.id) { style in
                     Text(style.displayName).tag(Optional(style.id))
                 }
@@ -86,7 +104,7 @@ struct OnboardingFlow: View {
             HStack {
                 Button("Back") { step = 1 }
                 Spacer()
-                Button("Finish") { finish() }
+                Button("Start Recording") { finish() }
                     .buttonStyle(.borderedProminent)
             }
         }
@@ -94,7 +112,7 @@ struct OnboardingFlow: View {
 
     private var progress: some View {
         HStack {
-            Text("\(step+1)/3")
+            Text("\(step + 1)/3")
                 .font(.caption.monospacedDigit())
                 .foregroundStyle(.secondary)
             Spacer()
@@ -149,5 +167,3 @@ struct OnboardingFlow: View {
 #Preview {
     OnboardingFlow()
 }
-
-

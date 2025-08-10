@@ -27,5 +27,5 @@ struct MicButton: View {
         MicButton(title: "Stop", systemImageName: "stop.fill", tint: .red, action: {})
         MicButton(title: "Processing…", systemImageName: "hourglass", tint: .gray, isDisabled: true, action: {})
     }
-        .padding()
+    .padding()
 }

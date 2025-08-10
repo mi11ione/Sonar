@@ -15,6 +15,7 @@ struct RecordView: View {
     @State private var startTime: Date? = nil
     @AppStorage("freeCount") private var freeCount: Int = 0
     @State private var showPaywall: Bool = false
+    @State private var isPaused: Bool = false
 
     var body: some View {
         VStack(spacing: 16) {
@@ -53,8 +54,13 @@ struct RecordView: View {
         case .idle:
             MicButton(title: "Start Recording") { Task { await startRecordingOrGate() } }
         case .recording:
-            MicButton(title: "Stop", systemImageName: "stop.fill", tint: .red) {
-                Task { await transcription.stop(); state = .processing }
+            HStack(spacing: 12) {
+                MicButton(title: isPaused ? "Resume" : "Pause", systemImageName: isPaused ? "play.fill" : "pause.fill", tint: .orange) {
+                    isPaused.toggle()
+                }
+                MicButton(title: "Stop", systemImageName: "stop.fill", tint: .red) {
+                    Task { await transcription.stop(); state = .processing }
+                }
             }
         case .processing:
             MicButton(title: "Processing…", systemImageName: "hourglass", tint: .gray, isDisabled: true) {}
@@ -77,7 +83,10 @@ struct RecordView: View {
                 let stream = try await transcription.startStreamingTranscription(onDeviceOnly: true)
                 if startTime == nil { startTime = .now }
                 for await chunk in stream {
-                    liveTranscript = chunk
+                    if isPaused { continue }
+                    if liveTranscript.isEmpty { liveTranscript = chunk }
+                    else if chunk.hasPrefix(liveTranscript) { /* incremental */ liveTranscript = chunk }
+                    else { liveTranscript += " " + chunk }
                 }
             } catch {
                 state = .error(error.localizedDescription)
@@ -101,6 +110,7 @@ struct RecordView: View {
             try modelContext.save()
             state = .saved
             startTime = nil
+            isPaused = false
 
             // Background processing for summary, mood, and indexing with style preference
             Task(priority: .utility) {
@@ -130,10 +140,11 @@ struct RecordView: View {
     private func startRecordingOrGate() async {
         // Gate if free tier exhausted and not subscribed
         let subscribed = await purchases.isSubscriber()
-        if !subscribed && freeCount >= 3 {
+        if !subscribed, freeCount >= 3 {
             showPaywall = true
             return
         }
+        isPaused = false
         state = .recording
     }
 

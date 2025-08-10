@@ -1,8 +1,8 @@
-import Foundation
-import AVFoundation
 import AVFAudio
-import Speech
+import AVFoundation
+import Foundation
 import OSLog
+import Speech
 
 @MainActor
 final class DefaultTranscriptionService: SpeechTranscriptionService {
@@ -139,13 +139,13 @@ extension CaptureError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .micDenied:
-            return "Microphone permission is denied. Enable microphone access in Settings to record."
+            "Microphone permission is denied. Enable microphone access in Settings to record."
         case .speechDenied:
-            return "Speech Recognition permission is denied. Enable Speech Recognition in Settings to transcribe."
+            "Speech Recognition permission is denied. Enable Speech Recognition in Settings to transcribe."
         case .onDeviceUnavailable:
-            return "On-device transcription isn't available for your language or device. You can still record audio."
+            "On-device transcription isn't available for your language or device. You can still record audio."
         case .internalError:
-            return "Something went wrong during recording. Please try again."
+            "Something went wrong during recording. Please try again."
         }
     }
 }

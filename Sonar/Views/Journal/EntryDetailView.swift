@@ -1,11 +1,13 @@
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct EntryDetailView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.indexing) private var indexing
+    @Environment(\.dismiss) private var dismiss
 
     @State var entry: JournalEntry
+    @State private var confirmDelete: Bool = false
 
     var body: some View {
         ScrollView {
@@ -33,9 +35,15 @@ struct EntryDetailView: View {
                     try? modelContext.save()
                 }
                 Menu {
-                    Button(role: .destructive) { deleteEntry() } label: { Label("Delete", systemImage: "trash") }
+                    Button(role: .destructive) { confirmDelete = true } label: { Label("Delete", systemImage: "trash") }
                 } label: { Image(systemName: "ellipsis.circle") }
             }
+        }
+        .alert("Delete this entry?", isPresented: $confirmDelete) {
+            Button("Delete", role: .destructive) { deleteEntry() }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("This action cannot be undone.")
         }
     }
 
@@ -43,11 +51,10 @@ struct EntryDetailView: View {
         modelContext.delete(entry)
         try? modelContext.save()
         Task { await indexing.deleteIndex(for: entry.id) }
+        dismiss()
     }
 }
 
 #Preview {
     NavigationStack { EntryDetailView(entry: JournalEntry(transcript: "A sample transcript.")) }
 }
-
-

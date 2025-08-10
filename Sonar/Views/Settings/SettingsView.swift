@@ -1,5 +1,5 @@
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.purchases) private var purchases
@@ -34,7 +34,26 @@ struct SettingsView: View {
             if let settings = settingsRows.first {
                 Section("Preferences") {
                     Toggle("On-device transcription only", isOn: Binding(get: { settings.allowOnDeviceOnly }, set: { settings.allowOnDeviceOnly = $0 }))
-                    Stepper("Reminder: \(settings.dailyReminderHour ?? 20):00", value: Binding(get: { settings.dailyReminderHour ?? 20 }, set: { settings.dailyReminderHour = $0 }), in: 5...22)
+                    Toggle("Daily reminder", isOn: Binding(
+                        get: { settings.dailyReminderHour != nil },
+                        set: { enabled in
+                            settings.dailyReminderHour = enabled ? (settings.dailyReminderHour ?? 20) : nil
+                            if !enabled { UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["daily.reminder"]) }
+                        }
+                    ))
+                    if settings.dailyReminderHour != nil {
+                        Stepper("Reminder: \(settings.dailyReminderHour ?? 20):00", value: Binding(get: { settings.dailyReminderHour ?? 20 }, set: { newVal in
+                            settings.dailyReminderHour = newVal
+                            // Reschedule with new time
+                            let content = UNMutableNotificationContent()
+                            content.title = "Daily reflection"
+                            content.body = "Take a minute to capture your thoughts."
+                            var date = DateComponents(); date.hour = newVal
+                            let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
+                            let req = UNNotificationRequest(identifier: "daily.reminder", content: content, trigger: trigger)
+                            UNUserNotificationCenter.current().add(req)
+                        }), in: 5 ... 22)
+                    }
                 }
             }
             Section("About") {

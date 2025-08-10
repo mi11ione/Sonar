@@ -28,5 +28,3 @@ struct MoodBadge: View {
         MoodBadge(label: "Negative", score: -0.5)
     }
 }
-
-

@@ -1,5 +1,5 @@
-import Foundation
 import CoreSpotlight
+import Foundation
 import UniformTypeIdentifiers
 
 struct DefaultSearchIndexingService: SearchIndexingService, Sendable {
@@ -7,7 +7,7 @@ struct DefaultSearchIndexingService: SearchIndexingService, Sendable {
         let attributeSet = CSSearchableItemAttributeSet(contentType: .text)
         attributeSet.title = entry.summary ?? "Journal Entry"
         attributeSet.contentDescription = String(entry.transcript.prefix(200))
-        attributeSet.keywords = entry.tags.map { $0.name } + [entry.moodLabel].compactMap { $0 }
+        attributeSet.keywords = entry.tags.map(\.name) + [entry.moodLabel].compactMap(\.self)
         let item = CSSearchableItem(uniqueIdentifier: entry.id.uuidString, domainIdentifier: "journal", attributeSet: attributeSet)
         try? await CSSearchableIndex.default().indexSearchableItems([item])
     }

@@ -6,6 +6,7 @@ final class JournalEntry: @unchecked Sendable {
     @Attribute(.unique) var id: UUID
     var createdAt: Date
     var updatedAt: Date
+    var sortRank: Double
 
     var transcript: String
     var summary: String?
@@ -22,6 +23,7 @@ final class JournalEntry: @unchecked Sendable {
         self.id = id
         self.createdAt = createdAt
         updatedAt = createdAt
+        sortRank = createdAt.timeIntervalSinceReferenceDate
         self.transcript = transcript
         isPinned = false
     }

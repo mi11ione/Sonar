@@ -15,7 +15,7 @@ struct DefaultPurchasesService: PurchasesService, Sendable {
     func isSubscriber() async -> Bool {
         if developerOverrideEnabled() { return true }
         for await entitlement in Transaction.currentEntitlements {
-            if case .verified(let transaction) = entitlement, transaction.productType == .autoRenewable {
+            if case let .verified(transaction) = entitlement, transaction.productType == .autoRenewable {
                 return true
             }
         }
@@ -25,7 +25,7 @@ struct DefaultPurchasesService: PurchasesService, Sendable {
     func currentPlanIdentifier() async -> String? {
         if developerOverrideEnabled() { return "dev.max.override" }
         for await entitlement in Transaction.currentEntitlements {
-            if case .verified(let transaction) = entitlement, transaction.productType == .autoRenewable {
+            if case let .verified(transaction) = entitlement, transaction.productType == .autoRenewable {
                 return transaction.productID
             }
         }
@@ -50,5 +50,3 @@ struct DefaultPurchasesService: PurchasesService, Sendable {
         UserDefaults.standard.bool(forKey: Self.devKey)
     }
 }
-
-

@@ -1,5 +1,5 @@
-import SwiftUI
 import StoreKit
+import SwiftUI
 
 struct PaywallView: View {
     @State private var products: [Product] = []
@@ -11,7 +11,7 @@ struct PaywallView: View {
         "sonar.pro.monthly",
         "sonar.premium.monthly",
         "sonar.max.monthly",
-        "sonar.premium.annual"
+        "sonar.premium.annual",
     ]
 
     var body: some View {
@@ -64,5 +64,3 @@ struct PaywallView: View {
 }
 
 #Preview { PaywallView() }
-
-

@@ -39,5 +39,3 @@ struct WaveformView: View {
 }
 
 #Preview { WaveformView(transcript: "hello world") }
-
-
