@@ -64,9 +64,6 @@ struct SettingsView: View {
                     }
                 }
             }
-            Section("Onboarding") {
-                Button("Restart Onboarding") { onboardingComplete = false }
-            }
             Section("About") {
                 LabeledContent("Version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-")
                 Button("Privacy Policy") { open(url: "https://example.com/privacy") }

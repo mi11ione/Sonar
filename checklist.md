@@ -8,12 +8,11 @@ First‑Run & Core Value
 - [x] Welcome screen explains privacy-first, on-device promise
 - [x] Short value bullets: capture, summarize, mood, search
 - [x] First-run shows a single clear primary action (Record)
-- [x] Tab bar includes Record, Journal, Search, Settings
+- [x] Tab bar includes Record, Journal, Settings
 - [ ] First-run hints show how to find past entries
 - [ ] First entry can be created in < 10 seconds from install
 - [x] First save gives positive feedback (haptic + check)
-- [x] First-run teaches summary and mood badges
-- [x] Users can skip or revisit onboarding later in Settings
+- [ ] First-run teaches summary and mood badges
 - [x] Works without account creation or sign-in
 
 Record — Start & Control
@@ -91,13 +90,13 @@ Organization — Tags & Threads
 - [ ] Edit tags/threads from Settings as well
 
 Search — Text & Filters
-- [x] Search tab accessible from tab bar
-- [x] Search across transcript and summary text
+- [ ] Search across transcript and summary text
 - [x] Spotlight indexing of entries for system-wide search
 - [x] Highlight matching terms in results
-- [x] Filter by date ranges (Today, 7 days, Custom)
+- [x] Filter by date ranges (Today, 7 days)
+- [ ] Filter by custom date ranges
 - [x] Filter by mood bins (Negative/Neutral/Positive)
-- [x] Filter by tags (multi-select)
+- [ ] Filter by tags (multi-select)
 - [ ] Filter by threads
 - [ ] Sort by newest/oldest/relevance
 - [x] Result rows show summary/mood/time
