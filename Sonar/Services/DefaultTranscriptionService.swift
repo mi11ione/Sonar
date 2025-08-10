@@ -140,6 +140,11 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
             .appendingPathComponent("Audio", isDirectory: true)
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         let url = dir.appendingPathComponent(UUID().uuidString).appendingPathExtension("caf")
+        // Set file protection and exclude from backups
+        var resourceValues = URLResourceValues()
+        resourceValues.isExcludedFromBackup = true
+        try? (dir as NSURL).setResourceValue(true, forKey: .isExcludedFromBackupKey)
+        // Note: NSFileProtection is set via attributes when creating file; we'll set after opening too
         // Use a broadly compatible output format for playback: 16-bit PCM, mono, interleaved, preserve sample rate
         guard let outFormat = AVAudioFormat(commonFormat: .pcmFormatInt16,
                                             sampleRate: format.sampleRate,
@@ -148,6 +153,14 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
         audioFile = try AVAudioFile(forWriting: url, settings: outFormat.settings)
         currentFileURL = url
         if let file = audioFile { writer = AudioBufferWriter(file: file) }
+        // Strengthen on-disk protection (best-effort)
+        do {
+            try FileManager.default.setAttributes([
+                .protectionKey: FileProtectionType.completeUntilFirstUserAuthentication,
+            ], ofItemAtPath: url.path)
+        } catch {
+            // best-effort; ignore
+        }
     }
 
     func startAudioOnlyRecording() async throws {

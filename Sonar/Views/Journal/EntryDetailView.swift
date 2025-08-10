@@ -24,7 +24,7 @@ struct EntryDetailView: View {
                 }
                 if let audio = entry.audio {
                     Divider()
-                    AudioPlayerView(url: audio.fileURL)
+                    AudioPlayerView(url: audio.resolvedFileURL)
                 }
                 Divider()
                 Text(entry.transcript)
