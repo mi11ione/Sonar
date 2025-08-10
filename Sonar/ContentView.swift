@@ -21,12 +21,9 @@ struct ContentView: View {
                     NavigationStack { EntriesListView() }
                         .tabItem { Label("Journal", systemImage: "book.closed") }
                         .tag(1)
-                    NavigationStack { SearchFilterView() }
-                        .tabItem { Label("Search", systemImage: "magnifyingglass") }
-                        .tag(2)
                     NavigationStack { SettingsView() }
                         .tabItem { Label("Settings", systemImage: "gear") }
-                        .tag(3)
+                        .tag(2)
                 }
             } else {
                 OnboardingFlow()
@@ -38,6 +35,10 @@ struct ContentView: View {
             case "start-recording":
                 selectedTab = 0
                 deepLinkStart = true
+            case "open-search":
+                selectedTab = 1
+            case "last-entry":
+                selectedTab = 1
             default:
                 break
             }

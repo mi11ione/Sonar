@@ -5,10 +5,12 @@ struct SettingsView: View {
     @Environment(\.purchases) private var purchases
     @Environment(\.openURL) private var openURL
     @Query private var settingsRows: [UserSettings]
+    @Query(sort: \PromptStyle.displayName) private var promptStyles: [PromptStyle]
     @State private var isSubscriber: Bool = false
     @State private var planId: String? = nil
     @State private var showPaywall: Bool = false
     @State private var devOverride: Bool = false
+    @AppStorage("onboardingComplete") private var onboardingComplete: Bool = true
 
     var body: some View {
         List {
@@ -54,7 +56,16 @@ struct SettingsView: View {
                             UNUserNotificationCenter.current().add(req)
                         }), in: 5 ... 22)
                     }
+                    Picker("Default summary style", selection: Binding(get: { settings.selectedPromptStyleId }, set: { settings.selectedPromptStyleId = $0 })) {
+                        Text("Default").tag(UUID?.none)
+                        ForEach(promptStyles, id: \.id) { style in
+                            Text(style.displayName).tag(Optional(style.id))
+                        }
+                    }
                 }
+            }
+            Section("Onboarding") {
+                Button("Restart Onboarding") { onboardingComplete = false }
             }
             Section("About") {
                 LabeledContent("Version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-")

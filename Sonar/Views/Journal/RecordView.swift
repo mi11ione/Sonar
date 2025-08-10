@@ -1,3 +1,4 @@
+import AVFoundation
 import SwiftData
 import SwiftUI
 
@@ -8,8 +9,9 @@ struct RecordView: View {
     @Environment(\.indexing) private var indexing
     @Environment(\.modelContext) private var modelContext
     @Environment(\.purchases) private var purchases
+    @Query private var settingsRows: [UserSettings]
 
-    enum ViewState: Equatable { case idle, recording, review, processing, saved, error(String) }
+    enum ViewState: Equatable { case idle, recording, recordingAudioOnly, review, processing, saved, error(String) }
     @State private var state: ViewState = .idle
     @State private var liveTranscript: String = ""
     @State private var committedTranscript: String = ""
@@ -44,7 +46,12 @@ struct RecordView: View {
                 }
             }
 
-            if state == .recording { WaveformView(transcript: liveTranscript) }
+            if state == .recording || state == .recordingAudioOnly { WaveformView(transcript: liveTranscript) }
+            if state == .recordingAudioOnly {
+                Text("On-device transcription unavailable. Recording audio only.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
 
             if state == .review {
                 VStack(alignment: .leading, spacing: 8) {
@@ -99,13 +106,31 @@ struct RecordView: View {
                     Task { await transcription.stop(); state = .review }
                 }
             }
+        case .recordingAudioOnly:
+            HStack(spacing: 12) {
+                MicButton(title: isPaused ? "Resume" : "Pause", systemImageName: isPaused ? "play.fill" : "pause.fill", tint: .orange) {
+                    if !isPaused {
+                        if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
+                        isPaused = true
+                        Task { await transcription.stop() }
+                    } else {
+                        isPaused = false
+                        lastResumeAt = Date()
+                        Task { try? await transcription.startAudioOnlyRecording() }
+                    }
+                }
+                MicButton(title: "Stop", systemImageName: "stop.fill", tint: .red) {
+                    if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
+                    Task { await transcription.stop(); state = .review }
+                }
+            }
         case .review:
             HStack(spacing: 12) {
-                MicButton(title: "Save", systemImageName: "checkmark", tint: .green) {
+                MicButton(title: "Save", systemImageName: "checkmark", tint: .green, font: .title3.bold()) {
                     liveTranscript = reviewText
                     state = .processing
                 }
-                MicButton(title: "Discard", systemImageName: "xmark", tint: .gray) {
+                MicButton(title: "Discard", systemImageName: "xmark", tint: .gray, font: .title3.bold()) {
                     didDiscardToggle.toggle()
                     state = .idle
                     liveTranscript = ""
@@ -141,6 +166,16 @@ struct RecordView: View {
             } catch {
                 state = .error(error.localizedDescription)
             }
+        case .recordingAudioOnly:
+            do {
+                try await transcription.requestAuthorization()
+                if startTime == nil { startTime = .now }
+                lastResumeAt = Date()
+                elapsedBeforePause = 0
+                try await transcription.startAudioOnlyRecording()
+            } catch {
+                state = .error(error.localizedDescription)
+            }
         case .review:
             reviewText = liveTranscript
         case .processing:
@@ -156,7 +191,8 @@ struct RecordView: View {
 
     private func streamTranscription() async {
         do {
-            let stream = try await transcription.startStreamingTranscription(onDeviceOnly: true)
+            let onDeviceOnly = settingsRows.first?.allowOnDeviceOnly ?? true
+            let stream = try await transcription.startStreamingTranscription(onDeviceOnly: onDeviceOnly)
             for await chunk in stream {
                 if isPaused { break }
                 // Merge partial with committed prefix to avoid losing prior text across pauses
@@ -169,7 +205,11 @@ struct RecordView: View {
                 }
             }
         } catch {
-            state = .error(error.localizedDescription)
+            if let captureError = error as? CaptureError, captureError == .onDeviceUnavailable {
+                state = .recordingAudioOnly
+            } else {
+                state = .error(error.localizedDescription)
+            }
         }
     }
 
@@ -185,6 +225,15 @@ struct RecordView: View {
         do {
             // Save immediately to keep UI responsive
             let entry = JournalEntry(transcript: transcript)
+            // Attach audio asset if an audio-only recording exists
+            if let url = (transcription as? DefaultTranscriptionService)?.currentRecordingFileURL() {
+                if let file = try? AVAudioFile(forReading: url) {
+                    let rate = file.fileFormat.sampleRate
+                    let duration = rate > 0 ? Double(file.length) / rate : elapsedBeforePause
+                    let asset = AudioAsset(fileURL: url, durationSec: duration, sampleRate: rate)
+                    entry.audio = asset
+                }
+            }
             modelContext.insert(entry)
             try modelContext.save()
             state = .saved

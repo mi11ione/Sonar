@@ -6,5 +6,16 @@
     <string>Sonar uses on-device speech recognition to transcribe your voice journals. Audio never leaves your device.</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>Sonar needs microphone access to record your voice journals.</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>sonarai</string>
+            </array>
+            <key>CFBundleURLName</key>
+            <string>app.sonar.ai</string>
+        </dict>
+    </array>
 </dict>
 </plist>

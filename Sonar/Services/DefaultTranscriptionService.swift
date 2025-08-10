@@ -12,6 +12,9 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
     private var streamContinuation: AsyncStream<String>.Continuation?
     private var isUserStopping = false
     private var didCleanup = false
+    private var audioFile: AVAudioFile?
+    private var currentFileURL: URL?
+    private var writer: AudioBufferWriter?
 
     func requestAuthorization() async throws {
         // Speech authorization
@@ -64,10 +67,14 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
         let recordingFormat = inputNode.outputFormat(forBus: 0)
         inputNode.removeTap(onBus: 0)
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { [weak self] buffer, _ in
+            // feed recognizer
             self?.recognitionRequest?.append(buffer)
+            // Offload file writes off the realtime thread
+            self?.enqueueWrite(buffer: buffer)
         }
 
         audioEngine.prepare()
+        try prepareRecordingFile(with: recordingFormat)
         try audioEngine.start()
         Logger.capture.log("Audio engine started, onDeviceOnly=\(onDeviceOnly)")
 
@@ -120,9 +127,63 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
         recognitionTask = nil
         recognitionRequest = nil
         streamContinuation = nil
+        audioFile = nil
+        writer = nil
+        // Keep currentFileURL so the caller can associate it with a saved entry after stop
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         Logger.capture.log("Audio engine stopped")
         isUserStopping = false
+    }
+
+    private func prepareRecordingFile(with format: AVAudioFormat) throws {
+        let dir = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            .appendingPathComponent("Audio", isDirectory: true)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let url = dir.appendingPathComponent(UUID().uuidString).appendingPathExtension("caf")
+        // Use a broadly compatible output format for playback: 16-bit PCM, mono, interleaved, preserve sample rate
+        guard let outFormat = AVAudioFormat(commonFormat: .pcmFormatInt16,
+                                            sampleRate: format.sampleRate,
+                                            channels: 1,
+                                            interleaved: true) else { throw CaptureError.internalError }
+        audioFile = try AVAudioFile(forWriting: url, settings: outFormat.settings)
+        currentFileURL = url
+        if let file = audioFile { writer = AudioBufferWriter(file: file) }
+    }
+
+    func startAudioOnlyRecording() async throws {
+        if audioEngine.isRunning { await stop() }
+        didCleanup = false
+        isUserStopping = false
+        try configureAudioSession()
+        let inputNode = audioEngine.inputNode
+        let format = inputNode.outputFormat(forBus: 0)
+        inputNode.removeTap(onBus: 0)
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { [weak self] buffer, _ in
+            self?.enqueueWrite(buffer: buffer)
+        }
+        try prepareRecordingFile(with: format)
+        try audioEngine.start()
+        Logger.capture.log("Audio-only recording started")
+    }
+
+    func currentRecordingFileURL() -> URL? { currentFileURL }
+
+    private func enqueueWrite(buffer: AVAudioPCMBuffer) {
+        guard let writer else { return }
+        // Copy buffer to detach from realtime memory
+        guard let copy = AVAudioPCMBuffer(pcmFormat: buffer.format, frameCapacity: buffer.frameLength) else { return }
+        copy.frameLength = buffer.frameLength
+        let channels = Int(buffer.format.channelCount)
+        if let src = buffer.floatChannelData, let dst = copy.floatChannelData {
+            for ch in 0 ..< channels {
+                memcpy(dst[ch], src[ch], Int(buffer.frameLength) * MemoryLayout<Float>.size)
+            }
+        } else if let srcI16 = buffer.int16ChannelData, let dstI16 = copy.int16ChannelData {
+            for ch in 0 ..< channels {
+                memcpy(dstI16[ch], srcI16[ch], Int(buffer.frameLength) * MemoryLayout<Int16>.size)
+            }
+        }
+        Task { await writer.write(copy) }
     }
 }
 
@@ -146,6 +207,18 @@ extension CaptureError: LocalizedError {
             "On-device transcription isn't available for your language or device. You can still record audio."
         case .internalError:
             "Something went wrong during recording. Please try again."
+        }
+    }
+}
+
+// MARK: - Async writer to avoid blocking realtime audio thread
+
+private actor AudioBufferWriter {
+    private let file: AVAudioFile
+    init(file: AVAudioFile) { self.file = file }
+    func write(_ buffer: AVAudioPCMBuffer) async {
+        do { try file.write(from: buffer) } catch {
+            await Logger.capture.error("Audio write failed: \(error.localizedDescription, privacy: .public)")
         }
     }
 }

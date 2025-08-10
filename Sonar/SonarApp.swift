@@ -8,6 +8,7 @@
 import MetricKit
 import SwiftData
 import SwiftUI
+import UserNotifications
 
 @main
 struct SonarApp: App {
@@ -33,7 +34,10 @@ struct SonarApp: App {
         WindowGroup {
             ContentView()
                 .modelContainer(container)
-                .onAppear { MXMetricManager.shared.add(mxObserver) }
+                .onAppear {
+                    MXMetricManager.shared.add(mxObserver)
+                    UNUserNotificationCenter.current().delegate = NotificationResponder.shared
+                }
                 .task {
                     // Preload default prompt styles on first launch
                     let context = ModelContext(container)
@@ -60,4 +64,14 @@ struct SonarApp: App {
 final class MXObserver: NSObject, MXMetricManagerSubscriber {
     func didReceive(_: [MXMetricPayload]) {}
     func didReceive(_: [MXDiagnosticPayload]) {}
+}
+
+final class NotificationResponder: NSObject, UNUserNotificationCenterDelegate {
+    static let shared = NotificationResponder()
+    func userNotificationCenter(_: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        // Default tap on our daily reminder should open into Record and start
+        if response.notification.request.identifier == "daily.reminder" {
+            UserDefaults.standard.set(true, forKey: "deeplink.startRecording")
+        }
+    }
 }

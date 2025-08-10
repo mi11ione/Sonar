@@ -13,7 +13,7 @@ First‑Run & Core Value
 - [ ] First entry can be created in < 10 seconds from install
 - [x] First save gives positive feedback (haptic + check)
 - [x] First-run teaches summary and mood badges
-- [ ] Users can skip or revisit onboarding later in Settings
+- [x] Users can skip or revisit onboarding later in Settings
 - [x] Works without account creation or sign-in
 
 Record — Start & Control
@@ -21,7 +21,7 @@ Record — Start & Control
 - [x] Big mic button starts recording instantly
 - [x] Visible level feedback (waveform or meter)
 - [x] Timer shows elapsed recording time
-- [ ] Pause/resume button with clear state
+- [x] Pause/resume button with clear state
 - [x] Stop button is unambiguous and within reach
 - [x] Subtle haptic on start/stop
 - [ ] Recording continues with screen off/locked when allowed
@@ -33,21 +33,21 @@ Record — Start & Control
 Transcription — Live & Reliable
 - [x] Live transcript updates while speaking
 - [x] On-device only by default; explain if unsupported
-- [ ] Fall back to record-only with clear next steps
+- [x] Fall back to record-only with clear next steps
 - [ ] Partial text updates without jitter (smooth cadence)
 - [ ] Keeps up with normal speaking pace
 - [ ] Auto-trims filler words where helpful
 - [ ] Handles multi-minute sessions without stalls
-- [ ] Finalizes the transcript on stop
+- [x] Finalizes the transcript on stop
 - [x] Allows review of transcript before saving
 - [ ] Language settings honor device locale
 
 Processing — Summary & Mood
 - [x] Automatic summary generated after stop
 - [x] Summary is concise (1–3 sentences) by default
-- [ ] Options: Concise, Reflective, Bulleted styles
+- [x] Options: Concise, Reflective, Bulleted styles
 - [x] Summary respects user’s chosen style by default
-- [ ] Users can regenerate summary for a different outcome
+- [x] Users can regenerate summary for a different outcome
 - [x] Mood signal calculated for each entry
 - [x] Mood badge text and color are understandable
 - [ ] Short explanation of mood when tapped
@@ -63,14 +63,14 @@ Journal — List
 - [x] Batch select for multi-delete or export (delete supported)
 - [x] Empty state shows guidance to Record
 - [ ] Pull to refresh derived content (if needed)
-- [ ] Context menu on long-press for quick actions
+- [x] Context menu on long-press for quick actions
 - [ ] Scales well with large history (no lag)
 
 Entry — Detail
 - [x] Full transcript readable with large text support
 - [x] Summary shown above transcript
 - [x] Mood chip with label/score
-- [ ] Audio playback with scrubber and speed control (UI stub)
+- [x] Audio playback with scrubber and speed control (UI stub)
 - [ ] Edit title/notes (optional short title)
 - [ ] Edit tags inline
 - [ ] Assign to a thread inline
@@ -97,7 +97,7 @@ Search — Text & Filters
 - [x] Highlight matching terms in results
 - [x] Filter by date ranges (Today, 7 days, Custom)
 - [x] Filter by mood bins (Negative/Neutral/Positive)
-- [ ] Filter by tags (multi-select)
+- [x] Filter by tags (multi-select)
 - [ ] Filter by threads
 - [ ] Sort by newest/oldest/relevance
 - [x] Result rows show summary/mood/time
@@ -116,7 +116,7 @@ Insights — Weekly
 Notifications — Gentle Reminders
 - [x] Friendly opt-in prompt explaining value
 - [x] Daily reminder at user-selected hour
-- [ ] Tapping opens straight into Record
+- [x] Tapping opens straight into Record
 - [ ] Quick actions from notification (Start/Remind me later)
 - [ ] Respect Focus modes and summary delivery
 - [x] Edit reminder time in Settings
@@ -158,7 +158,7 @@ Settings — Control & Confidence
 - [ ] iCloud sync toggle with explanation
 - [ ] Encryption toggle for transcripts/audio
 - [ ] Export data (ZIP) and Import (advanced)
-- [ ] Default summary style selector
+- [x] Default summary style selector
 - [x] Notification preferences (hour, enable/disable)
 - [ ] Daily prompt enable/disable
 - [x] App version and build visible
@@ -177,7 +177,7 @@ Paywall — Clear & Honest
 - [x] Paywall shown post-onboarding or on gate
 
 Privacy — Local First
-- [ ] On-device processing stated and honored
+- [x] On-device processing stated and honored
 - [ ] No account, no third-party analytics
 - [ ] Clear explanation of what’s stored
 - [ ] Easy export or delete of personal data
@@ -282,7 +282,7 @@ iPad & Keyboard
 Navigation & Deep Links
 - [ ] Navigation is predictable and reversible
 - [ ] Back behavior matches user expectations
-- [ ] Deep link: start recording (code wired; add URL scheme `sonarai` in Info.plist)
+- [x] Deep link: start recording (code wired; add URL scheme `sonarai` in Info.plist)
 - [ ] Deep link: open last entry
 - [ ] Deep link: open search with filters
 

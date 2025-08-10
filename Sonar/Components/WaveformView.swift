@@ -11,7 +11,7 @@ struct WaveformView: View {
         }
         .frame(height: 60)
         .onAppear { startAnimation() }
-        .onChange(of: transcript) { _ in startAnimation() }
+        .onChange(of: transcript) { startAnimation() }
         .accessibilityLabel("Live waveform")
     }
 

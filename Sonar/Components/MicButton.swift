@@ -5,12 +5,13 @@ struct MicButton: View {
     var systemImageName: String = "mic.fill"
     var tint: Color? = nil
     var isDisabled: Bool = false
+    var font: Font? = nil
     var action: () -> Void
 
     var body: some View {
         Button(action: action) {
             Label(title, systemImage: systemImageName)
-                .font(.title2.bold())
+                .font(font ?? .title2.bold())
                 .padding()
                 .frame(maxWidth: .infinity)
         }
