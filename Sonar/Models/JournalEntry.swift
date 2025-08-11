@@ -8,6 +8,10 @@ final class JournalEntry: @unchecked Sendable {
     var updatedAt: Date
     var sortRank: Double
 
+    // Optional user-provided metadata
+    var title: String?
+    var notes: String?
+
     var transcript: String
     var summary: String?
 

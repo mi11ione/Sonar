@@ -6,6 +6,7 @@
 //
 
 import MetricKit
+import OSLog
 import SwiftData
 import SwiftUI
 import UserNotifications
@@ -37,6 +38,7 @@ struct SonarApp: App {
                 .onAppear {
                     MXMetricManager.shared.add(mxObserver)
                     UNUserNotificationCenter.current().delegate = NotificationResponder.shared
+                    Task { await NotificationResponder.shared.registerCategories() }
                 }
                 .task {
                     // Preload default prompt styles on first launch
@@ -68,9 +70,29 @@ final class MXObserver: NSObject, MXMetricManagerSubscriber {
 
 final class NotificationResponder: NSObject, UNUserNotificationCenterDelegate {
     static let shared = NotificationResponder()
+    func registerCategories() async {
+        let start = UNNotificationAction(identifier: "start.recording", title: "Start Recording")
+        let snooze = UNNotificationAction(identifier: "snooze.reminder", title: "Remind me in 1 hour")
+        let category = UNNotificationCategory(identifier: "daily.reminder.category", actions: [start, snooze], intentIdentifiers: [])
+        UNUserNotificationCenter.current().setNotificationCategories([category])
+    }
+
     func userNotificationCenter(_: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         // Default tap on our daily reminder should open into Record and start
-        if response.notification.request.identifier == "daily.reminder" {
+        if response.notification.request.identifier == "daily.reminder" || response.notification.request.content.categoryIdentifier == "daily.reminder.category" {
+            switch response.actionIdentifier {
+            case "start.recording":
+                UserDefaults.standard.set(true, forKey: "deeplink.startRecording")
+            case "snooze.reminder":
+                let content = response.notification.request.content.mutableCopy() as! UNMutableNotificationContent
+                let next = Calendar.current.date(byAdding: .hour, value: 1, to: .now)!
+                let components = Calendar.current.dateComponents([.hour, .minute], from: next)
+                let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+                let req = UNNotificationRequest(identifier: "daily.reminder.snoozed", content: content, trigger: trigger)
+                try? await UNUserNotificationCenter.current().add(req)
+            default:
+                UserDefaults.standard.set(true, forKey: "deeplink.startRecording")
+            }
             UserDefaults.standard.set(true, forKey: "deeplink.startRecording")
         }
     }

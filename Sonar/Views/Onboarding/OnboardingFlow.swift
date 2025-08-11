@@ -146,6 +146,7 @@ struct OnboardingFlow: View {
         var date = DateComponents()
         date.hour = hour
         let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
+        content.categoryIdentifier = "daily.reminder.category"
         let request = UNNotificationRequest(identifier: "daily.reminder", content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request)
     }

@@ -11,10 +11,16 @@ struct EntryDetailView: View {
     @State private var confirmDelete: Bool = false
     @State private var showingMoodInfo: Bool = false
     @State private var showingTagSheet: Bool = false
+    @State private var showingThreadSheet: Bool = false
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
+                // Editable title
+                TextField("Title (optional)", text: Binding(get: { entry.title ?? "" }, set: { newVal in entry.title = newVal.isEmpty ? nil : newVal; try? modelContext.save() }))
+                    .font(.title3.weight(.semibold))
+                    .textInputAutocapitalization(.sentences)
+                    .disableAutocorrection(false)
                 if let summary = entry.summary, !summary.isEmpty {
                     Text(summary).font(.title3.weight(.semibold))
                         .contextMenu {
@@ -38,10 +44,20 @@ struct EntryDetailView: View {
                 Divider()
                 // Tags editor
                 tagsEditor
+                // Thread assignment
+                threadEditor
                 Divider()
                 Text(entry.transcript)
                     .font(.body)
                     .textSelection(.enabled)
+                // Editable notes
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Notes").font(.headline)
+                    TextEditor(text: Binding(get: { entry.notes ?? "" }, set: { newVal in entry.notes = newVal.isEmpty ? nil : newVal }))
+                        .frame(minHeight: 120)
+                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(.quaternary))
+                        .onChange(of: entry.notes ?? "") { try? modelContext.save() }
+                }
                 Spacer(minLength: 12)
                 ShareLink(item: entry.summary ?? entry.transcript) { Label("Share", systemImage: "square.and.arrow.up") }
             }
@@ -185,6 +201,100 @@ private struct TagsSheet: View {
             entry.tags.append(tag)
         }
         try? modelContext.save()
+    }
+}
+
+// MARK: - Thread Editor
+
+private extension EntryDetailView {
+    @ViewBuilder var threadEditor: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("Thread").font(.headline)
+                Spacer()
+                Button { showingThreadSheet = true } label: { Label("Assign", systemImage: "rectangle.connected.to.line.below") }
+                    .buttonStyle(.bordered)
+            }
+            if let thread = entryThreadTitle() {
+                Text(thread).font(.subheadline).foregroundStyle(.secondary)
+            } else {
+                Text("No thread").foregroundStyle(.secondary)
+            }
+        }
+        .sheet(isPresented: $showingThreadSheet) { ThreadSheet(entry: $entry) }
+    }
+
+    func entryThreadTitle() -> String? {
+        // Use first associated thread title if any
+        // We don’t have a back-reference on JournalEntry, so infer via any MemoryThread that contains this entry
+        let ctx = modelContext
+        if let threads: [MemoryThread] = try? ctx.fetch(FetchDescriptor<MemoryThread>()) {
+            return threads.first(where: { t in t.entries.contains(where: { $0.id == entry.id }) })?.title
+        }
+        return nil
+    }
+}
+
+private struct ThreadSheet: View {
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
+    @Query(sort: \MemoryThread.title) private var threads: [MemoryThread]
+    @Binding var entry: JournalEntry
+    @State private var newTitle: String = ""
+
+    var body: some View {
+        NavigationStack {
+            List {
+                Section("New Thread") {
+                    HStack {
+                        TextField("Title", text: $newTitle)
+                        Button("Add") { addThread() }.disabled(newTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    }
+                }
+                Section("All Threads") {
+                    ForEach(threads) { thread in
+                        Button { assign(thread) } label: {
+                            HStack {
+                                Text(thread.title)
+                                Spacer()
+                                if isAssigned(thread) { Image(systemName: "checkmark") }
+                            }
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Assign Thread")
+            .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Done") { dismiss() } } }
+        }
+    }
+
+    private func addThread() {
+        let title = newTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !title.isEmpty else { return }
+        if let existing = threads.first(where: { $0.title.caseInsensitiveCompare(title) == .orderedSame }) {
+            assign(existing)
+        } else {
+            let t = MemoryThread(title: title)
+            modelContext.insert(t)
+            // Uniquely assign entry to this thread (not enforcing exclusivity globally here)
+            t.entries.append(entry)
+            try? modelContext.save()
+        }
+        newTitle = ""
+    }
+
+    private func assign(_ thread: MemoryThread) {
+        if isAssigned(thread) {
+            // Unassign
+            if let i = thread.entries.firstIndex(where: { $0.id == entry.id }) { thread.entries.remove(at: i) }
+        } else {
+            thread.entries.append(entry)
+        }
+        try? modelContext.save()
+    }
+
+    private func isAssigned(_ thread: MemoryThread) -> Bool {
+        thread.entries.contains(where: { $0.id == entry.id })
     }
 }
 

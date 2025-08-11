@@ -77,9 +77,9 @@ Entry — Detail
 - [x] Summary shown above transcript
 - [x] Mood chip with label/score
 - [x] Audio playback with scrubber and speed control (UI stub)
-- [ ] Edit title/notes (optional short title)
+- [x] Edit title/notes (optional short title)
 - [x] Edit tags inline
-- [ ] Assign to a thread inline
+- [x] Assign to a thread inline
 - [x] Pin/unpin in toolbar
 - [x] Share/export entry
 - [x] Delete with confirmation
@@ -89,12 +89,12 @@ Organization — Tags & Threads
 - [ ] Create, rename, delete tags
 - [x] Assign multiple tags to an entry
 - [ ] Quick tag chips in detail and list row
-- [ ] Create memory threads (topics/people/goals)
-- [ ] Assign entries to threads
+- [x] Create memory threads (topics/people/goals)
+- [x] Assign entries to threads
 - [ ] Thread page shows all entries and a mini rollup
 - [ ] Per-thread highlights: top themes, pinned items
 - [ ] Filter by tags and threads in search
-- [ ] Edit tags/threads from Settings as well
+- [x] Edit tags/threads from Settings as well
 
 Search — Text & Filters
 - [x] Search across transcript and summary text
@@ -123,7 +123,7 @@ Notifications — Gentle Reminders
 - [x] Friendly opt-in prompt explaining value
 - [x] Daily reminder at user-selected hour
 - [x] Tapping opens straight into Record
-- [ ] Quick actions from notification (Start/Remind me later)
+- [x] Quick actions from notification (Start/Remind me later)
 - [ ] Respect Focus modes and summary delivery
 - [x] Edit reminder time in Settings
 - [x] Easy to turn off reminders
@@ -144,7 +144,7 @@ Live Activities — During Recording
 
 App Shortcuts — Spotlight & Siri
 - [ ] Start Recording shortcut
-- [ ] Summarize Last Entry shortcut
+- [x] Summarize Last Entry shortcut
 - [ ] Search Entries shortcut (tag/mood parameters)
 - [ ] Shortcuts return clear success messages
 - [ ] Show up as suggestions in Spotlight

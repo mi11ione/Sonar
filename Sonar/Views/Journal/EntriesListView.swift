@@ -79,6 +79,19 @@ struct EntriesListView: View {
                     }
                     Text(entry.createdAt, style: .date)
                         .foregroundStyle(.secondary)
+                    if !entry.tags.isEmpty {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 6) {
+                                ForEach(entry.tags.prefix(3), id: \.id) { tag in
+                                    Text(tag.name)
+                                        .font(.caption2)
+                                        .padding(.horizontal, 6).padding(.vertical, 2)
+                                        .background(Color.secondary.opacity(0.15), in: Capsule())
+                                }
+                            }
+                        }
+                        .frame(height: 20)
+                    }
                 }
             }
         }

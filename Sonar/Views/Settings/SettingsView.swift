@@ -19,6 +19,9 @@ struct SettingsView: View {
                 Button(isSubscriber ? "Change Plan" : "View Plans") { showPaywall = true }
                 Button("Restore Purchases") { Task { try? await purchases.restore() } }
             }
+            Section("Tags") {
+                NavigationLink("Manage tags") { ManageTagsView() }
+            }
             Section("Developer") {
                 Toggle("Developer: Unlimited subscription", isOn: Binding(
                     get: { devOverride },
@@ -81,6 +84,47 @@ struct SettingsView: View {
     }
 
     private func open(url: String) { if let u = URL(string: url) { openURL(u) } }
+}
+
+private struct ManageTagsView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query(sort: \Tag.name) private var tags: [Tag]
+    @State private var newTag: String = ""
+    var body: some View {
+        List {
+            Section("New Tag") {
+                HStack {
+                    TextField("Name", text: $newTag)
+                    Button("Add") { addTag() }.disabled(newTag.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                }
+            }
+            Section("All Tags") {
+                ForEach(tags) { tag in
+                    Text(tag.name)
+                }
+                .onDelete(perform: delete)
+            }
+        }
+        .navigationTitle("Manage Tags")
+    }
+
+    private func addTag() {
+        let name = newTag.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !name.isEmpty else { return }
+        if tags.first(where: { $0.name.caseInsensitiveCompare(name) == .orderedSame }) == nil {
+            let t = Tag(name: name)
+            modelContext.insert(t)
+            try? modelContext.save()
+        }
+        newTag = ""
+    }
+
+    private func delete(at offsets: IndexSet) {
+        for index in offsets {
+            modelContext.delete(tags[index])
+        }
+        try? modelContext.save()
+    }
 }
 
 #Preview {
