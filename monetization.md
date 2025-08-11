@@ -1,4 +1,4 @@
-Sonar Monetization Strategy (MRR Maximization without Trials)
+Sonar Monetization Strategy (Final, Ready for Release — No Trials)
 
 This document defines the pricing model, paywall strategy, conversion tactics, lifecycle incentives, and measurement plan to maximize MRR while preserving trust. There are no free trials. We include a one‑time Lifetime plan alongside monthly/annual subscriptions.
 
@@ -9,7 +9,7 @@ Objectives
 - Comply with Apple policies; use only StoreKit 2, OSLog for analytics, and on‑device processing.
 
 Product Segmentation and Plans
-Use the “Tracking/Data app” tiering baseline, tuned for Sonar’s value.
+Use the “Tracking/Data app” baseline, tuned for Sonar’s value. No free trials. Lifetime is offered as a separate non‑consumable.
 
 - Free: Try the core loop, feel the “aha” moment.
   - 3 saved entries total, then paywall gates saving.
@@ -29,7 +29,7 @@ Use the “Tracking/Data app” tiering baseline, tuned for Sonar’s value.
 
 - Lifetime (One‑time, non‑consumable) — $79.99:
   - Unlocks Premium feature set forever on the purchasing Apple ID.
-  - Max features remain subscription‑only to protect MRR while providing a high‑value escape hatch.
+  - Family Sharing optional; recommended ON for goodwill (Apple allows for non‑consumables).
 
 Notes
 - Prices are US tiers; localize using Apple price tiers with psychological thresholds (x.99).
@@ -46,13 +46,13 @@ Design goals: immediate clarity, strong value framing, effortless checkout, no t
 
 - Content and Framing
   - Headline: “Unlock Sonar” with 2–3 crisp benefit bullets tied to emotion + outcomes.
-  - Plan cards for Pro, Premium, Max; “Most Popular” badge on Premium; “Best Value” badge on Annual.
+  - Plan cards for Pro and Premium; “Most Popular” badge on Premium; “Best Value” badge on Annual.
   - Lifetime chip at the bottom: “Pay once, keep Premium forever.”
   - No trial messaging anywhere.
 
 - Price Anchoring and Choice Architecture
-  - Display Monthly vs Annual toggle defaulted to Annual on subsequent views (remember last choice).
-  - Order plans: Max (right), Premium (center, highlighted), Pro (left).
+  - Display Monthly vs Annual toggle; remember last choice. For returning visitors, default to Annual.
+  - Order plans: Premium (center, highlighted), Pro (left).
   - Lifetime below the grid; always visible but secondary to subscriptions.
 
 - Social Proof and Trust Elements
@@ -101,7 +101,7 @@ Measurement (OSLog, Privacy‑friendly)
 No third‑party analytics. Emit OSLog events with categories and parameters to compute conversion and retention in Instruments/Console.
 
 - paywall_shown { source: onboarding|gate|settings, planDefault: annual|monthly }
-- purchase_tap { plan: pro|premium|max|lifetime, term: monthly|annual|ot }
+- purchase_tap { plan: pro|premium|lifetime, term: monthly|annual|ot }
 - purchase_success { plan, term, priceTier }
 - restore_tap / restore_success
 - churn_detected { reason: expired|revoked|downgraded }
@@ -123,10 +123,102 @@ Keep A/B toggles local, deterministic by device hash.
 Success Metric: paywall→purchase conversion and 30‑day retention; ensure no regression in Day‑0 conversion.
 
 Compliance and Implementation Notes
-- StoreKit 2 only. One subscription group: Pro, Premium, Max; separate non‑consumable for Lifetime.
+- StoreKit 2 only. One subscription group: Pro and Premium. Separate non‑consumable for Lifetime.
 - No free trials. Use promotional offers (discounted pricing) for re‑engagement.
 - Receipt verification via `StoreKit.Transaction`; restore supported from Settings.
 - Universal links remain; privacy manifest present; no tracking/SDKs; on‑device processing preferred.
+
+StoreKit Product Mapping (App Store Connect)
+- Subscription Group ID: sonar.subscriptions
+- Products
+  - sonar.pro.monthly — Auto‑renewable, 1 month
+  - sonar.premium.monthly — Auto‑renewable, 1 month
+  - sonar.premium.annual — Auto‑renewable, 1 year
+  - sonar.lifetime — Non‑consumable (Premium entitlement forever)
+- Entitlements
+  - Group: upgrade/downgrade paths enabled between Pro and Premium.
+  - Lifetime is independent (not in the group). In app logic, treat Lifetime as Premium entitlement.
+- Pricing
+  - Use Apple price tiers; set introductory offers to None (no trials). Configure promotional offers only for win‑back (discounted pricing).
+  - Enable Family Sharing for the Lifetime product if desired.
+
+Entitlements Matrix (Summary)
+- Free: 3 total saves; basic summary; 7‑day history; no export; limited filters.
+- Pro: 5 saves/day; 30‑day history; all summary styles; mood label; basic filters.
+- Premium: Unlimited saves; full history; all styles; export; smart filters; weekly insights.
+- Lifetime: Same as Premium, perpetual.
+
+Feature Gating Map (Complete App)
+- Capture & Save
+  - Free: Save up to 3 entries total; after that, hard gate on save (paywall). Live transcript preview still visible.
+  - Pro: Save up to 5 entries/day; soft gate at 5 with upsell to Premium for unlimited.
+  - Premium/Lifetime: Unlimited saves.
+
+- Summarization & Styles
+  - Free: “Concise” only, capped to 3 sentences.
+  - Pro: All styles (Concise, Reflective, Bulleted without action items); 3–5 sentences max.
+  - Premium/Lifetime: All styles including Bulleted with action items; up to 7 sentences; tone hints honored.
+
+- Insights
+  - Free: No weekly insights. Show preview tile with blur and CTA.
+  - Pro: Basic weekly highlights (top themes list only); mood sparkline locked (blur + CTA).
+  - Premium/Lifetime: Full weekly insights: top themes, mood trend sparkline, highlight summaries.
+
+- Search & Filters
+  - Free: Full‑text search across existing entries; basic filters (Today, 7 days; mood bins).
+  - Pro: Adds tag filter and date ranges up to 30 days.
+  - Premium/Lifetime: All filters (tags multi‑select, mood bins, flexible date ranges, sort by relevance/time).
+
+- Export & Sharing
+  - Free: Share single entry as text only.
+  - Pro: Share single entry as text or audio (if recorded); no bulk export.
+  - Premium/Lifetime: Bulk export (ZIP) of selected entries with audio; optional password protection when implemented.
+
+- Tags & Threads
+  - Free: View tags/threads; assign up to 3 tags per entry; create up to 5 tags total.
+  - Pro: Unlimited tags/threads; quick chips editing.
+  - Premium/Lifetime: Same as Pro, plus per‑thread highlights in Insights (when implemented).
+
+- Text‑to‑Speech (TTS)
+  - Free: System default voice; playback in Entry Detail.
+  - Pro: Choose voice and rate.
+  - Premium/Lifetime: Voice, rate, and pitch; queued reading for multiple entries.
+
+- Widgets & App Intents
+  - Free: Quick Record widget; Start Recording, Summarize Last Entry intents.
+  - Pro: Daily Prompt widget; Search Entries intent with basic parameters.
+  - Premium/Lifetime: Recent Summary widget (privacy safe), advanced Search parameters.
+
+- Settings & Privacy
+  - Free: Basic settings; restore purchases.
+  - Pro: Default summary style selector; notification preferences.
+  - Premium/Lifetime: Export data; advanced preferences (e.g., encryption toggle when available).
+
+Gating Triggers by View
+- RecordView
+  - On save: enforce plan save limits; show paywall when exceeding.
+  - After first save: show soft upsell for styles (if user isn’t entitled).
+
+- EntryDetailView
+  - TTS controls beyond default → upsell based on plan.
+  - Export button: upsell if plan lacks audio export or bulk export.
+
+- InsightsView
+  - Free/Pro: show blurred sections with “Unlock Premium” CTA for locked cards.
+  - Premium/Lifetime: fully interactive insights.
+
+- SearchFilterView
+  - Show all filter affordances; lock Premium‑only ones with badges and inline CTA.
+
+Paywall Moments (Contextual)
+- Hard gate: After Free’s 3rd save; after Pro’s 5th save of the day.
+- Feature gate: On locked actions (export/bulk, insights cards, advanced filters, TTS advanced controls).
+- Settings gate: On export data, advanced preferences.
+
+UX Patterns for Gates
+- Blurred previews with inline “Unlock” for non‑destructive features (insights, filters).
+- Action interstitial for destructive or time‑critical actions (exceeding save limits, bulk export).
+- Always provide a dismiss path; never interrupt in‑progress recording.
 
 Rollout Plan
 1) Phase 1 — Pricing & Paywall
@@ -149,6 +241,18 @@ Copy Snippets (Reusable)
 - Lifetime CTA: “Pay once — keep Premium forever”
 - Trust: “Private. On‑device processing.”
 
-This plan aims for strong early conversion (first 5 hours), defensible recurring revenue via Annual/Premium emphasis, safety via Max, and a Lifetime outlet that minimizes MRR cannibalization while serving a distinct buyer preference.
+This plan aims for strong early conversion (first 5 hours), defensible recurring revenue via Annual/Premium emphasis, and a Lifetime outlet that minimizes MRR cannibalization while serving a distinct buyer preference.
+
+Final QA Checklist (Monetization‑only, end of project)
+- Paywall shows after onboarding or at 3rd save; does not interrupt live recording.
+- Product list loads reliably on Wi‑Fi and cellular; handles empty/error states.
+- Purchase flows: Pro monthly/annual, Premium monthly/annual, Lifetime — all succeed; price displays correct locale/tier.
+- Upgrade/downgrade: Pro→Premium and vice‑versa reflected via subscription status view.
+- Lifetime purchase grants Premium entitlements; remains even if subscription group expires.
+- Restore Purchases works after reinstall; Lifetime restored correctly.
+- Promotional offers only for win‑back (no trials); signature handling tested.
+- Entitlements respected across app (unlimited saves, insights, export, filters).
+- Legal links present; Family Sharing note (Lifetime) confirmed if enabled.
+- OSLog events emitted for paywall, purchase taps/success, restore, churn; verified in Console.
 
 
