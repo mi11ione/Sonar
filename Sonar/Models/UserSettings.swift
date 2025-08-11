@@ -13,6 +13,8 @@ final class UserSettings {
     var ttsVoiceIdentifier: String?
     var ttsRate: Double
     var ttsPitch: Double
+    // Insights preferences
+    var weeklyInsightsEnabled: Bool
 
     init(id: UUID = .init()) {
         self.id = id
@@ -24,5 +26,6 @@ final class UserSettings {
         ttsVoiceIdentifier = nil
         ttsRate = 0.5
         ttsPitch = 1.0
+        weeklyInsightsEnabled = true
     }
 }

@@ -33,7 +33,7 @@ Record — Start & Control
 - [ ] Recording continues with screen off/locked when allowed
  - [x] Handles phone calls/alarms gracefully (auto-pause)
  - [x] Resumes safely after interruption
-- [ ] Guardrails against extremely long sessions
+ - [x] Guardrails against extremely long sessions
 - [x] Clear error messages for mic/speech permissions
 
 Transcription — Live & Reliable
@@ -42,7 +42,7 @@ Transcription — Live & Reliable
 - [x] Fall back to record-only with clear next steps
  - [x] Partial text updates without jitter (smooth cadence)
  - [x] Keeps up with normal speaking pace
- - [ ] Auto-trims filler words where helpful
+  - [x] Auto-trims filler words where helpful
  - [x] Handles multi-minute sessions without stalls
 - [x] Finalizes the transcript on stop
 - [x] Allows review of transcript before saving
@@ -70,7 +70,6 @@ Journal — List
 - [x] Empty state shows guidance to Record
  - [x] Pull to refresh derived content (if needed)
 - [x] Context menu on long-press for quick actions
- - [ ] Scales well with large history (no lag)
 
 Entry — Detail
 - [x] Full transcript readable with large text support
@@ -102,30 +101,29 @@ Search — Text & Filters
 - [x] Spotlight indexing of entries for system-wide search
 - [x] Highlight matching terms in results
 - [x] Filter by date ranges (Today, 7 days)
- - [ ] Filter by custom date ranges
+  - [x] Filter by custom date ranges
 - [x] Filter by mood bins (Negative/Neutral/Positive)
 - [x] Filter by tags (multi-select)
- - [ ] Filter by threads
- - [ ] Sort by newest/oldest/relevance
+  - [x] Filter by threads
+  - [x] Sort by newest/oldest/relevance
 - [x] Result rows show summary/mood/time
 - [x] No-results state suggests removing filters
-- [ ] Search is fast, even with large history
 
 Insights — Weekly
  - [x] Weekly dashboard surfaces top themes
  - [x] Mood trend chart (week-over-week)
  - [x] Highlights: notable summaries, pinned items
-- [ ] Suggested prompts for reflection
+ - [x] Suggested prompts for reflection
 - [ ] Privacy note that insights are on-device
 - [ ] Share weekly highlights (optional)
-- [ ] Users can opt out of insights
+ - [x] Users can opt out of insights
 
 Notifications — Gentle Reminders
 - [x] Friendly opt-in prompt explaining value
 - [x] Daily reminder at user-selected hour
 - [x] Tapping opens straight into Record
 - [x] Quick actions from notification (Start/Remind me later)
-- [ ] Respect Focus modes and summary delivery
+ - [x] Respect Focus modes and summary delivery
 - [x] Edit reminder time in Settings
 - [x] Easy to turn off reminders
 
@@ -154,7 +152,7 @@ Onboarding — 3 Screens Max
  - [x] Value + privacy promise in friendly tone
  - [x] Permission education (Mic, Speech, Notifications)
  - [x] Choose summary style and reminder time
-- [ ] Free limit and paid tiers explained succinctly
+  - [x] Free limit and paid tiers explained succinctly
  - [x] Finish goes to Record with encouragement
  - [x] Progress indicators (1/3, 2/3, 3/3)
 
@@ -162,9 +160,9 @@ Settings — Control & Confidence
 - [x] Settings screen exists
 - [x] Manage subscription (plans, upgrade/downgrade)
 - [x] Restore purchases
-- [ ] iCloud sync toggle with explanation
+ - [x] iCloud sync toggle with explanation
 - [ ] Encryption toggle for transcripts/audio
-- [ ] Export data (ZIP) and Import (advanced)
+ - [x] Export data (ZIP) and Import (advanced)
 - [x] Default summary style selector
 - [x] Text-to-speech voice and rate selection
 - [x] Notification preferences (hour, enable/disable)
@@ -269,7 +267,7 @@ Cloud Sync — SwiftData + CloudKit (optional)
 
 iOS Shortcuts & App Intents
  - [x] ≥ 3 App Intents implemented (Start Recording, Summarize Last Entry, Search Entries)
-- [ ] Intents return clear result summaries
+ - [x] Intents return clear result summaries
 - [ ] Appear as Spotlight suggestions
 
 Testing — Unit & UI

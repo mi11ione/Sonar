@@ -11,6 +11,6 @@ struct SummarizeLastEntryIntent: AppIntent {
         // Request app to open Journal tab and show last entry
         UserDefaults.standard.set(1, forKey: "deeplink.targetTab")
         UserDefaults.standard.set(true, forKey: "deeplink.showLastEntry")
-        return .result()
+        return .result(dialog: IntentDialog("Opening your latest entry…"))
     }
 }

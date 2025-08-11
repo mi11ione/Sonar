@@ -4,6 +4,7 @@ import SwiftUI
 struct InsightsView: View {
     @Environment(\.insights) private var insights
     @Query(sort: \JournalEntry.createdAt, order: .reverse) private var entries: [JournalEntry]
+    @Query private var settingsRows: [UserSettings]
     @State private var weekly: WeeklyInsights = .init(topThemes: [], avgMood: nil, highlightSummaries: [])
     @State private var lastFourWeeks: [[JournalEntry]] = []
     var body: some View {
@@ -22,12 +23,16 @@ struct InsightsView: View {
             Section("Highlights") {
                 if weekly.highlightSummaries.isEmpty { Text("No highlights yet") } else { ForEach(weekly.highlightSummaries, id: \.self, content: Text.init) }
             }
+            Section("Suggested prompts") {
+                Text("What energized you this week? What drained you?")
+                Text("What small win are you proud of?")
+                Text("What trend do you notice in your mood?")
+                    .foregroundStyle(.secondary)
+            }
         }
         .navigationTitle("Insights")
-        .task {
-            weekly = await insights.computeWeeklyInsights(from: entries)
-            lastFourWeeks = groupLastFourWeeks(entries)
-        }
+        .task { await computeIfEnabled() }
+        .refreshable { await computeIfEnabled() }
     }
 }
 
@@ -81,5 +86,19 @@ private func moodAverages(_ weeks: [[JournalEntry]]) -> [Double] {
         let moods = week.compactMap(\.moodScore)
         guard !moods.isEmpty else { return 0 }
         return moods.reduce(0, +) / Double(moods.count)
+    }
+}
+
+private extension InsightsView {
+    @MainActor
+    func computeIfEnabled() async {
+        let enabled = settingsRows.first?.weeklyInsightsEnabled ?? true
+        guard enabled else {
+            weekly = .init(topThemes: [], avgMood: nil, highlightSummaries: [])
+            lastFourWeeks = []
+            return
+        }
+        weekly = await insights.computeWeeklyInsights(from: entries)
+        lastFourWeeks = groupLastFourWeeks(entries)
     }
 }

@@ -18,7 +18,7 @@ struct WaveformView: View {
             Task { await listenForAmplitude() }
             // Precompile shader to avoid first-use hitch when applied
             Task.detached {
-                if let shader = try? Shader(function: .init(library: .default, name: "sonar_color_wave"), arguments: [
+                if let shader = try? await Shader(function: .init(library: .default, name: "sonar_color_wave"), arguments: [
                     .float(Float(amplitude)), .float(Float(phase)),
                 ]) {
                     try? await shader.compile(as: .colorEffect)

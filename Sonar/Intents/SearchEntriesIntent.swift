@@ -26,6 +26,11 @@ struct SearchEntriesIntent: AppIntent {
         payload["mood"] = mood.rawValue
         UserDefaults.standard.set(payload, forKey: "deeplink.searchRequest")
         UserDefaults.standard.set(1, forKey: "deeplink.targetTab") // Journal tab
-        return .result()
+        var pieces: [String] = []
+        if let q = query, !q.isEmpty { pieces.append("\"\(q)\"") }
+        if tag?.isEmpty == false { pieces.append("#\(tag!)") }
+        if mood != .any { pieces.append(mood.rawValue) }
+        let summary = pieces.isEmpty ? "Opening search…" : "Searching: \(pieces.joined(separator: ", "))"
+        return .result(dialog: IntentDialog(stringLiteral: summary))
     }
 }

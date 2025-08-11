@@ -53,6 +53,11 @@ struct OnboardingFlow: View {
                     Text("Mood badges summarize tone without sharing your data.")
                         .foregroundStyle(.secondary)
                 }
+                HStack(spacing: 8) {
+                    Image(systemName: "lock.fill").foregroundStyle(.green)
+                    Text("No account required. Your data stays on device. Free plan includes 3 saves; upgrade anytime.")
+                        .foregroundStyle(.secondary)
+                }
             }
             Toggle("On-device transcription only", isOn: $onDeviceOnly)
             Spacer(minLength: 8)

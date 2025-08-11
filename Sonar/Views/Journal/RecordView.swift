@@ -26,6 +26,8 @@ struct RecordView: View {
     @State private var showPaywall: Bool = false
     @State private var isPaused: Bool = false
     @State private var didDiscardToggle: Bool = false
+    @State private var longSessionWarningShown: Bool = false
+    private let maxRecordingDuration: TimeInterval = 60 * 20 // 20 minutes guardrail
     @Environment(\.requestReview) private var requestReview
 
     var body: some View {
@@ -77,6 +79,7 @@ struct RecordView: View {
         .sensoryFeedback(.impact(weight: .light), trigger: isPaused)
         .sensoryFeedback(.impact(weight: .light), trigger: didDiscardToggle)
         .task(id: state) { await handleStateChange() }
+        .task(id: lastResumeAt) { await enforceLongSessionGuardIfNeeded() }
         .sheet(isPresented: $showPaywall) { PaywallView() }
         .onChange(of: showPaywall) { if showPaywall { review.recordPaywallShown(now: .now) } }
         .task {
@@ -207,6 +210,18 @@ struct RecordView: View {
             if state == .saved { state = .idle; liveTranscript = "" }
         default:
             break
+        }
+    }
+
+    private func enforceLongSessionGuardIfNeeded() async {
+        guard state == .recording || state == .recordingAudioOnly else { return }
+        guard let start = startTime else { return }
+        let elapsed = (lastResumeAt.map { Date().timeIntervalSince($0) } ?? 0) + elapsedBeforePause + Date().timeIntervalSince(start) - (start == lastResumeAt ? 0 : 0)
+        if elapsed > maxRecordingDuration, !longSessionWarningShown {
+            longSessionWarningShown = true
+            await MainActor.run {
+                state = .review
+            }
         }
     }
 

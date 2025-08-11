@@ -5,12 +5,15 @@ internal import AVFAudio
 struct SettingsView: View {
     @Environment(\.purchases) private var purchases
     @Environment(\.openURL) private var openURL
+    @Environment(\.modelContext) private var modelContext
     @Query private var settingsRows: [UserSettings]
     @Query(sort: \PromptStyle.displayName) private var promptStyles: [PromptStyle]
     @State private var isSubscriber: Bool = false
     @State private var planId: String? = nil
     @State private var showPaywall: Bool = false
     @State private var devOverride: Bool = false
+    @State private var exportURL: URL? = nil
+    @State private var showExporter: Bool = false
     @AppStorage("onboardingComplete") private var onboardingComplete: Bool = true
 
     var body: some View {
@@ -38,6 +41,7 @@ struct SettingsView: View {
             }
             if let settings = settingsRows.first {
                 Section("Preferences") {
+                    Toggle("iCloud sync", isOn: Binding(get: { settings.iCloudSyncEnabled }, set: { settings.iCloudSyncEnabled = $0 }))
                     Toggle("On-device transcription only", isOn: Binding(get: { settings.allowOnDeviceOnly }, set: { settings.allowOnDeviceOnly = $0 }))
                     Toggle("Daily prompt", isOn: Binding(
                         get: { (settings.dailyReminderHour ?? 20) >= 0 },
@@ -71,6 +75,13 @@ struct SettingsView: View {
                         }
                     }
                     NavigationLink("Text-to-speech options") { TTSSettingsView() }
+                    Toggle("Weekly insights", isOn: Binding(
+                        get: { settings.weeklyInsightsEnabled },
+                        set: { settings.weeklyInsightsEnabled = $0 }
+                    ))
+                }
+                Section("Data") {
+                    Button("Export JSON (entries only)") { generateExportJSON() }
                 }
             }
             Section("About") {
@@ -87,9 +98,52 @@ struct SettingsView: View {
             devOverride = purchases.developerOverrideEnabled()
         }
         .sheet(isPresented: $showPaywall) { PaywallView() }
+        .sheet(isPresented: $showExporter) {
+            VStack(spacing: 16) {
+                Text("Share your export").font(.headline)
+                if let url = exportURL {
+                    ShareLink(item: url) { Label("Share Export", systemImage: "square.and.arrow.up") }
+                } else {
+                    ContentUnavailableView("No export available", systemImage: "doc")
+                }
+            }
+            .padding()
+        }
     }
 
     private func open(url: String) { if let u = URL(string: url) { openURL(u) } }
+
+    // MARK: - Lightweight JSON export
+
+    private func generateExportJSON() {
+        let entries: [JournalEntry] = (try? modelContext.fetch(FetchDescriptor<JournalEntry>())) ?? []
+        let payload: [[String: Any]] = entries.map { e in
+            var dict: [String: Any] = [
+                "id": e.id.uuidString,
+                "createdAt": e.createdAt.timeIntervalSince1970,
+                "updatedAt": e.updatedAt.timeIntervalSince1970,
+                "title": e.title ?? "",
+                "transcript": e.transcript,
+                "summary": e.summary ?? "",
+                "tags": e.tags.map(\.name),
+            ]
+            if let s = e.moodScore { dict["moodScore"] = s }
+            if let l = e.moodLabel { dict["moodLabel"] = l }
+            return dict
+        }
+        guard JSONSerialization.isValidJSONObject(payload),
+              let data = try? JSONSerialization.data(withJSONObject: payload, options: [.prettyPrinted])
+        else { return }
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("Sonar-Export.json")
+        do {
+            try data.write(to: url)
+            exportURL = url
+            showExporter = true
+        } catch {
+            exportURL = nil
+            showExporter = false
+        }
+    }
 }
 
 private struct TTSSettingsView: View {

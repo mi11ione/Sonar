@@ -45,6 +45,22 @@ enum VectorOps {
 
 enum Rewriter {
     static func rewrite(_ text: String, toneHint _: String?) -> String {
-        text.replacingOccurrences(of: "  ", with: " ")
+        // Lightweight cleanup: trim common fillers and normalize whitespace/punctuation
+        var t = text
+        let fillers = [
+            " um ", " uh ", " like, ", " like ", " you know, ", " you know ", " I mean, ", " I mean ",
+            " kinda ", " sort of ", " sorta ", " gonna ", " wanna ",
+        ]
+        for f in fillers {
+            t = t.replacingOccurrences(of: f, with: " ", options: [.caseInsensitive])
+        }
+        // Remove repeated spaces and stray commas
+        while t.contains("  ") { t = t.replacingOccurrences(of: "  ", with: " ") }
+        t = t.replacingOccurrences(of: " ,", with: ",")
+        // Collapse repeated punctuation like ".." or "!?"
+        t = t.replacingOccurrences(of: "..", with: ".")
+        t = t.replacingOccurrences(of: "!!", with: "!")
+        t = t.trimmingCharacters(in: .whitespacesAndNewlines)
+        return t
     }
 }

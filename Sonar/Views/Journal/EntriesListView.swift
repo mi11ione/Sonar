@@ -9,7 +9,9 @@ struct EntriesListView: View {
     @State private var query: String = ""
     @State private var moodBin: Int? = nil
     @State private var dateRange: ClosedRange<Date>? = nil
-    @State private var datePreset: Int? = nil // 0: Today, 1: Last 7 days
+    @State private var datePreset: Int? = nil // 0: Today, 1: Last 7 days, 2: Custom
+    @State private var sortMode: SortMode = .newest
+    @State private var selectedThreadTitle: String? = nil
     @State private var selectedTags: Set<String> = []
     @State private var presentLastEntry: Bool = false
 
@@ -263,6 +265,20 @@ struct EntriesListView: View {
                 Text("Any").tag(Int?.none)
                 Text("Today").tag(Optional(0))
                 Text("Last 7 days").tag(Optional(1))
+                Text("Custom range").tag(Optional(2))
+            }
+            if datePreset == 2 {
+                // Simple inline controls to pick a custom range: past N days
+                let today = Date()
+                let start = Calendar.current.date(byAdding: .day, value: -30, to: today) ?? today
+                DatePicker("Start", selection: Binding(get: { dateRange?.lowerBound ?? start }, set: { lower in
+                    let upper = dateRange?.upperBound ?? today
+                    dateRange = min(lower, upper) ... max(lower, upper)
+                }), displayedComponents: .date)
+                DatePicker("End", selection: Binding(get: { dateRange?.upperBound ?? today }, set: { upper in
+                    let lower = dateRange?.lowerBound ?? start
+                    dateRange = min(lower, upper) ... max(lower, upper)
+                }), displayedComponents: .date)
             }
             Menu("Tags") {
                 let allTags: [String] = Array(Set(entries.flatMap { $0.tags.map(\.name) }))
@@ -273,6 +289,26 @@ struct EntriesListView: View {
                         HStack { Text(tagName); Spacer(); if selectedTags.contains(tagName) { Image(systemName: "checkmark") } }
                     }
                 }
+            }
+            Menu("Thread") {
+                let allThreads: [String] = {
+                    let ctx = modelContext
+                    let threads: [MemoryThread] = (try? ctx.fetch(FetchDescriptor<MemoryThread>())) ?? []
+                    return threads.map(\.title)
+                }()
+                Button {
+                    selectedThreadTitle = nil
+                } label: { HStack { Text("Any"); if selectedThreadTitle == nil { Spacer(); Image(systemName: "checkmark") } } }
+                ForEach(allThreads, id: \.self) { title in
+                    Button {
+                        selectedThreadTitle = title
+                    } label: {
+                        HStack { Text(title); Spacer(); if selectedThreadTitle == title { Image(systemName: "checkmark") } }
+                    }
+                }
+            }
+            Picker("Sort", selection: $sortMode) {
+                ForEach(SortMode.allCases, id: \.self) { mode in Text(mode.label).tag(mode) }
             }
             Button("Clear filters") { moodBin = nil; dateRange = nil; datePreset = nil; selectedTags.removeAll() }
         } label: {
@@ -285,10 +321,11 @@ struct EntriesListView: View {
         let activeRange: ClosedRange<Date>? = switch datePreset {
         case 0: Calendar.current.startOfDay(for: .now) ... Date()
         case 1: Calendar.current.date(byAdding: .day, value: -7, to: .now)! ... Date()
+        case 2: dateRange
         default: nil
         }
 
-        return list.filter { entry in
+        let filtered = list.filter { entry in
             var include = true
             if !query.isEmpty {
                 let text = entry.transcript + "\n" + (entry.summary ?? "")
@@ -297,7 +334,26 @@ struct EntriesListView: View {
             if let moodBin { include = include && moodMatches(entry.moodScore, bin: moodBin) }
             if let range = activeRange { include = include && range.contains(entry.createdAt) }
             if !selectedTags.isEmpty { include = include && !Set(entry.tags.map(\.name)).intersection(selectedTags).isEmpty }
+            if let thread = selectedThreadTitle {
+                let ctx = modelContext
+                let threads: [MemoryThread] = (try? ctx.fetch(FetchDescriptor<MemoryThread>())) ?? []
+                let contains = threads.first(where: { $0.title == thread })?.entries.contains(where: { $0.id == entry.id }) ?? false
+                include = include && contains
+            }
             return include
+        }
+        switch sortMode {
+        case .newest: return filtered.sorted { $0.createdAt > $1.createdAt }
+        case .oldest: return filtered.sorted { $0.createdAt < $1.createdAt }
+        case .relevance:
+            // naive relevance: prioritize summary/transcript hits
+            guard !query.isEmpty else { return filtered }
+            return filtered.sorted { a, b in
+                let ta = (a.summary ?? a.transcript).localizedCaseInsensitiveContains(query)
+                let tb = (b.summary ?? b.transcript).localizedCaseInsensitiveContains(query)
+                if ta == tb { return a.createdAt > b.createdAt }
+                return ta && !tb
+            }
         }
     }
 
@@ -316,6 +372,13 @@ struct EntriesListView: View {
         }
         try? modelContext.save()
         selection.removeAll()
+    }
+
+    private enum SortMode: String, CaseIterable {
+        case newest, oldest, relevance
+        var label: String {
+            switch self { case .newest: "Newest"; case .oldest: "Oldest"; case .relevance: "Relevance" }
+        }
     }
 
     private func refreshDerivedContentIfNeeded() async {

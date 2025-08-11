@@ -8,6 +8,6 @@ struct StartRecordingIntent: AppIntent {
 
     func perform() async throws -> some IntentResult {
         UserDefaults.standard.set(true, forKey: "deeplink.startRecording")
-        return .result()
+        return .result(dialog: IntentDialog("Starting recording…"))
     }
 }
