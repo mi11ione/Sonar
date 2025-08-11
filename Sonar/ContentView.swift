@@ -43,6 +43,14 @@ struct ContentView: View {
                 break
             }
         }
+        .task {
+            // Handle tab deep link requests set by App Intents
+            let requestedTab = UserDefaults.standard.object(forKey: "deeplink.targetTab") as? Int
+            if let requestedTab {
+                selectedTab = requestedTab
+                UserDefaults.standard.removeObject(forKey: "deeplink.targetTab")
+            }
+        }
     }
 }
 

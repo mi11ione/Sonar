@@ -78,6 +78,7 @@ Entry — Detail
 - [x] Mood chip with label/score
 - [x] Audio playback with scrubber and speed control (UI stub)
 - [x] Edit title/notes (optional short title)
+- [ ] Text-to-speech playback with chosen voice
 - [x] Edit tags inline
 - [x] Assign to a thread inline
 - [x] Pin/unpin in toolbar
@@ -91,7 +92,7 @@ Organization — Tags & Threads
 - [ ] Quick tag chips in detail and list row
 - [x] Create memory threads (topics/people/goals)
 - [x] Assign entries to threads
-- [ ] Thread page shows all entries and a mini rollup
+- [x] Threads list and per-thread detail with average mood
 - [ ] Per-thread highlights: top themes, pinned items
 - [ ] Filter by tags and threads in search
 - [x] Edit tags/threads from Settings as well
@@ -145,7 +146,7 @@ Live Activities — During Recording
 App Shortcuts — Spotlight & Siri
 - [ ] Start Recording shortcut
 - [x] Summarize Last Entry shortcut
-- [ ] Search Entries shortcut (tag/mood parameters)
+- [x] Search Entries shortcut (tag/mood parameters)
 - [ ] Shortcuts return clear success messages
 - [ ] Show up as suggestions in Spotlight
 
@@ -165,6 +166,7 @@ Settings — Control & Confidence
 - [ ] Encryption toggle for transcripts/audio
 - [ ] Export data (ZIP) and Import (advanced)
 - [x] Default summary style selector
+- [ ] Text-to-speech voice and rate selection
 - [x] Notification preferences (hour, enable/disable)
 - [ ] Daily prompt enable/disable
 - [x] App version and build visible

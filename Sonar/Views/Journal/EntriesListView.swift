@@ -43,6 +43,9 @@ struct EntriesListView: View {
                     EditButton()
                 }
             }
+            ToolbarItem(placement: .bottomBar) {
+                NavigationLink(destination: ThreadsListView()) { Label("Threads", systemImage: "rectangle.connected.to.line.below") }
+            }
         }
         .searchable(text: $query)
         .sensoryFeedback(.selection, trigger: query.isEmpty)
@@ -62,6 +65,17 @@ struct EntriesListView: View {
             }
         }
         .onAppear { selection.removeAll() }
+        .task {
+            // Handle incoming search requests from App Intent
+            if let payload = UserDefaults.standard.dictionary(forKey: "deeplink.searchRequest") {
+                if let q = payload["query"] as? String { query = q }
+                if let tag = payload["tag"] as? String { selectedTags = [tag] }
+                if let mood = payload["mood"] as? String {
+                    switch mood { case "negative": moodBin = 0; case "neutral": moodBin = 1; case "positive": moodBin = 2; default: break }
+                }
+                UserDefaults.standard.removeObject(forKey: "deeplink.searchRequest")
+            }
+        }
     }
 
     @State private var shareText: String? = nil

@@ -1,4 +1,4 @@
-import AVFAudio
+internal import AVFAudio
 import AVFoundation
 import Foundation
 import OSLog

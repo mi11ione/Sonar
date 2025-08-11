@@ -1,5 +1,6 @@
 import SwiftData
 import SwiftUI
+internal import AVFAudio
 
 struct SettingsView: View {
     @Environment(\.purchases) private var purchases
@@ -65,6 +66,7 @@ struct SettingsView: View {
                             Text(style.displayName).tag(Optional(style.id))
                         }
                     }
+                    NavigationLink("Text-to-speech options") { TTSSettingsView() }
                 }
             }
             Section("About") {
@@ -84,6 +86,40 @@ struct SettingsView: View {
     }
 
     private func open(url: String) { if let u = URL(string: url) { openURL(u) } }
+}
+
+private struct TTSSettingsView: View {
+    @Environment(\.tts) private var tts
+    @State private var selectedVoiceIdentifier: String? = nil
+    @State private var rate: Float = 0.5
+    @State private var pitch: Float = 1.0
+    var body: some View {
+        List {
+            Section("Voice") {
+                ForEach(tts.availableVoices(), id: \.identifier) { voice in
+                    Button {
+                        selectedVoiceIdentifier = voice.identifier
+                    } label: {
+                        HStack {
+                            Text(voice.name)
+                            Spacer()
+                            if selectedVoiceIdentifier == voice.identifier { Image(systemName: "checkmark") }
+                        }
+                    }
+                }
+            }
+            Section("Preview") {
+                Slider(value: Binding(get: { Double(rate) }, set: { rate = Float($0) }), in: 0.2 ... 0.7) { Text("Rate") }
+                Slider(value: Binding(get: { Double(pitch) }, set: { pitch = Float($0) }), in: 0.5 ... 2.0) { Text("Pitch") }
+                Button("Play sample") {
+                    let voice = tts.availableVoices().first(where: { $0.identifier == selectedVoiceIdentifier })
+                    tts.speak("This is your Sonar summary voice.", voice: voice, rate: rate, pitch: pitch)
+                }
+                Button("Stop") { tts.stop() }
+            }
+        }
+        .navigationTitle("Text-to-speech")
+    }
 }
 
 private struct ManageTagsView: View {

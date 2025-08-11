@@ -5,6 +5,7 @@ import SwiftUI
 struct EntryDetailView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.indexing) private var indexing
+    @Environment(\.tts) private var tts
     @Environment(\.dismiss) private var dismiss
 
     @State var entry: JournalEntry
@@ -59,7 +60,11 @@ struct EntryDetailView: View {
                         .onChange(of: entry.notes ?? "") { try? modelContext.save() }
                 }
                 Spacer(minLength: 12)
-                ShareLink(item: entry.summary ?? entry.transcript) { Label("Share", systemImage: "square.and.arrow.up") }
+                HStack {
+                    ShareLink(item: entry.summary ?? entry.transcript) { Label("Share", systemImage: "square.and.arrow.up") }
+                    Button { tts.speak(entry.summary ?? entry.transcript, voice: nil, rate: 0.5, pitch: 1.0) } label: { Label("Read", systemImage: "speaker.wave.2.fill") }
+                        .buttonStyle(.bordered)
+                }
             }
             .padding()
         }
