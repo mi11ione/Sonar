@@ -8,6 +8,7 @@ private struct IndexingKey: EnvironmentKey { static let defaultValue: any Search
 private struct PurchasesKey: EnvironmentKey { static let defaultValue: any PurchasesService = DefaultPurchasesService() }
 private struct TTSKey: EnvironmentKey { static let defaultValue: any TextToSpeechService = DefaultTextToSpeechService() }
 private struct InsightsKey: EnvironmentKey { static let defaultValue: any InsightsService = DefaultInsightsService() }
+private struct PromptsKey: EnvironmentKey { static let defaultValue: any PromptsService = DefaultPromptsService() }
 
 extension EnvironmentValues {
     var transcription: any SpeechTranscriptionService {
@@ -43,5 +44,10 @@ extension EnvironmentValues {
     var insights: any InsightsService {
         get { self[InsightsKey.self] }
         set { self[InsightsKey.self] = newValue }
+    }
+
+    var prompts: any PromptsService {
+        get { self[PromptsKey.self] }
+        set { self[PromptsKey.self] = newValue }
     }
 }

@@ -50,6 +50,11 @@ struct ContentView: View {
                 selectedTab = requestedTab
                 UserDefaults.standard.removeObject(forKey: "deeplink.targetTab")
             }
+            if UserDefaults.standard.bool(forKey: "deeplink.showLastEntry") {
+                // Future: present last entry detail; for now, ensure Journal tab is shown
+                selectedTab = 1
+                UserDefaults.standard.removeObject(forKey: "deeplink.showLastEntry")
+            }
         }
     }
 }

@@ -41,6 +41,14 @@ struct SonarApp: App {
                     Task { await NotificationResponder.shared.registerCategories() }
                 }
                 .task {
+                    // Schedule daily prompt notification content if enabled
+                    let context = ModelContext(container)
+                    let settings = (try? context.fetch(FetchDescriptor<UserSettings>()))?.first
+                    if let hour = settings?.dailyReminderHour {
+                        await NotificationResponder.shared.scheduleDailyPrompt(atHour: hour)
+                    }
+                }
+                .task {
                     // Preload default prompt styles on first launch
                     let context = ModelContext(container)
                     let request = FetchDescriptor<PromptStyle>()
@@ -95,5 +103,28 @@ final class NotificationResponder: NSObject, UNUserNotificationCenterDelegate {
             }
             UserDefaults.standard.set(true, forKey: "deeplink.startRecording")
         }
+    }
+}
+
+extension NotificationResponder {
+    func scheduleDailyPrompt(atHour hour: Int) async {
+        let center = UNUserNotificationCenter.current()
+        // Remove existing to prevent duplicates
+        center.removePendingNotificationRequests(withIdentifiers: ["daily.reminder"])
+
+        let content = UNMutableNotificationContent()
+        content.title = "Daily reflection"
+        // Add a localized, friendly prompt pulled from PromptsService via plain lookup here
+        let prompt = DefaultPromptsService().todayPrompt(locale: .current)
+        content.body = prompt
+        content.categoryIdentifier = "daily.reminder.category"
+        // Respect Focus/summary: keep alerts minimal; system handles Focus policies
+        // We avoid critical alerts, no interruption-level override
+
+        var date = DateComponents()
+        date.hour = hour
+        let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
+        let request = UNNotificationRequest(identifier: "daily.reminder", content: content, trigger: trigger)
+        do { try await center.add(request) } catch {}
     }
 }

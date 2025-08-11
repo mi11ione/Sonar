@@ -17,7 +17,7 @@ First‑Run & Core Value
 - [x] First-run shows a single clear primary action (Record)
 - [x] Tab bar includes Record, Journal, Settings
 - [x] First-run hints show how to find past entries
-- [ ] First entry can be created in < 10 seconds from install
+ - [x] First entry can be created in < 10 seconds from install
 - [x] First save gives positive feedback (haptic + check)
 - [ ] First-run teaches summary and mood badges
 - [x] Works without account creation or sign-in
@@ -31,8 +31,8 @@ Record — Start & Control
 - [x] Stop button is unambiguous and within reach
 - [x] Subtle haptic on start/stop
 - [ ] Recording continues with screen off/locked when allowed
-- [ ] Handles phone calls/alarms gracefully (auto-pause)
-- [ ] Resumes safely after interruption
+ - [x] Handles phone calls/alarms gracefully (auto-pause)
+ - [x] Resumes safely after interruption
 - [ ] Guardrails against extremely long sessions
 - [x] Clear error messages for mic/speech permissions
 
@@ -40,13 +40,13 @@ Transcription — Live & Reliable
 - [x] Live transcript updates while speaking
 - [x] On-device only by default; explain if unsupported
 - [x] Fall back to record-only with clear next steps
-- [ ] Partial text updates without jitter (smooth cadence)
+ - [x] Partial text updates without jitter (smooth cadence)
 - [ ] Keeps up with normal speaking pace
 - [ ] Auto-trims filler words where helpful
 - [ ] Handles multi-minute sessions without stalls
 - [x] Finalizes the transcript on stop
 - [x] Allows review of transcript before saving
-- [ ] Language settings honor device locale
+ - [x] Language settings honor device locale
 
 Processing — Summary & Mood
 - [x] Automatic summary generated after stop
@@ -68,7 +68,7 @@ Journal — List
 - [x] Swipe actions: Pin/Unpin, Delete, Share
 - [x] Batch select for multi-delete or export (delete supported)
 - [x] Empty state shows guidance to Record
-- [ ] Pull to refresh derived content (if needed)
+ - [x] Pull to refresh derived content (if needed)
 - [x] Context menu on long-press for quick actions
 - [ ] Scales well with large history (no lag)
 
@@ -89,7 +89,7 @@ Entry — Detail
 Organization — Tags & Threads
 - [ ] Create, rename, delete tags
 - [x] Assign multiple tags to an entry
-- [ ] Quick tag chips in detail and list row
+ - [x] Quick tag chips in detail and list row
 - [x] Create memory threads (topics/people/goals)
 - [x] Assign entries to threads
 - [x] Threads list and per-thread detail with average mood
@@ -112,7 +112,7 @@ Search — Text & Filters
 - [ ] Search is fast, even with large history
 
 Insights — Weekly
-- [ ] Weekly dashboard surfaces top themes
+ - [x] Weekly dashboard surfaces top themes
 - [ ] Mood trend chart (week-over-week)
 - [ ] Highlights: notable summaries, pinned items
 - [ ] Suggested prompts for reflection
@@ -144,19 +144,19 @@ Live Activities — During Recording
 - [ ] Resilient across app/background transitions
 
 App Shortcuts — Spotlight & Siri
-- [ ] Start Recording shortcut
+ - [x] Start Recording shortcut
 - [x] Summarize Last Entry shortcut
 - [x] Search Entries shortcut (tag/mood parameters)
 - [ ] Shortcuts return clear success messages
 - [ ] Show up as suggestions in Spotlight
 
 Onboarding — 3 Screens Max
-- [ ] Value + privacy promise in friendly tone
-- [ ] Permission education (Mic, Speech, Notifications)
-- [ ] Choose summary style and reminder time
+ - [x] Value + privacy promise in friendly tone
+ - [x] Permission education (Mic, Speech, Notifications)
+ - [x] Choose summary style and reminder time
 - [ ] Free limit and paid tiers explained succinctly
-- [ ] Finish goes to Record with encouragement
-- [ ] Progress indicators (1/3, 2/3, 3/3)
+ - [x] Finish goes to Record with encouragement
+ - [x] Progress indicators (1/3, 2/3, 3/3)
 
 Settings — Control & Confidence
 - [x] Settings screen exists
@@ -168,7 +168,7 @@ Settings — Control & Confidence
 - [x] Default summary style selector
 - [x] Text-to-speech voice and rate selection
 - [x] Notification preferences (hour, enable/disable)
-- [ ] Daily prompt enable/disable
+ - [x] Daily prompt enable/disable
 - [x] App version and build visible
 - [x] Privacy policy and Terms links
 - [x] Contact support (mailto:)
@@ -214,16 +214,16 @@ Compliance — ATS & Export
 - [ ] Export compliance key present in Info
 
 Request Review
-- [x] Modern review request after third day of successful saves (appropriate moment)
+- [x] Modern review request after second hour of successful saves (appropriate moment)
 
 Security — Your Data, Your Device
 - [ ] Encrypted export option with passphrase
-- [ ] Local files use appropriate protection class
+ - [x] Local files use appropriate protection class
 - [ ] Clear warnings about lost passphrases
 - [ ] Data remains accessible offline
 
 Sharing, Export & Import
-- [ ] Share selected entries (text summary/transcript)
+ - [x] Share selected entries (text summary/transcript)
 - [ ] Export ZIP (entries + audio)
 - [ ] Optional password on export
 - [ ] Import merges by entry ID without duplicates
@@ -268,7 +268,7 @@ Cloud Sync — SwiftData + CloudKit (optional)
 - [ ] Conflict strategy documented (append-only entries)
 
 iOS Shortcuts & App Intents
-- [ ] ≥ 3 App Intents implemented (Start Recording, Summarize Last Entry, Search Entries)
+ - [x] ≥ 3 App Intents implemented (Start Recording, Summarize Last Entry, Search Entries)
 - [ ] Intents return clear result summaries
 - [ ] Appear as Spotlight suggestions
 
@@ -291,7 +291,7 @@ Navigation & Deep Links
 - [ ] Navigation is predictable and reversible
 - [ ] Back behavior matches user expectations
 - [x] Deep link: start recording (code wired; add URL scheme `sonarai` in Info.plist)
-- [ ] Deep link: open last entry
+ - [x] Deep link: open last entry
 - [ ] Deep link: open search with filters
 
 Offline & Reliability

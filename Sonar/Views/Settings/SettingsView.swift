@@ -39,6 +39,17 @@ struct SettingsView: View {
             if let settings = settingsRows.first {
                 Section("Preferences") {
                     Toggle("On-device transcription only", isOn: Binding(get: { settings.allowOnDeviceOnly }, set: { settings.allowOnDeviceOnly = $0 }))
+                    Toggle("Daily prompt", isOn: Binding(
+                        get: { (settings.dailyReminderHour ?? 20) >= 0 },
+                        set: { enabled in
+                            settings.dailyReminderHour = enabled ? (settings.dailyReminderHour ?? 20) : nil
+                            if enabled, let hour = settings.dailyReminderHour {
+                                Task { await NotificationResponder.shared.scheduleDailyPrompt(atHour: hour) }
+                            } else {
+                                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["daily.reminder"])
+                            }
+                        }
+                    ))
                     Toggle("Daily reminder", isOn: Binding(
                         get: { settings.dailyReminderHour != nil },
                         set: { enabled in
@@ -50,13 +61,7 @@ struct SettingsView: View {
                         Stepper("Reminder: \(settings.dailyReminderHour ?? 20):00", value: Binding(get: { settings.dailyReminderHour ?? 20 }, set: { newVal in
                             settings.dailyReminderHour = newVal
                             // Reschedule with new time
-                            let content = UNMutableNotificationContent()
-                            content.title = "Daily reflection"
-                            content.body = "Take a minute to capture your thoughts."
-                            var date = DateComponents(); date.hour = newVal
-                            let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
-                            let req = UNNotificationRequest(identifier: "daily.reminder", content: content, trigger: trigger)
-                            UNUserNotificationCenter.current().add(req)
+                            Task { await NotificationResponder.shared.scheduleDailyPrompt(atHour: newVal) }
                         }), in: 5 ... 22)
                     }
                     Picker("Default summary style", selection: Binding(get: { settings.selectedPromptStyleId }, set: { settings.selectedPromptStyleId = $0 })) {

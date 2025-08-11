@@ -15,6 +15,8 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
     private var audioFile: AVAudioFile?
     private var currentFileURL: URL?
     private var writer: AudioBufferWriter?
+    private var interruptionObserver: Any?
+    private var routeObserver: Any?
 
     func requestAuthorization() async throws {
         // Speech authorization
@@ -78,6 +80,8 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
         try audioEngine.start()
         Logger.capture.log("Audio engine started, onDeviceOnly=\(onDeviceOnly)")
 
+        observeAudioSessionNotifications()
+
         let stream = AsyncStream<String> { continuation in
             self.streamContinuation = continuation
             self.recognitionTask = recognizer.recognitionTask(with: request) { [weak self] result, error in
@@ -133,6 +137,10 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         Logger.capture.log("Audio engine stopped")
         isUserStopping = false
+
+        // Remove observers
+        if let o = interruptionObserver { NotificationCenter.default.removeObserver(o); interruptionObserver = nil }
+        if let o = routeObserver { NotificationCenter.default.removeObserver(o); routeObserver = nil }
     }
 
     private func prepareRecordingFile(with format: AVAudioFormat) throws {
@@ -197,6 +205,41 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
             }
         }
         Task { await writer.write(copy) }
+    }
+
+    private func observeAudioSessionNotifications() {
+        let center = NotificationCenter.default
+        interruptionObserver = center.addObserver(forName: AVAudioSession.interruptionNotification, object: nil, queue: .main) { [weak self] note in
+            guard let self else { return }
+            let userInfo = note.userInfo ?? [:]
+            if let typeRaw = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+               let type = AVAudioSession.InterruptionType(rawValue: typeRaw)
+            {
+                switch type {
+                case .began:
+                    Task { await self.stop() }
+                case .ended:
+                    // Do nothing; the view decides whether to resume
+                    break
+                @unknown default:
+                    break
+                }
+            } else {
+                // Conservative: stop on unknown interruption
+                Task { await self.stop() }
+            }
+        }
+        routeObserver = center.addObserver(forName: AVAudioSession.routeChangeNotification, object: nil, queue: .main) { [weak self] note in
+            guard let self else { return }
+            let userInfo = note.userInfo ?? [:]
+            if let reasonRaw = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
+               let reason = AVAudioSession.RouteChangeReason(rawValue: reasonRaw)
+            {
+                if reason == .oldDeviceUnavailable || reason == .categoryChange {
+                    Task { await self.stop() }
+                }
+            }
+        }
     }
 }
 

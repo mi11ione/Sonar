@@ -29,14 +29,31 @@ struct PaywallView: View {
                     } else if products.isEmpty {
                         ContentUnavailableView("No products", systemImage: "cart")
                     } else {
-                        // Native StoreKit product views with one-tap purchase
-                        ForEach(products, id: \.id) { product in
-                            ProductView(product, prefersPromotionalIcon: true)
+                        // Use indices to avoid any Binding overload inference
+                        ForEach(products.indices, id: \.self) { index in
+                            let product = products[index]
+                            VStack(alignment: .leading, spacing: 8) {
+                                // Render promoted icon by product ID to avoid passing a Binding<Product>
+                                ProductView(id: product.id, prefersPromotionalIcon: true) {
+                                    Image(systemName: "cart")
+                                } placeholderIcon: {
+                                    Image(systemName: "cart")
+                                }
                                 .productViewStyle(.regular)
                                 .productDescription(.visible)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding()
-                                .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12))
+                                HStack(spacing: 8) {
+                                    Text(product.displayPrice).bold()
+                                    if let info = product.subscription {
+                                        Text(unitLabel(info.subscriptionPeriod.unit)).foregroundStyle(.secondary)
+                                    }
+                                    Spacer()
+                                    Button("Buy") { Task { try? await purchases.purchase(productId: product.id) } }
+                                        .buttonStyle(.borderedProminent)
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding()
+                            .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12))
                         }
                         Button("Restore Purchases") { Task { try? await purchases.restore() } }
                             .buttonStyle(.plain)
@@ -70,6 +87,16 @@ struct PaywallView: View {
     private func openLegal(urlString: String) {
         guard let url = URL(string: urlString) else { return }
         openURL(url)
+    }
+
+    private func unitLabel(_ unit: Product.SubscriptionPeriod.Unit) -> String {
+        switch unit {
+        case .day: return "/day"
+        case .week: return "/week"
+        case .month: return "/month"
+        case .year: return "/year"
+        @unknown default: return ""
+        }
     }
 }
 

@@ -42,6 +42,11 @@ struct EntryDetailView: View {
                     Divider()
                     AudioPlayerView(url: audio.resolvedFileURL)
                 }
+                if entry.audio == nil {
+                    Text("No audio attached")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
                 Divider()
                 // Tags editor
                 tagsEditor

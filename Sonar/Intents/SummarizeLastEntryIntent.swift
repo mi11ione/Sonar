@@ -8,8 +8,9 @@ struct SummarizeLastEntryIntent: AppIntent {
     static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
-        // Signal the app to handle the summarize action on next foreground if desired.
-        // For now, just open the app; UI can provide a regenerate action.
-        .result()
+        // Request app to open Journal tab and show last entry
+        UserDefaults.standard.set(1, forKey: "deeplink.targetTab")
+        UserDefaults.standard.set(true, forKey: "deeplink.showLastEntry")
+        return .result()
     }
 }

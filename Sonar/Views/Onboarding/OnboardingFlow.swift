@@ -76,6 +76,11 @@ struct OnboardingFlow: View {
                 Button("Enable Notifications") { Task { await requestNotifications() } }
             }
             .buttonStyle(.bordered)
+            if !notificationsEnabled {
+                Text("You can turn on reminders later in Settings → Preferences.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
             Spacer(minLength: 8)
             HStack {
                 Button("Back") { step = 0 }
@@ -165,6 +170,8 @@ struct OnboardingFlow: View {
 
         if notificationsEnabled { scheduleDailyReminder(at: reminderHour) }
         onboardingComplete = true
+        // On finish, deep link to the Record tab immediately
+        UserDefaults.standard.set(0, forKey: "deeplink.targetTab")
     }
 }
 
