@@ -6,31 +6,9 @@ First‑Run & Core Value
 Record — Start & Control
 - [ ] Recording continues with screen off/locked when allowed
 
-Widgets — Quick Actions
-- [ ] Quick Record widget (tap to record)
-- [ ] Daily Prompt widget (tap to record with prompt)
-- [ ] Recent Summary widget (privacy-aware)
-- [ ] Placeholder states for all sizes
-- [ ] Looks good in light/dark and on Lock Screen
-- [ ] Doesn’t reveal sensitive text by default
-
-Live Activities — During Recording
-- [ ] Shows elapsed time and a Stop action
-- [ ] Uses compact/expanded/Dynamic Island layouts
-- [ ] Ends reliably when recording stops
-- [ ] Resilient across app/background transitions
-
-Settings — Control & Confidence
- - [ ] Encryption toggle for transcripts/audio
-
 Privacy — Local First
-- [ ] No account, no third-party analytics
 - [ ] Clear explanation of what’s stored
 - [ ] Privacy Manifest accurately describes use
-
-Performance — Budgets & Profiling
-- [ ] Start record → first partial < 600ms
-- [ ] Stop → summary < 1.5s for 2–3 min speech
 
 File Management — Storage & Protection
 - [ ] Temp files cleaned after export/playback
@@ -45,9 +23,6 @@ Internationalization & Localization
 - [ ] RTL layouts render properly
 - [ ] Dates and numbers use locale formats
 
-iOS Shortcuts & App Intents
- - [x] Appear as Spotlight suggestions
-
 iPad
 - [ ] iPad two-column layout (list + detail)
 - [ ] Inspector or sidebar for details where helpful
@@ -57,7 +32,6 @@ Navigation & Deep Links
 - [ ] Back behavior matches user expectations
 
 Offline & Reliability
-- [ ] Recording works with no connectivity
 - [ ] Saving never silently fails
 - [ ] Clear recovery if something goes wrong
 - [ ] Handles low battery gracefully
