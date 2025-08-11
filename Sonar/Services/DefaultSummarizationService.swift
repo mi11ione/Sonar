@@ -4,8 +4,12 @@ import NaturalLanguage
 struct DefaultSummarizationService: SummarizationService, Sendable {
     func summarize(text: String, maxSentences: Int, toneHint: String?) async -> String {
         let sentences = SentenceSplitter.split(text)
-        // Reuse embedding instance to avoid repeated allocations
-        guard !sentences.isEmpty, let embedding = Self.embedding else {
+        guard !sentences.isEmpty else { return text }
+        // Choose embedding based on device locale; fall back to English; fall back to heuristic if unavailable
+        let languageCode = Locale.current.language.languageCode?.identifier ?? "en"
+        let language = NLLanguage(languageCode)
+        let embedding = Self.embedding(for: language) ?? Self.embedding(for: .english)
+        guard let embedding else {
             return text
         }
 
@@ -23,5 +27,13 @@ struct DefaultSummarizationService: SummarizationService, Sendable {
         return Rewriter.rewrite(joined, toneHint: toneHint)
     }
 
-    private static let embedding = NLEmbedding.sentenceEmbedding(for: .english)
+    private static var cache = [NLLanguage: NLEmbedding]()
+    private static func embedding(for language: NLLanguage) -> NLEmbedding? {
+        if let cached = cache[language] { return cached }
+        if let e = NLEmbedding.sentenceEmbedding(for: language) {
+            cache[language] = e
+            return e
+        }
+        return nil
+    }
 }

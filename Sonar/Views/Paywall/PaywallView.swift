@@ -4,6 +4,7 @@ import SwiftUI
 struct PaywallView: View {
     @State private var products: [Product] = []
     @State private var isLoading: Bool = true
+    @State private var showManageSheet: Bool = false
     @Environment(\.dismiss) private var dismiss
     @Environment(\.purchases) private var purchases
     @Environment(\.openURL) private var openURL
@@ -14,6 +15,7 @@ struct PaywallView: View {
         "sonar.max.monthly",
         "sonar.premium.annual",
     ]
+    private let groupID = "sonar.subscriptions"
 
     var body: some View {
         NavigationStack {
@@ -58,6 +60,15 @@ struct PaywallView: View {
                         Button("Restore Purchases") { Task { try? await purchases.restore() } }
                             .buttonStyle(.plain)
                             .padding(.top, 4)
+                        Divider().padding(.vertical, 8)
+                        // Manage subscriptions and upgrade/downgrade affordances when already subscribed
+                        SubscriptionStatusView(groupID: groupID)
+                        HStack {
+                            Spacer()
+                            Button("Manage Subscription") { showManageSheet = true }
+                                .buttonStyle(.bordered)
+                                .manageSubscriptionsSheet(isPresented: $showManageSheet, subscriptionGroupID: groupID)
+                        }
                     }
                     Spacer()
                     VStack(spacing: 6) {
@@ -101,3 +112,36 @@ struct PaywallView: View {
 }
 
 #Preview { PaywallView() }
+
+// MARK: - Entitlement-aware upgrade/downgrade status
+
+private struct SubscriptionStatusView: View {
+    let groupID: String
+    @State private var statuses: [Product.SubscriptionInfo.Status] = []
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            if statuses.isEmpty {
+                Text("Not subscribed").font(.footnote).foregroundStyle(.secondary)
+            } else {
+                ForEach(Array(statuses.enumerated()), id: \.offset) { _, status in
+                    Text(label(for: status.state)).bold()
+                }
+                Text("Change plan via Apple").font(.footnote).foregroundStyle(.secondary)
+            }
+        }
+        .subscriptionStatusTask(for: groupID) { state in
+            if let s = state.value { statuses = s }
+        }
+    }
+
+    private func label(for state: Product.SubscriptionInfo.RenewalState) -> String {
+        switch state {
+        case .subscribed: "Subscribed"
+        case .expired: "Expired"
+        case .inBillingRetryPeriod: "Billing Retry"
+        case .inGracePeriod: "Grace Period"
+        case .revoked: "Revoked"
+        default: "Unknown"
+        }
+    }
+}

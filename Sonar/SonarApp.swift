@@ -39,6 +39,8 @@ struct SonarApp: App {
                     MXMetricManager.shared.add(mxObserver)
                     UNUserNotificationCenter.current().delegate = NotificationResponder.shared
                     Task { await NotificationResponder.shared.registerCategories() }
+                    // Review: track active days for cadence heuristics
+                    DefaultReviewRequestService().recordAppActive(now: .now)
                 }
                 .task {
                     // Schedule daily prompt notification content if enabled

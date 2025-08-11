@@ -10,6 +10,7 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private var streamContinuation: AsyncStream<String>.Continuation?
+    private var amplitudeContinuation: AsyncStream<Float>.Continuation?
     private var isUserStopping = false
     private var didCleanup = false
     private var audioFile: AVAudioFile?
@@ -37,7 +38,7 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
 
         // Microphone authorization
         let _ = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Bool, Error>) in
-            AVAudioApplication.requestRecordPermission { granted in
+            AVAudioSession.sharedInstance().requestRecordPermission { granted in
                 if granted { continuation.resume(returning: true) }
                 else { continuation.resume(throwing: CaptureError.micDenied) }
             }
@@ -73,11 +74,17 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
             self?.recognitionRequest?.append(buffer)
             // Offload file writes off the realtime thread
             self?.enqueueWrite(buffer: buffer)
+            self?.yieldAmplitude(from: buffer)
         }
 
         audioEngine.prepare()
         try prepareRecordingFile(with: recordingFormat)
-        try audioEngine.start()
+        do {
+            try audioEngine.start()
+        } catch {
+            Logger.capture.error("Audio engine failed to start: \(error.localizedDescription, privacy: .public)")
+            throw error
+        }
         Logger.capture.log("Audio engine started, onDeviceOnly=\(onDeviceOnly)")
 
         observeAudioSessionNotifications()
@@ -97,8 +104,8 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
                     if self?.isUserStopping != true {
                         Logger.capture.error("Recognition error: \(error.localizedDescription, privacy: .public)")
                     }
-                    continuation.finish()
-                    self?.cleanupRecognition()
+                    // Do not immediately finish the stream; allow caller to decide. Stop engine though.
+                    Task { await self?.stop() }
                 }
             }
             // No-op on termination to avoid double stop/cleanup
@@ -122,7 +129,7 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
     private func configureAudioSession() throws {
         let session = AVAudioSession.sharedInstance()
         try session.setCategory(.playAndRecord, mode: .measurement, options: [.defaultToSpeaker, .allowBluetoothHFP])
-        try session.setActive(true, options: .notifyOthersOnDeactivation)
+        try session.setActive(true, options: [.notifyOthersOnDeactivation])
     }
 
     private func cleanupRecognition() {
@@ -131,6 +138,7 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
         recognitionTask = nil
         recognitionRequest = nil
         streamContinuation = nil
+        amplitudeContinuation?.finish(); amplitudeContinuation = nil
         audioFile = nil
         writer = nil
         // Keep currentFileURL so the caller can associate it with a saved entry after stop
@@ -153,12 +161,8 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
         resourceValues.isExcludedFromBackup = true
         try? (dir as NSURL).setResourceValue(true, forKey: .isExcludedFromBackupKey)
         // Note: NSFileProtection is set via attributes when creating file; we'll set after opening too
-        // Use a broadly compatible output format for playback: 16-bit PCM, mono, interleaved, preserve sample rate
-        guard let outFormat = AVAudioFormat(commonFormat: .pcmFormatInt16,
-                                            sampleRate: format.sampleRate,
-                                            channels: 1,
-                                            interleaved: true) else { throw CaptureError.internalError }
-        audioFile = try AVAudioFile(forWriting: url, settings: outFormat.settings)
+        // Match file format to capture format to avoid real-time conversion complexity
+        audioFile = try AVAudioFile(forWriting: url, settings: format.settings)
         currentFileURL = url
         if let file = audioFile { writer = AudioBufferWriter(file: file) }
         // Strengthen on-disk protection (best-effort)
@@ -181,6 +185,7 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
         inputNode.removeTap(onBus: 0)
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { [weak self] buffer, _ in
             self?.enqueueWrite(buffer: buffer)
+            self?.yieldAmplitude(from: buffer)
         }
         try prepareRecordingFile(with: format)
         try audioEngine.start()
@@ -217,10 +222,13 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
             {
                 switch type {
                 case .began:
-                    Task { await self.stop() }
+                    // Pause engine but keep recognition alive in case it resumes
+                    if audioEngine.isRunning {
+                        audioEngine.pause()
+                    }
                 case .ended:
-                    // Do nothing; the view decides whether to resume
-                    break
+                    // Attempt to resume engine after interruption ends
+                    do { try audioEngine.start() } catch {}
                 @unknown default:
                     break
                 }
@@ -235,11 +243,58 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
             if let reasonRaw = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
                let reason = AVAudioSession.RouteChangeReason(rawValue: reasonRaw)
             {
-                if reason == .oldDeviceUnavailable || reason == .categoryChange {
+                // Only stop when the previous device became unavailable (e.g., unplugged headphones)
+                if reason == .oldDeviceUnavailable {
                     Task { await self.stop() }
                 }
             }
         }
+    }
+
+    // MARK: - Amplitude meter
+
+    func amplitudeStream() -> AsyncStream<Float> {
+        AsyncStream<Float> { continuation in
+            self.amplitudeContinuation = continuation
+            continuation.onTermination = { @MainActor [weak self] _ in self?.amplitudeContinuation = nil }
+        }
+    }
+
+    private func yieldAmplitude(from buffer: AVAudioPCMBuffer) {
+        guard let continuation = amplitudeContinuation else { return }
+        // Prefer float data; otherwise convert from Int16
+        var rms: Float = 0
+        if let floatData = buffer.floatChannelData {
+            let channel = floatData[0]
+            let frameCount = Int(buffer.frameLength)
+            if frameCount > 0 {
+                var sum: Float = 0
+                var i = 0
+                while i < frameCount {
+                    let s = channel[i]
+                    sum += s * s
+                    i += 1
+                }
+                rms = sqrtf(sum / Float(frameCount))
+            }
+        } else if let int16Data = buffer.int16ChannelData {
+            let channel = int16Data[0]
+            let frameCount = Int(buffer.frameLength)
+            if frameCount > 0 {
+                var sum: Float = 0
+                let scale: Float = 1.0 / 32768.0
+                var i = 0
+                while i < frameCount {
+                    let s = Float(channel[i]) * scale
+                    sum += s * s
+                    i += 1
+                }
+                rms = sqrtf(sum / Float(frameCount))
+            }
+        }
+        // Simple peak emphasis and clamp to [0,1]
+        let level = min(max(rms * 1.8, 0), 1)
+        continuation.yield(level)
     }
 }
 

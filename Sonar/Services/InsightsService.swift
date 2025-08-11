@@ -1,4 +1,5 @@
 import Foundation
+import NaturalLanguage
 
 struct WeeklyInsights: Sendable {
     let topThemes: [String]
@@ -13,12 +14,30 @@ protocol InsightsService: Sendable {
 struct DefaultInsightsService: InsightsService, Sendable {
     func computeWeeklyInsights(from entries: [JournalEntry]) async -> WeeklyInsights {
         let recent = entries.filter { Calendar.current.isDate($0.createdAt, equalTo: Date(), toGranularity: .weekOfYear) }
-        let tokens = recent.flatMap { $0.tags.map(\.name) }
+        let tokens = recent.flatMap { $0.tags.map(\.name) } + keyphrases(from: recent)
         let freq = Dictionary(grouping: tokens, by: { $0 }).mapValues(\.count)
-        let topThemes = Array(freq.sorted { $0.value > $1.value }.prefix(3).map(\.key))
+        let topThemes = Array(freq.sorted { $0.value > $1.value }.prefix(5).map(\.key))
         let moods = recent.compactMap(\.moodScore)
         let avgMood = moods.isEmpty ? nil : moods.reduce(0, +) / Double(moods.count)
         let highlights = recent.compactMap(\.summary).prefix(5)
         return WeeklyInsights(topThemes: topThemes, avgMood: avgMood, highlightSummaries: Array(highlights))
+    }
+
+    /// Extract simple keyphrases using NLTagger nouns/proper nouns across summaries
+    private func keyphrases(from entries: [JournalEntry]) -> [String] {
+        let text = entries.compactMap(\.summary).joined(separator: ". ")
+        guard !text.isEmpty else { return [] }
+        let tagger = NLTagger(tagSchemes: [.nameType, .lexicalClass])
+        tagger.string = text
+        var phrases: [String] = []
+        let options: NLTagger.Options = [.omitPunctuation, .omitWhitespace, .joinNames]
+        tagger.enumerateTags(in: text.startIndex ..< text.endIndex, unit: .word, scheme: .lexicalClass, options: options) { tag, range in
+            if tag == .noun || tag == .verb || tag == .adjective {
+                let token = String(text[range]).lowercased()
+                if token.count > 2 { phrases.append(token) }
+            }
+            return true
+        }
+        return phrases
     }
 }

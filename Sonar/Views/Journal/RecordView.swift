@@ -10,6 +10,7 @@ struct RecordView: View {
     @Environment(\.indexing) private var indexing
     @Environment(\.modelContext) private var modelContext
     @Environment(\.purchases) private var purchases
+    @Environment(\.review) private var review
     @Query private var settingsRows: [UserSettings]
 
     enum ViewState: Equatable { case idle, recording, recordingAudioOnly, review, processing, saved, error(String) }
@@ -77,6 +78,7 @@ struct RecordView: View {
         .sensoryFeedback(.impact(weight: .light), trigger: didDiscardToggle)
         .task(id: state) { await handleStateChange() }
         .sheet(isPresented: $showPaywall) { PaywallView() }
+        .onChange(of: showPaywall) { if showPaywall { review.recordPaywallShown(now: .now) } }
         .task {
             if deepLinkStart {
                 deepLinkStart = false
@@ -225,7 +227,22 @@ struct RecordView: View {
             }
         } catch {
             if let captureError = error as? CaptureError, captureError == .onDeviceUnavailable {
-                state = .recordingAudioOnly
+                // Fallback to network-backed recognition if on-device isn't available
+                do {
+                    let stream = try await transcription.startStreamingTranscription(onDeviceOnly: false)
+                    for await chunk in stream {
+                        if isPaused { break }
+                        if chunk.hasPrefix(committedTranscript) {
+                            let suffix = String(chunk.dropFirst(committedTranscript.count)).trimmingCharacters(in: .whitespacesAndNewlines)
+                            liveTranscript = suffix.isEmpty ? committedTranscript : committedTranscript + (committedTranscript.isEmpty ? "" : " ") + suffix
+                        } else {
+                            liveTranscript = committedTranscript.isEmpty ? chunk : committedTranscript + " " + chunk
+                        }
+                    }
+                } catch {
+                    // As a last resort, record audio only
+                    state = .recordingAudioOnly
+                }
             } else {
                 state = .error(error.localizedDescription)
             }
@@ -305,9 +322,8 @@ struct RecordView: View {
     }
 
     private func requestReviewIfAppropriate() async {
-        // Use modern SwiftUI action from StoreKit
-        // Trigger sparingly; example: after 3rd successful save overall
-        if freeCount == 3 {
+        review.recordAppActive(now: .now)
+        if review.shouldRequestReview(after: .entrySaved, now: .now) {
             await MainActor.run { requestReview() }
         }
     }

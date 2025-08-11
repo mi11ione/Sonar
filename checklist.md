@@ -41,9 +41,9 @@ Transcription — Live & Reliable
 - [x] On-device only by default; explain if unsupported
 - [x] Fall back to record-only with clear next steps
  - [x] Partial text updates without jitter (smooth cadence)
-- [ ] Keeps up with normal speaking pace
-- [ ] Auto-trims filler words where helpful
-- [ ] Handles multi-minute sessions without stalls
+ - [x] Keeps up with normal speaking pace
+ - [ ] Auto-trims filler words where helpful
+ - [x] Handles multi-minute sessions without stalls
 - [x] Finalizes the transcript on stop
 - [x] Allows review of transcript before saving
  - [x] Language settings honor device locale
@@ -70,7 +70,7 @@ Journal — List
 - [x] Empty state shows guidance to Record
  - [x] Pull to refresh derived content (if needed)
 - [x] Context menu on long-press for quick actions
-- [ ] Scales well with large history (no lag)
+ - [ ] Scales well with large history (no lag)
 
 Entry — Detail
 - [x] Full transcript readable with large text support
@@ -102,19 +102,19 @@ Search — Text & Filters
 - [x] Spotlight indexing of entries for system-wide search
 - [x] Highlight matching terms in results
 - [x] Filter by date ranges (Today, 7 days)
-- [ ] Filter by custom date ranges
+ - [ ] Filter by custom date ranges
 - [x] Filter by mood bins (Negative/Neutral/Positive)
 - [x] Filter by tags (multi-select)
-- [ ] Filter by threads
-- [ ] Sort by newest/oldest/relevance
+ - [ ] Filter by threads
+ - [ ] Sort by newest/oldest/relevance
 - [x] Result rows show summary/mood/time
 - [x] No-results state suggests removing filters
 - [ ] Search is fast, even with large history
 
 Insights — Weekly
  - [x] Weekly dashboard surfaces top themes
-- [ ] Mood trend chart (week-over-week)
-- [ ] Highlights: notable summaries, pinned items
+ - [x] Mood trend chart (week-over-week)
+ - [x] Highlights: notable summaries, pinned items
 - [ ] Suggested prompts for reflection
 - [ ] Privacy note that insights are on-device
 - [ ] Share weekly highlights (optional)
@@ -160,7 +160,7 @@ Onboarding — 3 Screens Max
 
 Settings — Control & Confidence
 - [x] Settings screen exists
-- [x] Manage subscription (plans, trial, upgrade/downgrade)
+- [x] Manage subscription (plans, upgrade/downgrade)
 - [x] Restore purchases
 - [ ] iCloud sync toggle with explanation
 - [ ] Encryption toggle for transcripts/audio
@@ -173,10 +173,10 @@ Settings — Control & Confidence
 - [x] Privacy policy and Terms links
 - [x] Contact support (mailto:)
 
-Paywall — Clear & Honest
+ Paywall — Clear & Honest
 - [x] Fast, clear comparison: Free vs paid
 - [x] Plan cards: Pro, Premium, Max + annuals
-- [ ] Trial messaging (e.g., 7 days on Premium)
+- [x] No free trials anywhere in the app
 - [x] Benefits explained in plain language
 - [ ] Family Sharing guidance if applicable
 - [x] Restore Purchases visible
@@ -214,7 +214,7 @@ Compliance — ATS & Export
 - [ ] Export compliance key present in Info
 
 Request Review
-- [x] Modern review request after second hour of successful saves (appropriate moment)
+- [x] Modern review request via service with multi-signal cadence (active days, milestones, cooldowns)
 
 Security — Your Data, Your Device
 - [ ] Encrypted export option with passphrase
