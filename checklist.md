@@ -11,12 +11,9 @@ Record — Start & Control
 
 Organization — Tags & Threads
 - [ ] Create, rename, delete tags
-- [x] Per-thread highlights: top themes, pinned items
 - [ ] Filter by tags and threads in search
 
 Insights — Weekly
- - [x] Privacy note that insights are on-device
-- [x] Share weekly highlights
 
 Widgets — Quick Actions
 - [ ] Quick Record widget (tap to record)
@@ -33,7 +30,6 @@ Live Activities — During Recording
 - [ ] Resilient across app/background transitions
 
 App Shortcuts — Spotlight & Siri
-- [x] Shortcuts return clear success messages
 - [ ] Show up as suggestions in Spotlight
 
 Settings — Control & Confidence
@@ -42,10 +38,7 @@ Settings — Control & Confidence
 Privacy — Local First
 - [ ] No account, no third-party analytics
 - [ ] Clear explanation of what’s stored
-- [x] Easy export or delete of personal data
 - [ ] Privacy Manifest accurately describes use
- - [x] Spotlight indexing opt-out if encrypting
- - [x] Sensitive screens respect privacy (blur in app switcher)
 
 Performance — Budgets & Profiling
 - [ ] Start record → first partial < 600ms
@@ -53,13 +46,10 @@ Performance — Budgets & Profiling
 - [ ] Coalesce Spotlight updates; index on background tasks (title/notes added to Spotlight)
 
 File Management — Storage & Protection
-- [x] Audio stored under Library/Application Support/Audio with UUID filenames
-- [x] File protection set to CompleteUntilFirstUserAuthentication
 - [ ] Temp files cleaned after export/playback
 
 Crash Resilience — Recovery
 - [ ] Engine/session safely stopped on relaunch after crash
- - [x] UI to recover/salvage partial audio if present
 - [ ] Critical steps wrapped with user-visible fallback
 
 Accessibility — Inclusive by Default
@@ -103,7 +93,6 @@ iPad
 Navigation & Deep Links
 - [ ] Navigation is predictable and reversible
 - [ ] Back behavior matches user expectations
- - [x] Deep link: open search with filters
 
 Offline & Reliability
 - [ ] Recording works with no connectivity
@@ -114,7 +103,6 @@ Offline & Reliability
 
 Trust, Help & Support
 - [ ] In-app “How it works” in Settings
-- [x] Contact support via email draft with context
 - [ ] Clear privacy stance reiterated
 - [ ] Changelog or “What’s new” view for updates
 

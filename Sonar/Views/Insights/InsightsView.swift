@@ -28,7 +28,12 @@ struct InsightsView: View {
             Section("Highlights") {
                 if weekly.highlightSummaries.isEmpty { Text("No highlights yet") } else { ForEach(weekly.highlightSummaries, id: \.self, content: Text.init) }
                 if !weekly.highlightSummaries.isEmpty {
-                    ShareLink(item: weekly.highlightSummaries.joined(separator: "\n\n")) { Label("Share weekly highlights", systemImage: "square.and.arrow.up") }
+                    let header = "This week’s Sonar highlights (private)\n\n"
+                    let content = weekly.highlightSummaries.map { "• \($0)" }.joined(separator: "\n")
+                    let range = dateRangeOfCurrentWeek()
+                    let title = range.map { "\($0.0) – \($0.1)" } ?? "This week"
+                    let payload = "\(title)\n\n" + header + content
+                    ShareLink(item: payload) { Label("Share weekly highlights", systemImage: "square.and.arrow.up") }
                         .buttonStyle(.bordered)
                 }
             }
@@ -109,5 +114,16 @@ private extension InsightsView {
         }
         weekly = await insights.computeWeeklyInsights(from: entries)
         lastFourWeeks = groupLastFourWeeks(entries)
+    }
+
+    func dateRangeOfCurrentWeek() -> (String, String)? {
+        let cal = Calendar.current
+        let now = Date()
+        guard let start = cal.date(from: cal.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)) else { return nil }
+        let end = cal.date(byAdding: .day, value: 6, to: start) ?? now
+        let fmt = DateFormatter()
+        fmt.dateStyle = .medium
+        fmt.timeStyle = .none
+        return (fmt.string(from: start), fmt.string(from: end))
     }
 }

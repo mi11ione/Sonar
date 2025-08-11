@@ -88,6 +88,7 @@ Organization — Tags & Threads
 - [x] Assign entries to threads
 - [x] Threads list and per-thread detail with average mood
 - [x] Edit tags/threads from Settings as well
+- [x] Per-thread highlights: top themes, pinned items
 
 Search — Text & Filters
 - [x] Search across transcript and summary text
@@ -162,6 +163,8 @@ Privacy — Local First
 - [x] On-device processing stated and honored
 - [x] Sensitive screens blur in app switcher using privacySensitive()
 - [x] Spotlight indexing opt-out preference
+ - [x] Easy export or delete of personal data
+- [x] Easy export or delete of personal data
 
 Performance — Budgets & Profiling
 - [x] Reuse NLEmbedding and avoid repeated allocations
@@ -174,6 +177,10 @@ Security — Your Data, Your Device
 
 Sharing, Export & Import
 - [x] Share selected entries (text summary/transcript)
+ 
+File Management — Storage & Protection
+- [x] Audio stored under Library/Application Support/Audio with UUID filenames
+- [x] File protection set to CompleteUntilFirstUserAuthentication
 
 Crash Resilience — Recovery
 - [x] UI to salvage orphan audio recordings on next launch

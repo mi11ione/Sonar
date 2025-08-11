@@ -1,6 +1,7 @@
 import SwiftData
 import SwiftUI
 internal import AVFAudio
+import CoreSpotlight
 
 struct SettingsView: View {
     @Environment(\.purchases) private var purchases
@@ -15,6 +16,7 @@ struct SettingsView: View {
     @State private var exportURL: URL? = nil
     @State private var showExporter: Bool = false
     @AppStorage("onboardingComplete") private var onboardingComplete: Bool = true
+    @State private var confirmDeleteAll: Bool = false
 
     var body: some View {
         List {
@@ -81,12 +83,28 @@ struct SettingsView: View {
                     ))
                     Toggle("Spotlight indexing", isOn: Binding(
                         get: { settings.spotlightIndexingEnabled },
-                        set: { settings.spotlightIndexingEnabled = $0; UserDefaults.standard.set($0, forKey: "pref.spotlightIndexing"); try? modelContext.save() }
+                        set: { enabled in
+                            settings.spotlightIndexingEnabled = enabled
+                            UserDefaults.standard.set(enabled, forKey: "pref.spotlightIndexing")
+                            try? modelContext.save()
+                            Task {
+                                if enabled {
+                                    // Reindex all entries in background
+                                    let entries: [JournalEntry] = (try? modelContext.fetch(FetchDescriptor<JournalEntry>())) ?? []
+                                    for e in entries {
+                                        await DefaultSearchIndexingService().index(entry: e)
+                                    }
+                                } else {
+                                    // Clear existing Spotlight items
+                                    try? await CSSearchableIndex.default().deleteAllSearchableItems()
+                                }
+                            }
+                        }
                     ))
                 }
                 Section("Data") {
                     Button("Export JSON (entries only)") { generateExportJSON() }
-                    Button("Delete all data", role: .destructive) { deleteAllData() }
+                    Button("Delete all data", role: .destructive) { confirmDeleteAll = true }
                 }
             }
             Section("About") {
@@ -113,6 +131,18 @@ struct SettingsView: View {
                 }
             }
             .padding()
+        }
+        .onChange(of: showExporter) { isPresented in
+            if !isPresented, let url = exportURL {
+                try? FileManager.default.removeItem(at: url)
+                exportURL = nil
+            }
+        }
+        .alert("Delete all data?", isPresented: $confirmDeleteAll) {
+            Button("Delete", role: .destructive) { performDeleteAllDataCleanup() }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("This removes all entries, tags, threads, local audio, notifications, and search indexes from this device.")
         }
     }
 
@@ -160,8 +190,8 @@ struct SettingsView: View {
         }
     }
 
-    private func deleteAllData() {
-        // Danger: destructive reset of all user data in SwiftData store and local audio files
+    private func performDeleteAllDataCleanup() {
+        // 1) SwiftData entities
         let entries: [JournalEntry] = (try? modelContext.fetch(FetchDescriptor<JournalEntry>())) ?? []
         let threads: [MemoryThread] = (try? modelContext.fetch(FetchDescriptor<MemoryThread>())) ?? []
         let tags: [Tag] = (try? modelContext.fetch(FetchDescriptor<Tag>())) ?? []
@@ -179,14 +209,21 @@ struct SettingsView: View {
             modelContext.delete(a)
         }
         try? modelContext.save()
-        // Also remove audio folder contents
-        if let dir = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("Audio", isDirectory: true) {
-            if let items = try? FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil) {
-                for url in items {
-                    try? FileManager.default.removeItem(at: url)
-                }
+        // 2) Local audio files
+        if let dir = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("Audio", isDirectory: true),
+           let items = try? FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil)
+        {
+            for url in items {
+                try? FileManager.default.removeItem(at: url)
             }
         }
+        // 3) Spotlight index
+        Task { try? await CSSearchableIndex.default().deleteAllSearchableItems() }
+        // 4) Notifications
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["daily.reminder"])
+        // 5) App state defaults (freeCount, review cadence hints, deep links)
+        let defaults = UserDefaults.standard
+        ["freeCount", "deeplink.targetTab", "deeplink.showLastEntry", "deeplink.searchRequest", "deeplink.searchURL", "recording.inProgress"].forEach { defaults.removeObject(forKey: $0) }
     }
 }
 

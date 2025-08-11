@@ -76,6 +76,23 @@ struct ThreadDetailView: View {
 
     var body: some View {
         List {
+            // Pinned section
+            let pinned = thread.entries.filter(\.isPinned)
+            if !pinned.isEmpty {
+                Section("Pinned") {
+                    ForEach(pinned.sorted(by: { $0.createdAt > $1.createdAt })) { entry in
+                        NavigationLink(destination: EntryDetailView(entry: entry)) {
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text(entry.summary ?? String(entry.transcript.prefix(80))).font(.headline)
+                                HStack(spacing: 12) {
+                                    if let label = entry.moodLabel { MoodBadge(label: label, score: entry.moodScore ?? 0) }
+                                    Text(entry.createdAt, style: .date).foregroundStyle(.secondary)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             ForEach(thread.entries.sorted(by: { $0.createdAt > $1.createdAt })) { entry in
                 NavigationLink(destination: EntryDetailView(entry: entry)) {
                     VStack(alignment: .leading, spacing: 6) {
