@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>NSSpeechRecognitionUsageDescription</key>
-    <string>Sonar uses on-device speech recognition to transcribe your voice journals. Audio never leaves your device.</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Sonar needs microphone access to record your voice journals.</string>
     <key>CFBundleURLTypes</key>
     <array>
         <dict>
