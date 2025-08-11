@@ -88,7 +88,9 @@ Organization — Tags & Threads
 - [x] Assign entries to threads
 - [x] Threads list and per-thread detail with average mood
 - [x] Edit tags/threads from Settings as well
+- [x] Create, rename (with merge), delete tags
 - [x] Per-thread highlights: top themes, pinned items
+- [x] Filter by tags and threads in search
 
 Search — Text & Filters
 - [x] Search across transcript and summary text
@@ -109,7 +111,7 @@ Insights — Weekly
 - [x] Highlights: notable summaries, pinned items
 - [x] Suggested prompts for reflection
 - [x] Users can opt out of insights
- - [x] Share weekly highlights via ShareLink
+- [x] Share weekly highlights via ShareLink
 
 Notifications — Gentle Reminders
 - [x] Friendly opt-in prompt explaining value
@@ -126,6 +128,7 @@ App Shortcuts — Spotlight & Siri
 - [x] Search Entries shortcut (tag/mood parameters)
 - [x] Shortcuts return clear result summaries
 - [x] Deep link support for search with filters via URL scheme
+- [x] App Shortcuts show up as Spotlight suggestions
 
 Onboarding — 3 Screens Max
 - [x] Value + privacy promise in friendly tone
@@ -163,11 +166,12 @@ Privacy — Local First
 - [x] On-device processing stated and honored
 - [x] Sensitive screens blur in app switcher using privacySensitive()
 - [x] Spotlight indexing opt-out preference
- - [x] Easy export or delete of personal data
+- [x] Easy export or delete of personal data
 - [x] Easy export or delete of personal data
 
 Performance — Budgets & Profiling
 - [x] Reuse NLEmbedding and avoid repeated allocations
+- [x] Coalesce Spotlight updates; index on background tasks
 
 Request Review
 - [x] Modern review request via service with multi-signal cadence (active days, milestones, cooldowns)

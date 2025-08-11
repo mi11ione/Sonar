@@ -1,19 +1,10 @@
 ### Sonar — Comprehensive Product Checklist for 1.0 (keep updated)
 
-Legend
-- [ ] = pending
-
 First‑Run & Core Value
 - [ ] First-run teaches summary and mood badges
 
 Record — Start & Control
 - [ ] Recording continues with screen off/locked when allowed
-
-Organization — Tags & Threads
-- [ ] Create, rename, delete tags
-- [ ] Filter by tags and threads in search
-
-Insights — Weekly
 
 Widgets — Quick Actions
 - [ ] Quick Record widget (tap to record)
@@ -29,9 +20,6 @@ Live Activities — During Recording
 - [ ] Ends reliably when recording stops
 - [ ] Resilient across app/background transitions
 
-App Shortcuts — Spotlight & Siri
-- [ ] Show up as suggestions in Spotlight
-
 Settings — Control & Confidence
  - [ ] Encryption toggle for transcripts/audio
 
@@ -43,7 +31,6 @@ Privacy — Local First
 Performance — Budgets & Profiling
 - [ ] Start record → first partial < 600ms
 - [ ] Stop → summary < 1.5s for 2–3 min speech
-- [ ] Coalesce Spotlight updates; index on background tasks (title/notes added to Spotlight)
 
 File Management — Storage & Protection
 - [ ] Temp files cleaned after export/playback
@@ -59,7 +46,7 @@ Internationalization & Localization
 - [ ] Dates and numbers use locale formats
 
 iOS Shortcuts & App Intents
-- [ ] Appear as Spotlight suggestions
+ - [x] Appear as Spotlight suggestions
 
 iPad
 - [ ] iPad two-column layout (list + detail)

@@ -326,6 +326,8 @@ private struct ManageTagsView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Tag.name) private var tags: [Tag]
     @State private var newTag: String = ""
+    @State private var renamingTag: Tag? = nil
+    @State private var renameText: String = ""
     var body: some View {
         List {
             Section("New Tag") {
@@ -336,12 +338,23 @@ private struct ManageTagsView: View {
             }
             Section("All Tags") {
                 ForEach(tags) { tag in
-                    Text(tag.name)
+                    HStack { Text(tag.name); Spacer() }
+                        .swipeActions {
+                            Button("Rename") { renamingTag = tag; renameText = tag.name }.tint(.blue)
+                            Button(role: .destructive) {
+                                if let idx = tags.firstIndex(where: { $0.id == tag.id }) { delete(at: IndexSet(integer: idx)) }
+                            } label: { Label("Delete", systemImage: "trash") }
+                        }
                 }
                 .onDelete(perform: delete)
             }
         }
         .navigationTitle("Manage Tags")
+        .alert("Rename Tag", isPresented: Binding(get: { renamingTag != nil }, set: { if !$0 { renamingTag = nil } })) {
+            TextField("Name", text: $renameText)
+            Button("Save") { renameTag() }
+            Button("Cancel", role: .cancel) { renamingTag = nil }
+        }
     }
 
     private func addTag() {
@@ -360,6 +373,23 @@ private struct ManageTagsView: View {
             modelContext.delete(tags[index])
         }
         try? modelContext.save()
+    }
+
+    private func renameTag() {
+        guard let tag = renamingTag else { return }
+        let name = renameText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !name.isEmpty else { return }
+        if let existing = tags.first(where: { $0.name.caseInsensitiveCompare(name) == .orderedSame && $0.id != tag.id }) {
+            // Merge entries into existing tag and delete the old tag
+            for e in tag.entries where !existing.entries.contains(where: { $0.id == e.id }) {
+                existing.entries.append(e)
+            }
+            modelContext.delete(tag)
+        } else {
+            tag.name = name
+        }
+        try? modelContext.save()
+        renamingTag = nil
     }
 }
 
