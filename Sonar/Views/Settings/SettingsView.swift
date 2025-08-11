@@ -90,20 +90,61 @@ struct SettingsView: View {
 
 private struct TTSSettingsView: View {
     @Environment(\.tts) private var tts
+    @Query private var settingsRows: [UserSettings]
     @State private var selectedVoiceIdentifier: String? = nil
     @State private var rate: Float = 0.5
     @State private var pitch: Float = 1.0
+    private let samplePhrases: [String] = [
+        "Hi, I'm Sonar. I'll read your summaries just like this.",
+        "Hello from Sonar. Here's a quick preview of your journal voice.",
+        "Hey! Sonar here. This is how entries will sound when spoken.",
+        "Nice to meet you! I'm Sonar, reading a sample out loud.",
+        "Welcome to Sonar. Your summaries can be read in this voice.",
+        "Hi there, this is Sonar giving you a quick voice check.",
+        "Sonar speaking! Here's a short sample for you.",
+        "Preview from Sonar: this is your reading voice."
+    ]
+
+    private func randomSample() -> String {
+        samplePhrases.randomElement() ?? "Hi from Sonar."
+    }
+
+    private var voicesByLanguage: [(code: String, display: String, voices: [AVSpeechSynthesisVoice])] {
+        let all = tts.availableVoices()
+        var grouped: [String: [AVSpeechSynthesisVoice]] = [:]
+        for v in all { grouped[v.language, default: []].append(v) }
+
+        var result: [(code: String, display: String, voices: [AVSpeechSynthesisVoice])] = []
+        for (code, voices) in grouped {
+            var seenNames: Set<String> = []
+            let dedup = voices.filter { v in
+                if seenNames.contains(v.name) { return false }
+                seenNames.insert(v.name)
+                return true
+            }.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+            let display = Locale.current.localizedString(forIdentifier: code) ?? code
+            result.append((code: code, display: display, voices: dedup))
+        }
+        result.sort(by: { lhs, rhs in
+            lhs.display.localizedCaseInsensitiveCompare(rhs.display) == .orderedAscending
+        })
+        return result
+    }
     var body: some View {
         List {
-            Section("Voice") {
-                ForEach(tts.availableVoices(), id: \.identifier) { voice in
-                    Button {
+            ForEach(voicesByLanguage, id: \.code) { group in
+                Section(group.display) {
+                    ForEach(group.voices, id: \.identifier) { voice in
+                        Button {
                         selectedVoiceIdentifier = voice.identifier
-                    } label: {
-                        HStack {
-                            Text(voice.name)
-                            Spacer()
-                            if selectedVoiceIdentifier == voice.identifier { Image(systemName: "checkmark") }
+                        tts.stop()
+                        tts.speak(randomSample(), voice: voice, rate: rate, pitch: pitch)
+                        } label: {
+                            HStack {
+                                Text(voice.name)
+                                Spacer()
+                                if selectedVoiceIdentifier == voice.identifier { Image(systemName: "checkmark") }
+                            }
                         }
                     }
                 }
@@ -113,12 +154,29 @@ private struct TTSSettingsView: View {
                 Slider(value: Binding(get: { Double(pitch) }, set: { pitch = Float($0) }), in: 0.5 ... 2.0) { Text("Pitch") }
                 Button("Play sample") {
                     let voice = tts.availableVoices().first(where: { $0.identifier == selectedVoiceIdentifier })
-                    tts.speak("This is your Sonar summary voice.", voice: voice, rate: rate, pitch: pitch)
+                    tts.speak(randomSample(), voice: voice, rate: rate, pitch: pitch)
                 }
                 Button("Stop") { tts.stop() }
             }
         }
         .navigationTitle("Text-to-speech")
+        .task { hydrate() }
+        .onDisappear { persist() }
+    }
+
+    private func hydrate() {
+        let s = settingsRows.first
+        selectedVoiceIdentifier = s?.ttsVoiceIdentifier
+        rate = Float(s?.ttsRate ?? 0.5)
+        pitch = Float(s?.ttsPitch ?? 1.0)
+    }
+
+    private func persist() {
+        guard let settings = settingsRows.first else { return }
+        settings.ttsVoiceIdentifier = selectedVoiceIdentifier
+        settings.ttsRate = Double(rate)
+        settings.ttsPitch = Double(pitch)
+        try? settings.modelContext?.save()
     }
 }
 

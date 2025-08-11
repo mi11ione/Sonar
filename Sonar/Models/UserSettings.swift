@@ -9,6 +9,10 @@ final class UserSettings {
     var dailyReminderHour: Int?
     var selectedPromptStyleId: UUID?
     var allowOnDeviceOnly: Bool
+    // Text-to-speech preferences
+    var ttsVoiceIdentifier: String?
+    var ttsRate: Double
+    var ttsPitch: Double
 
     init(id: UUID = .init()) {
         self.id = id
@@ -17,5 +21,8 @@ final class UserSettings {
         dailyReminderHour = nil
         selectedPromptStyleId = nil
         allowOnDeviceOnly = true
+        ttsVoiceIdentifier = nil
+        ttsRate = 0.5
+        ttsPitch = 1.0
     }
 }

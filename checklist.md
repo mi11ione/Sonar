@@ -78,7 +78,7 @@ Entry — Detail
 - [x] Mood chip with label/score
 - [x] Audio playback with scrubber and speed control (UI stub)
 - [x] Edit title/notes (optional short title)
-- [ ] Text-to-speech playback with chosen voice
+- [x] Text-to-speech playback with chosen voice
 - [x] Edit tags inline
 - [x] Assign to a thread inline
 - [x] Pin/unpin in toolbar
@@ -166,7 +166,7 @@ Settings — Control & Confidence
 - [ ] Encryption toggle for transcripts/audio
 - [ ] Export data (ZIP) and Import (advanced)
 - [x] Default summary style selector
-- [ ] Text-to-speech voice and rate selection
+- [x] Text-to-speech voice and rate selection
 - [x] Notification preferences (hour, enable/disable)
 - [ ] Daily prompt enable/disable
 - [x] App version and build visible
@@ -197,7 +197,7 @@ Performance — Budgets & Profiling
 - [ ] Start record → first partial < 600ms
 - [ ] Stop → summary < 1.5s for 2–3 min speech
 - [x] Reuse NLEmbedding and avoid repeated allocations
-- [ ] Coalesce Spotlight updates; index on background tasks
+- [ ] Coalesce Spotlight updates; index on background tasks (title/notes added to Spotlight)
 
 File Management — Storage & Protection
 - [ ] Audio stored under Library/Application Support/Audio with UUID filenames

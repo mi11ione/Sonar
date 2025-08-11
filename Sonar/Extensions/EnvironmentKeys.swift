@@ -7,6 +7,7 @@ private struct MoodKey: EnvironmentKey { static let defaultValue: any MoodAnalys
 private struct IndexingKey: EnvironmentKey { static let defaultValue: any SearchIndexingService = DefaultSearchIndexingService() }
 private struct PurchasesKey: EnvironmentKey { static let defaultValue: any PurchasesService = DefaultPurchasesService() }
 private struct TTSKey: EnvironmentKey { static let defaultValue: any TextToSpeechService = DefaultTextToSpeechService() }
+private struct InsightsKey: EnvironmentKey { static let defaultValue: any InsightsService = DefaultInsightsService() }
 
 extension EnvironmentValues {
     var transcription: any SpeechTranscriptionService {
@@ -37,5 +38,10 @@ extension EnvironmentValues {
     var tts: any TextToSpeechService {
         get { self[TTSKey.self] }
         set { self[TTSKey.self] = newValue }
+    }
+
+    var insights: any InsightsService {
+        get { self[InsightsKey.self] }
+        set { self[InsightsKey.self] = newValue }
     }
 }

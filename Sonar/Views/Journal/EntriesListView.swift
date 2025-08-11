@@ -36,15 +36,14 @@ struct EntriesListView: View {
         .navigationTitle("Journal")
         .toolbar {
             ToolbarItem(placement: .topBarLeading) { filterMenu }
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItemGroup(placement: .topBarTrailing) {
                 if !selection.isEmpty {
                     Button(role: .destructive) { deleteSelected() } label: { Label("Delete", systemImage: "trash") }
                 } else {
+                    NavigationLink(destination: ThreadsListView()) { Image(systemName: "rectangle.connected.to.line.below") }
+                    NavigationLink(destination: InsightsView()) { Image(systemName: "chart.line.uptrend.xyaxis") }
                     EditButton()
                 }
-            }
-            ToolbarItem(placement: .bottomBar) {
-                NavigationLink(destination: ThreadsListView()) { Label("Threads", systemImage: "rectangle.connected.to.line.below") }
             }
         }
         .searchable(text: $query)
@@ -178,7 +177,7 @@ struct EntriesListView: View {
 
     private func displayText(for entry: JournalEntry, matchedBy query: String, maxLength: Int = 160) -> String {
         guard !query.isEmpty else {
-            return entry.summary ?? String(entry.transcript.prefix(80))
+            return entry.title ?? entry.summary ?? String(entry.transcript.prefix(80))
         }
 
         let summary = entry.summary ?? ""
@@ -188,7 +187,7 @@ struct EntriesListView: View {
         if let snippet = contextualSnippet(from: entry.transcript, query: query, maxLength: maxLength), !snippet.isEmpty {
             return snippet
         }
-        return entry.summary ?? String(entry.transcript.prefix(80))
+        return entry.title ?? entry.summary ?? String(entry.transcript.prefix(80))
     }
 
     private func contextualSnippet(from text: String, query: String, maxLength: Int) -> String? {

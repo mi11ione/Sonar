@@ -62,7 +62,7 @@ struct EntryDetailView: View {
                 Spacer(minLength: 12)
                 HStack {
                     ShareLink(item: entry.summary ?? entry.transcript) { Label("Share", systemImage: "square.and.arrow.up") }
-                    Button { tts.speak(entry.summary ?? entry.transcript, voice: nil, rate: 0.5, pitch: 1.0) } label: { Label("Read", systemImage: "speaker.wave.2.fill") }
+                    Button { speakSummary() } label: { Label("Read", systemImage: "speaker.wave.2.fill") }
                         .buttonStyle(.bordered)
                 }
             }
@@ -119,6 +119,15 @@ struct EntryDetailView: View {
         try? modelContext.save()
         Task { await indexing.deleteIndex(for: entry.id) }
         dismiss()
+    }
+
+    @Query private var settingsRows: [UserSettings]
+    private func speakSummary() {
+        let s = settingsRows.first
+        let voice = tts.availableVoices().first { $0.identifier == s?.ttsVoiceIdentifier }
+        let rate = Float(s?.ttsRate ?? 0.5)
+        let pitch = Float(s?.ttsPitch ?? 1.0)
+        tts.speak(entry.summary ?? entry.transcript, voice: voice, rate: rate, pitch: pitch)
     }
 }
 
