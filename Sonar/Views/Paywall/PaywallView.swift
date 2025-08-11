@@ -17,43 +17,41 @@ struct PaywallView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 16) {
-                Text("Unlock Sonar")
-                    .font(.largeTitle.bold())
-                Text("Unlimited entries, custom styles, and insights.")
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(.secondary)
+            ScrollView {
+                VStack(spacing: 20) {
+                    Text("Unlock Sonar").font(.largeTitle.bold())
+                    Text("Unlimited entries, custom styles, and insights.")
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.secondary)
 
-                if isLoading {
-                    ProgressView()
-                } else if products.isEmpty {
-                    ContentUnavailableView("No products", systemImage: "cart")
-                } else {
-                    ForEach(products, id: \.id) { product in
-                        Button {
-                            Task { _ = try? await product.purchase() }
-                        } label: {
-                            VStack(alignment: .leading) {
-                                Text(product.displayName).font(.headline)
-                                Text(product.displayPrice).font(.subheadline).foregroundStyle(.secondary)
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                    if isLoading {
+                        ProgressView()
+                    } else if products.isEmpty {
+                        ContentUnavailableView("No products", systemImage: "cart")
+                    } else {
+                        // Native StoreKit product views with one-tap purchase
+                        ForEach(products, id: \.id) { product in
+                            ProductView(product, prefersPromotionalIcon: true)
+                                .productViewStyle(.regular)
+                                .productDescription(.visible)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding()
+                                .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12))
                         }
-                        .buttonStyle(.borderedProminent)
+                        Button("Restore Purchases") { Task { try? await purchases.restore() } }
+                            .buttonStyle(.plain)
+                            .padding(.top, 4)
                     }
-                    Button("Restore Purchases") { Task { try? await purchases.restore() } }
-                        .buttonStyle(.plain)
-                        .padding(.top, 4)
+                    Spacer()
+                    VStack(spacing: 6) {
+                        Button("Terms of Service") { openLegal(urlString: "https://example.com/terms") }
+                            .buttonStyle(.plain)
+                        Button("Privacy Policy") { openLegal(urlString: "https://example.com/privacy") }
+                            .buttonStyle(.plain)
+                    }
                 }
-                Spacer()
-                VStack(spacing: 6) {
-                    Button("Terms of Service") { openLegal(urlString: "https://example.com/terms") }
-                        .buttonStyle(.plain)
-                    Button("Privacy Policy") { openLegal(urlString: "https://example.com/privacy") }
-                        .buttonStyle(.plain)
-                }
+                .padding()
             }
-            .padding()
             .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Close") { dismiss() } } }
             .task { await loadProducts() }
         }

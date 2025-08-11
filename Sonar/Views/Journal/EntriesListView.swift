@@ -45,6 +45,7 @@ struct EntriesListView: View {
             }
         }
         .searchable(text: $query)
+        .sensoryFeedback(.selection, trigger: query.isEmpty)
         .overlay {
             if entries.isEmpty {
                 ContentUnavailableView(
