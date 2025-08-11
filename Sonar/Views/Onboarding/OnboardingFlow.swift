@@ -58,6 +58,9 @@ struct OnboardingFlow: View {
             Spacer(minLength: 8)
             Button("Continue") { step = 1 }
                 .buttonStyle(.borderedProminent)
+            Text("You can always find past entries in the Journal tab and search later.")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
         }
     }
 

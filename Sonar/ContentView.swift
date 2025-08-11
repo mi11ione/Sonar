@@ -35,7 +35,7 @@ struct ContentView: View {
             case "start-recording":
                 selectedTab = 0
                 deepLinkStart = true
-            case "open-search":
+            case "summarize-last":
                 selectedTab = 1
             case "last-entry":
                 selectedTab = 1

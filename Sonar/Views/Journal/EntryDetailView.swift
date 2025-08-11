@@ -9,6 +9,8 @@ struct EntryDetailView: View {
 
     @State var entry: JournalEntry
     @State private var confirmDelete: Bool = false
+    @State private var showingMoodInfo: Bool = false
+    @State private var showingTagSheet: Bool = false
 
     var body: some View {
         ScrollView {
@@ -20,12 +22,22 @@ struct EntryDetailView: View {
                         }
                 }
                 if let score = entry.moodScore, let label = entry.moodLabel {
-                    MoodBadge(label: label, score: score)
+                    HStack(spacing: 8) {
+                        MoodBadge(label: label, score: score)
+                        Button {
+                            showingMoodInfo = true
+                        } label: {
+                            Image(systemName: "info.circle")
+                        }.buttonStyle(.plain)
+                    }
                 }
                 if let audio = entry.audio {
                     Divider()
                     AudioPlayerView(url: audio.resolvedFileURL)
                 }
+                Divider()
+                // Tags editor
+                tagsEditor
                 Divider()
                 Text(entry.transcript)
                     .font(.body)
@@ -53,6 +65,19 @@ struct EntryDetailView: View {
         } message: {
             Text("This action cannot be undone.")
         }
+        .sheet(isPresented: $showingMoodInfo) {
+            NavigationStack {
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("About mood signal").font(.title2.bold())
+                    Text("Sonar estimates mood locally using Apple's on‑device sentiment. Scores range from −1 to +1 and are grouped as Negative, Neutral, or Positive. Your content never leaves the device.")
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                }
+                .padding()
+                .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Close") { showingMoodInfo = false } } }
+            }
+            .presentationDetents([.medium])
+        }
     }
 
     @Environment(\.summarization) private var summarization
@@ -73,6 +98,125 @@ struct EntryDetailView: View {
         try? modelContext.save()
         Task { await indexing.deleteIndex(for: entry.id) }
         dismiss()
+    }
+}
+
+// MARK: - Tags Editor
+
+private extension EntryDetailView {
+    @ViewBuilder var tagsEditor: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("Tags").font(.headline)
+                Spacer()
+                Button { showingTagSheet = true } label: { Label("Edit", systemImage: "tag") }
+                    .buttonStyle(.bordered)
+            }
+            if entry.tags.isEmpty {
+                Text("No tags").foregroundStyle(.secondary)
+            } else {
+                FlowLayout(entry.tags.map(\.name)) { name in
+                    Text(name)
+                        .font(.caption)
+                        .padding(.horizontal, 8).padding(.vertical, 4)
+                        .background(Color.accentColor.opacity(0.15), in: Capsule())
+                }
+            }
+        }
+        .sheet(isPresented: $showingTagSheet) { TagsSheet(entry: $entry) }
+    }
+}
+
+// MARK: - Tags Sheet
+
+private struct TagsSheet: View {
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
+    @Query(sort: \Tag.name) private var allTags: [Tag]
+    @Binding var entry: JournalEntry
+    @State private var newTagName: String = ""
+
+    var body: some View {
+        NavigationStack {
+            List {
+                Section("Add Tag") {
+                    HStack {
+                        TextField("New tag", text: $newTagName)
+                        Button("Add") { addTag() }.disabled(newTagName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    }
+                }
+                Section("All Tags") {
+                    ForEach(allTags) { tag in
+                        Button {
+                            toggle(tag)
+                        } label: {
+                            HStack {
+                                Text(tag.name)
+                                Spacer()
+                                if entry.tags.contains(where: { $0.id == tag.id }) { Image(systemName: "checkmark") }
+                            }
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Edit Tags")
+            .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Done") { dismiss() } } }
+        }
+    }
+
+    private func addTag() {
+        let name = newTagName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !name.isEmpty else { return }
+        if let existing = allTags.first(where: { $0.name.caseInsensitiveCompare(name) == .orderedSame }) {
+            toggle(existing)
+        } else {
+            let t = Tag(name: name)
+            modelContext.insert(t)
+            entry.tags.append(t)
+            try? modelContext.save()
+        }
+        newTagName = ""
+    }
+
+    private func toggle(_ tag: Tag) {
+        if let idx = entry.tags.firstIndex(where: { $0.id == tag.id }) {
+            entry.tags.remove(at: idx)
+        } else {
+            entry.tags.append(tag)
+        }
+        try? modelContext.save()
+    }
+}
+
+// MARK: - Simple flow layout for tag chips
+
+private struct FlowLayout<Data: RandomAccessCollection, Content: View>: View where Data.Element: Hashable {
+    private let data: Data
+    private let content: (Data.Element) -> Content
+    init(_ data: Data, content: @escaping (Data.Element) -> Content) {
+        self.data = data
+        self.content = content
+    }
+
+    var body: some View {
+        var width: CGFloat = .zero
+        var height: CGFloat = .zero
+        return GeometryReader { geometry in
+            ZStack(alignment: .topLeading) {
+                ForEach(Array(data), id: \.self) { item in
+                    content(item)
+                        .padding(4)
+                        .alignmentGuide(.leading) { d in
+                            if abs(width - d.width) > geometry.size.width { width = 0; height -= d.height }
+                            let result = width
+                            if item == data.last { width = 0 } else { width -= d.width }
+                            return result
+                        }
+                        .alignmentGuide(.top) { _ in height }
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, minHeight: 0)
     }
 }
 

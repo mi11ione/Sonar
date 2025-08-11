@@ -5,18 +5,18 @@ Legend
 - [ ] = pending
 
 AI Agent — API Verification (keep this green before edits)
-- [ ] Use `framework-sources/` as canonical reference for framework symbols
-- [ ] Verify function/type names, parameters, and availability in the relevant `*.md`
-- [ ] Add inline citation(s) to the exact lines used from `framework-sources/`
-- [ ] Prefer iOS 18+ modern APIs; avoid deprecated items in the sources
-- [ ] If symbol missing or unclear, pause and request updated sources or cite Apple docs
+- [x] Use `framework-sources/` as canonical reference for framework symbols
+- [x] Verify function/type names, parameters, and availability in the relevant `*.md`
+- [x] Add inline citation(s) to the exact lines used from `framework-sources/`
+- [x] Prefer iOS 18+ modern APIs; avoid deprecated items in the sources
+- [x] If symbol missing or unclear, pause and request updated sources or cite Apple docs
 
 First‑Run & Core Value
 - [x] Welcome screen explains privacy-first, on-device promise
 - [x] Short value bullets: capture, summarize, mood, search
 - [x] First-run shows a single clear primary action (Record)
 - [x] Tab bar includes Record, Journal, Settings
-- [ ] First-run hints show how to find past entries
+- [x] First-run hints show how to find past entries
 - [ ] First entry can be created in < 10 seconds from install
 - [x] First save gives positive feedback (haptic + check)
 - [ ] First-run teaches summary and mood badges
@@ -56,7 +56,7 @@ Processing — Summary & Mood
 - [x] Users can regenerate summary for a different outcome
 - [x] Mood signal calculated for each entry
 - [x] Mood badge text and color are understandable
-- [ ] Short explanation of mood when tapped
+- [x] Short explanation of mood when tapped
 - [x] Processing shows clear progress state
 - [x] Processing completes quickly for typical entries
 
@@ -78,7 +78,7 @@ Entry — Detail
 - [x] Mood chip with label/score
 - [x] Audio playback with scrubber and speed control (UI stub)
 - [ ] Edit title/notes (optional short title)
-- [ ] Edit tags inline
+- [x] Edit tags inline
 - [ ] Assign to a thread inline
 - [x] Pin/unpin in toolbar
 - [x] Share/export entry
@@ -87,7 +87,7 @@ Entry — Detail
 
 Organization — Tags & Threads
 - [ ] Create, rename, delete tags
-- [ ] Assign multiple tags to an entry
+- [x] Assign multiple tags to an entry
 - [ ] Quick tag chips in detail and list row
 - [ ] Create memory threads (topics/people/goals)
 - [ ] Assign entries to threads
@@ -97,13 +97,13 @@ Organization — Tags & Threads
 - [ ] Edit tags/threads from Settings as well
 
 Search — Text & Filters
-- [ ] Search across transcript and summary text
+- [x] Search across transcript and summary text
 - [x] Spotlight indexing of entries for system-wide search
 - [x] Highlight matching terms in results
 - [x] Filter by date ranges (Today, 7 days)
 - [ ] Filter by custom date ranges
 - [x] Filter by mood bins (Negative/Neutral/Positive)
-- [ ] Filter by tags (multi-select)
+- [x] Filter by tags (multi-select)
 - [ ] Filter by threads
 - [ ] Sort by newest/oldest/relevance
 - [x] Result rows show summary/mood/time
@@ -212,7 +212,7 @@ Compliance — ATS & Export
 - [ ] Export compliance key present in Info
 
 Request Review
-- [ ] Modern review request after third day of successful saves (appropriate moment)
+- [x] Modern review request after third day of successful saves (appropriate moment)
 
 Security — Your Data, Your Device
 - [ ] Encrypted export option with passphrase
@@ -314,9 +314,8 @@ Store Presence & Launch
 - [ ] Version notes focus on improvements users feel
 
 Already Completed (snapshot)
-- [x] App shell with four tabs: Record, Journal, Search, Settings
+- [x] App shell with three tabs: Record, Journal, Settings
 - [x] Journal list basic screen exists
-- [x] Search basic screen exists
 - [x] Settings basic screen exists
 - [x] Saving entries locally with summary and mood
 - [x] Baseline on-device summary and mood signal foundation

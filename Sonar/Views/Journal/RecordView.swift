@@ -1,4 +1,5 @@
 import AVFoundation
+import StoreKit
 import SwiftData
 import SwiftUI
 
@@ -24,6 +25,7 @@ struct RecordView: View {
     @State private var showPaywall: Bool = false
     @State private var isPaused: Bool = false
     @State private var didDiscardToggle: Bool = false
+    @Environment(\.requestReview) private var requestReview
 
     var body: some View {
         VStack(spacing: 16) {
@@ -260,6 +262,7 @@ struct RecordView: View {
                 await indexing.index(entry: entry)
             }
             await gateUsagePostSave()
+            await requestReviewIfAppropriate()
         } catch {
             state = .error(error.localizedDescription)
         }
@@ -281,6 +284,14 @@ struct RecordView: View {
         if !subscribed {
             freeCount += 1
             if freeCount >= 3 { showPaywall = true }
+        }
+    }
+
+    private func requestReviewIfAppropriate() async {
+        // Use modern SwiftUI action from StoreKit
+        // Trigger sparingly; example: after 3rd successful save overall
+        if freeCount == 3 {
+            await MainActor.run { requestReview() }
         }
     }
 }

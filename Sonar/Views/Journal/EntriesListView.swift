@@ -172,8 +172,8 @@ struct EntriesListView: View {
 
         let matchLength = text.distance(from: matchRange.lowerBound, to: matchRange.upperBound)
         let availableContext = max(0, maxLength - matchLength)
-        var leftContext = availableContext / 2
-        var rightContext = availableContext - leftContext
+        let leftContext = availableContext / 2
+        let rightContext = availableContext - leftContext
 
         let startIndex = text.startIndex
         let endIndex = text.endIndex
@@ -181,7 +181,7 @@ struct EntriesListView: View {
         let startCandidate = text.index(matchRange.lowerBound, offsetBy: -leftContext, limitedBy: startIndex) ?? startIndex
         let endCandidate = text.index(matchRange.upperBound, offsetBy: rightContext, limitedBy: endIndex) ?? endIndex
 
-        var actualStart = startCandidate
+        let actualStart = startCandidate
         var actualEnd = endCandidate
 
         let currentLength = text.distance(from: actualStart, to: actualEnd)
