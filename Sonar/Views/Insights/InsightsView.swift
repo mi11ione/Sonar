@@ -9,6 +9,11 @@ struct InsightsView: View {
     @State private var lastFourWeeks: [[JournalEntry]] = []
     var body: some View {
         List {
+            Section("Privacy") {
+                Text("Insights are computed on your device. No summaries or transcripts leave your phone.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
             Section("Top themes") {
                 if weekly.topThemes.isEmpty { Text("No themes yet") } else { ForEach(weekly.topThemes, id: \.self, content: Text.init) }
             }
@@ -22,6 +27,10 @@ struct InsightsView: View {
             }
             Section("Highlights") {
                 if weekly.highlightSummaries.isEmpty { Text("No highlights yet") } else { ForEach(weekly.highlightSummaries, id: \.self, content: Text.init) }
+                if !weekly.highlightSummaries.isEmpty {
+                    ShareLink(item: weekly.highlightSummaries.joined(separator: "\n\n")) { Label("Share weekly highlights", systemImage: "square.and.arrow.up") }
+                        .buttonStyle(.bordered)
+                }
             }
             Section("Suggested prompts") {
                 Text("What energized you this week? What drained you?")

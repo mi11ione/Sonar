@@ -108,6 +108,7 @@ Insights — Weekly
 - [x] Highlights: notable summaries, pinned items
 - [x] Suggested prompts for reflection
 - [x] Users can opt out of insights
+ - [x] Share weekly highlights via ShareLink
 
 Notifications — Gentle Reminders
 - [x] Friendly opt-in prompt explaining value
@@ -123,6 +124,7 @@ App Shortcuts — Spotlight & Siri
 - [x] Summarize Last Entry shortcut
 - [x] Search Entries shortcut (tag/mood parameters)
 - [x] Shortcuts return clear result summaries
+- [x] Deep link support for search with filters via URL scheme
 
 Onboarding — 3 Screens Max
 - [x] Value + privacy promise in friendly tone
@@ -158,6 +160,8 @@ Paywall — Clear & Honest
 
 Privacy — Local First
 - [x] On-device processing stated and honored
+- [x] Sensitive screens blur in app switcher using privacySensitive()
+- [x] Spotlight indexing opt-out preference
 
 Performance — Budgets & Profiling
 - [x] Reuse NLEmbedding and avoid repeated allocations
@@ -171,6 +175,9 @@ Security — Your Data, Your Device
 Sharing, Export & Import
 - [x] Share selected entries (text summary/transcript)
 
+Crash Resilience — Recovery
+- [x] UI to salvage orphan audio recordings on next launch
+
 iOS Shortcuts & App Intents
 - [x] ≥ 3 App Intents implemented (Start Recording, Summarize Last Entry, Search Entries)
 - [x] Intents return clear result summaries
@@ -178,6 +185,7 @@ iOS Shortcuts & App Intents
 Navigation & Deep Links
 - [x] Deep link: start recording (code wired; add URL scheme `sonarai` in Info.plist)
 - [x] Deep link: open last entry
+- [x] Deep link: open search with filters
 
 Already Completed (snapshot)
 - [x] App shell with three tabs: Record, Journal, Settings

@@ -50,6 +50,7 @@ struct SonarApp: App {
                         await NotificationResponder.shared.scheduleDailyPrompt(atHour: hour)
                     }
                 }
+                .privacySensitive()
                 .task {
                     // Preload default prompt styles on first launch
                     let context = ModelContext(container)

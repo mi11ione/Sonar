@@ -3,6 +3,8 @@ import SwiftUI
 
 struct ThreadsListView: View {
     @Query(sort: \MemoryThread.title) private var threads: [MemoryThread]
+    @State private var renamingThread: MemoryThread? = nil
+    @State private var renameText: String = ""
     var body: some View {
         List {
             ForEach(threads) { thread in
@@ -11,12 +13,19 @@ struct ThreadsListView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(thread.title).font(.headline)
                             Text("\(thread.entries.count) entries").font(.caption).foregroundStyle(.secondary)
+                            // Simple inline highlights using most common tag names in this thread
+                            if let highlight = topThemes(for: thread).first {
+                                Text("Theme: \(highlight)").font(.caption2).foregroundStyle(.secondary)
+                            }
                         }
                         Spacer()
                         if let avg = averageMood(for: thread) {
                             MoodBadge(label: label(for: avg), score: avg)
                         }
                     }
+                }
+                .swipeActions(edge: .trailing) {
+                    Button("Rename") { renamingThread = thread; renameText = thread.title }.tint(.blue)
                 }
             }
         }
@@ -26,6 +35,11 @@ struct ThreadsListView: View {
                 ContentUnavailableView("No threads yet", systemImage: "rectangle.connected.to.line.below", description: Text("Assign entries to threads from entry details."))
             }
         }
+        .alert("Rename Thread", isPresented: Binding(get: { renamingThread != nil }, set: { if !$0 { renamingThread = nil } })) {
+            TextField("Title", text: $renameText)
+            Button("Save") { rename() }
+            Button("Cancel", role: .cancel) { renamingThread = nil }
+        }
     }
 
     private func averageMood(for thread: MemoryThread) -> Double? {
@@ -34,10 +48,25 @@ struct ThreadsListView: View {
         return scores.reduce(0, +) / Double(scores.count)
     }
 
+    private func topThemes(for thread: MemoryThread) -> [String] {
+        let tokens = thread.entries.flatMap { $0.tags.map(\.name) }
+        guard !tokens.isEmpty else { return [] }
+        let freq = Dictionary(grouping: tokens, by: { $0 }).mapValues(\.count)
+        return Array(freq.sorted { $0.value > $1.value }.prefix(3).map(\.key))
+    }
+
     private func label(for score: Double) -> String {
         if score > 0.2 { return "Positive" }
         if score < -0.2 { return "Negative" }
         return "Neutral"
+    }
+
+    private func rename() {
+        guard let thread = renamingThread else { return }
+        let title = renameText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !title.isEmpty else { return }
+        thread.title = title
+        renamingThread = nil
     }
 }
 

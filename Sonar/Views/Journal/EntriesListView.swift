@@ -20,6 +20,9 @@ struct EntriesListView: View {
         let others = entries.filter { !$0.isPinned }
 
         NavigationStack {
+            // Deep link to open search with parameters via custom URL
+            // e.g., sonarai://search?query=...&mood=positive&tag=...
+            // Handled via .onOpenURL in ContentView; we mirror via UserDefaults already
             // Hidden programmatic navigation to last entry when requested
             NavigationLink(isActive: $presentLastEntry) {
                 if let first = entries.first { EntryDetailView(entry: first) }
@@ -89,6 +92,15 @@ struct EntriesListView: View {
                     UserDefaults.standard.removeObject(forKey: "deeplink.showLastEntry")
                     // Only present if we actually have entries
                     if entries.first != nil { presentLastEntry = true }
+                }
+                // Handle deep link via URL parameters set by ContentView
+                if let urlPayload = UserDefaults.standard.dictionary(forKey: "deeplink.searchURL") {
+                    if let q = urlPayload["query"] as? String { query = q }
+                    if let tag = urlPayload["tag"] as? String { selectedTags = [tag] }
+                    if let mood = urlPayload["mood"] as? String {
+                        switch mood { case "negative": moodBin = 0; case "neutral": moodBin = 1; case "positive": moodBin = 2; default: break }
+                    }
+                    UserDefaults.standard.removeObject(forKey: "deeplink.searchURL")
                 }
             }
         }

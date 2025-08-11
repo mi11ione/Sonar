@@ -88,6 +88,14 @@ struct RecordView: View {
                 await startRecordingOrGate()
             }
         }
+        .privacySensitive()
+        .task { await checkForOrphanAudioToRecover() }
+        .alert("Recovered recording found", isPresented: $showRecoveryAlert) {
+            Button("Discard", role: .destructive) { discardRecovered() }
+            Button("Save") { Task { await saveRecovered() } }
+        } message: {
+            Text("A previous recording didn’t finish saving. You can save it as a new entry or discard it.")
+        }
     }
 
     @ViewBuilder private var micControl: some View {
@@ -110,7 +118,11 @@ struct RecordView: View {
                 }
                 MicButton(title: "Stop", systemImageName: "stop.fill", tint: .red) {
                     if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
-                    Task { await transcription.stop(); state = .review }
+                    Task {
+                        await transcription.stop()
+                        UserDefaults.standard.set(false, forKey: "recording.inProgress")
+                        state = .review
+                    }
                 }
             }
         case .recordingAudioOnly:
@@ -128,7 +140,11 @@ struct RecordView: View {
                 }
                 MicButton(title: "Stop", systemImageName: "stop.fill", tint: .red) {
                     if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
-                    Task { await transcription.stop(); state = .review }
+                    Task {
+                        await transcription.stop()
+                        UserDefaults.standard.set(false, forKey: "recording.inProgress")
+                        state = .review
+                    }
                 }
             }
         case .review:
@@ -183,6 +199,7 @@ struct RecordView: View {
             committedTranscript = ""
             do {
                 try await transcription.requestAuthorization()
+                UserDefaults.standard.set(true, forKey: "recording.inProgress")
                 if startTime == nil { startTime = .now }
                 lastResumeAt = Date()
                 elapsedBeforePause = 0
@@ -193,6 +210,7 @@ struct RecordView: View {
         case .recordingAudioOnly:
             do {
                 try await transcription.requestAuthorization()
+                UserDefaults.standard.set(true, forKey: "recording.inProgress")
                 if startTime == nil { startTime = .now }
                 lastResumeAt = Date()
                 elapsedBeforePause = 0
@@ -341,6 +359,59 @@ struct RecordView: View {
         if review.shouldRequestReview(after: .entrySaved, now: .now) {
             await MainActor.run { requestReview() }
         }
+    }
+
+    // MARK: - Recovery
+
+    @State private var recoveryURL: URL? = nil
+    @State private var showRecoveryAlert: Bool = false
+
+    private func checkForOrphanAudioToRecover() async {
+        guard state == .idle else { return }
+        // Clear stale flag if present
+        if UserDefaults.standard.bool(forKey: "recording.inProgress") == true {
+            UserDefaults.standard.set(false, forKey: "recording.inProgress")
+        }
+        let audioDir = (try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: false))?.appendingPathComponent("Audio", isDirectory: true)
+        guard let audioDir, let files = try? FileManager.default.contentsOfDirectory(at: audioDir, includingPropertiesForKeys: [.contentModificationDateKey], options: [.skipsHiddenFiles]) else { return }
+        // Build set of known asset filenames
+        let assets: [AudioAsset] = (try? modelContext.fetch(FetchDescriptor<AudioAsset>())) ?? []
+        let known: Set<String> = Set(assets.map(\.fileURL.lastPathComponent))
+        let orphans = files.filter { $0.pathExtension.lowercased() == "caf" && !known.contains($0.lastPathComponent) }
+        guard let url = orphans.sorted(by: { lhs, rhs in
+            let l = (try? lhs.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? .distantPast
+            let r = (try? rhs.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? .distantPast
+            return l > r
+        }).first else { return }
+        recoveryURL = url
+        showRecoveryAlert = true
+    }
+
+    private func discardRecovered() {
+        guard let url = recoveryURL else { return }
+        try? FileManager.default.removeItem(at: url)
+        recoveryURL = nil
+    }
+
+    private func saveRecovered() async {
+        guard let url = recoveryURL else { return }
+        do {
+            let entry = JournalEntry(transcript: "")
+            if let file = try? AVAudioFile(forReading: url) {
+                let rate = file.fileFormat.sampleRate
+                let duration = rate > 0 ? Double(file.length) / rate : 0
+                let asset = AudioAsset(fileURL: url, durationSec: duration, sampleRate: rate)
+                entry.audio = asset
+                entry.title = "Recovered recording"
+                entry.notes = "Recovered after an interruption."
+            }
+            modelContext.insert(entry)
+            try modelContext.save()
+            await indexing.index(entry: entry)
+        } catch {
+            // ignore
+        }
+        recoveryURL = nil
     }
 }
 

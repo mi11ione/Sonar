@@ -79,16 +79,21 @@ struct SettingsView: View {
                         get: { settings.weeklyInsightsEnabled },
                         set: { settings.weeklyInsightsEnabled = $0 }
                     ))
+                    Toggle("Spotlight indexing", isOn: Binding(
+                        get: { settings.spotlightIndexingEnabled },
+                        set: { settings.spotlightIndexingEnabled = $0; UserDefaults.standard.set($0, forKey: "pref.spotlightIndexing"); try? modelContext.save() }
+                    ))
                 }
                 Section("Data") {
                     Button("Export JSON (entries only)") { generateExportJSON() }
+                    Button("Delete all data", role: .destructive) { deleteAllData() }
                 }
             }
             Section("About") {
                 LabeledContent("Version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-")
                 Button("Privacy Policy") { open(url: "https://example.com/privacy") }
                 Button("Terms of Service") { open(url: "https://example.com/terms") }
-                Button("Contact Support") { open(url: "mailto:support@example.com?subject=Sonar%20Support") }
+                Button("Contact Support") { contactSupport() }
             }
         }
         .navigationTitle("Settings")
@@ -112,6 +117,16 @@ struct SettingsView: View {
     }
 
     private func open(url: String) { if let u = URL(string: url) { openURL(u) } }
+
+    private func contactSupport() {
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-"
+        let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
+        let subject = "Sonar Support"
+        let body = "\n\n—\nApp Version: \(appVersion)\nOS: \(osVersion)\n"
+        let query = "subject=\(subject)&body=\(body)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "subject=Sonar"
+        let urlString = "mailto:support@example.com?\(query)"
+        open(url: urlString)
+    }
 
     // MARK: - Lightweight JSON export
 
@@ -142,6 +157,35 @@ struct SettingsView: View {
         } catch {
             exportURL = nil
             showExporter = false
+        }
+    }
+
+    private func deleteAllData() {
+        // Danger: destructive reset of all user data in SwiftData store and local audio files
+        let entries: [JournalEntry] = (try? modelContext.fetch(FetchDescriptor<JournalEntry>())) ?? []
+        let threads: [MemoryThread] = (try? modelContext.fetch(FetchDescriptor<MemoryThread>())) ?? []
+        let tags: [Tag] = (try? modelContext.fetch(FetchDescriptor<Tag>())) ?? []
+        let assets: [AudioAsset] = (try? modelContext.fetch(FetchDescriptor<AudioAsset>())) ?? []
+        for e in entries {
+            modelContext.delete(e)
+        }
+        for t in threads {
+            modelContext.delete(t)
+        }
+        for t in tags {
+            modelContext.delete(t)
+        }
+        for a in assets {
+            modelContext.delete(a)
+        }
+        try? modelContext.save()
+        // Also remove audio folder contents
+        if let dir = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("Audio", isDirectory: true) {
+            if let items = try? FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil) {
+                for url in items {
+                    try? FileManager.default.removeItem(at: url)
+                }
+            }
         }
     }
 }

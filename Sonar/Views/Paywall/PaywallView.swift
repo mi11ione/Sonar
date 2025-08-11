@@ -12,8 +12,8 @@ struct PaywallView: View {
     private let productIds: [String] = [
         "sonar.pro.monthly",
         "sonar.premium.monthly",
-        "sonar.max.monthly",
         "sonar.premium.annual",
+        "sonar.lifetime",
     ]
     private let groupID = "sonar.subscriptions"
 

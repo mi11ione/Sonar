@@ -15,6 +15,8 @@ final class UserSettings {
     var ttsPitch: Double
     // Insights preferences
     var weeklyInsightsEnabled: Bool
+    // Spotlight indexing (privacy)
+    var spotlightIndexingEnabled: Bool
 
     init(id: UUID = .init()) {
         self.id = id
@@ -27,5 +29,6 @@ final class UserSettings {
         ttsRate = 0.5
         ttsPitch = 1.0
         weeklyInsightsEnabled = true
+        spotlightIndexingEnabled = true
     }
 }

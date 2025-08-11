@@ -35,6 +35,20 @@ struct ContentView: View {
             case "start-recording":
                 selectedTab = 0
                 deepLinkStart = true
+            case "search":
+                selectedTab = 1
+                if let comps = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+                    var payload: [String: Any] = [:]
+                    for item in comps.queryItems ?? [] {
+                        switch item.name {
+                        case "query": payload["query"] = item.value
+                        case "tag": payload["tag"] = item.value
+                        case "mood": payload["mood"] = item.value
+                        default: break
+                        }
+                    }
+                    UserDefaults.standard.set(payload, forKey: "deeplink.searchURL")
+                }
             case "summarize-last":
                 selectedTab = 1
             case "last-entry":

@@ -11,12 +11,12 @@ Record — Start & Control
 
 Organization — Tags & Threads
 - [ ] Create, rename, delete tags
-- [ ] Per-thread highlights: top themes, pinned items
+- [x] Per-thread highlights: top themes, pinned items
 - [ ] Filter by tags and threads in search
 
 Insights — Weekly
-- [ ] Privacy note that insights are on-device
-- [ ] Share weekly highlights
+ - [x] Privacy note that insights are on-device
+- [x] Share weekly highlights
 
 Widgets — Quick Actions
 - [ ] Quick Record widget (tap to record)
@@ -33,19 +33,19 @@ Live Activities — During Recording
 - [ ] Resilient across app/background transitions
 
 App Shortcuts — Spotlight & Siri
-- [ ] Shortcuts return clear success messages
+- [x] Shortcuts return clear success messages
 - [ ] Show up as suggestions in Spotlight
 
 Settings — Control & Confidence
-- [ ] Encryption toggle for transcripts/audio
+ - [ ] Encryption toggle for transcripts/audio
 
 Privacy — Local First
 - [ ] No account, no third-party analytics
 - [ ] Clear explanation of what’s stored
-- [ ] Easy export or delete of personal data
+- [x] Easy export or delete of personal data
 - [ ] Privacy Manifest accurately describes use
-- [ ] Spotlight indexing opt-out if encrypting
-- [ ] Sensitive screens respect privacy (blur in app switcher if desired)
+ - [x] Spotlight indexing opt-out if encrypting
+ - [x] Sensitive screens respect privacy (blur in app switcher)
 
 Performance — Budgets & Profiling
 - [ ] Start record → first partial < 600ms
@@ -53,13 +53,13 @@ Performance — Budgets & Profiling
 - [ ] Coalesce Spotlight updates; index on background tasks (title/notes added to Spotlight)
 
 File Management — Storage & Protection
-- [ ] Audio stored under Library/Application Support/Audio with UUID filenames
-- [ ] File protection set to CompleteUntilFirstUserAuthentication
+- [x] Audio stored under Library/Application Support/Audio with UUID filenames
+- [x] File protection set to CompleteUntilFirstUserAuthentication
 - [ ] Temp files cleaned after export/playback
 
 Crash Resilience — Recovery
 - [ ] Engine/session safely stopped on relaunch after crash
-- [ ] UI to recover/salvage partial audio if present
+ - [x] UI to recover/salvage partial audio if present
 - [ ] Critical steps wrapped with user-visible fallback
 
 Accessibility — Inclusive by Default
@@ -103,7 +103,7 @@ iPad
 Navigation & Deep Links
 - [ ] Navigation is predictable and reversible
 - [ ] Back behavior matches user expectations
-- [ ] Deep link: open search with filters
+ - [x] Deep link: open search with filters
 
 Offline & Reliability
 - [ ] Recording works with no connectivity
@@ -114,7 +114,7 @@ Offline & Reliability
 
 Trust, Help & Support
 - [ ] In-app “How it works” in Settings
-- [ ] Contact support via email draft with context
+- [x] Contact support via email draft with context
 - [ ] Clear privacy stance reiterated
 - [ ] Changelog or “What’s new” view for updates
 
