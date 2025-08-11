@@ -41,6 +41,7 @@ struct EntryDetailView: View {
                 if let audio = entry.audio {
                     Divider()
                     AudioPlayerView(url: audio.resolvedFileURL)
+                        .id(audio.resolvedFileURL)
                 }
                 if entry.audio == nil {
                     Text("No audio attached")
@@ -393,6 +394,9 @@ private struct AudioPlayerView: View {
             isPlaying = false
             progressTask?.cancel()
             progressTask = nil
+            player?.delegate = nil
+            playerDelegate.onFinish = nil
+            player = nil
         }
     }
 

@@ -10,6 +10,7 @@ import OSLog
 import SwiftData
 import SwiftUI
 import UserNotifications
+internal import AVFAudio
 
 @main
 struct SonarApp: App {
@@ -41,6 +42,11 @@ struct SonarApp: App {
                     Task { await NotificationResponder.shared.registerCategories() }
                     // Review: track active days for cadence heuristics
                     DefaultReviewRequestService().recordAppActive(now: .now)
+                    // Safety: ensure audio session/engine are not left running from a prior crash
+                    Task { await DefaultTranscriptionService().stop() }
+                    try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+                    // Clean up any leftover temporary export files
+                    cleanupTemporaryExports()
                 }
                 .task {
                     // Schedule daily prompt notification content if enabled
@@ -77,6 +83,16 @@ struct SonarApp: App {
 final class MXObserver: NSObject, MXMetricManagerSubscriber {
     func didReceive(_: [MXMetricPayload]) {}
     func didReceive(_: [MXDiagnosticPayload]) {}
+}
+
+private func cleanupTemporaryExports() {
+    let fm = FileManager.default
+    let tmp = fm.temporaryDirectory
+    let candidates = ["Sonar-Export.json", "Sonar-Export.zip", "Sonar-Temp-Playback.caf"]
+    for name in candidates {
+        let url = tmp.appendingPathComponent(name)
+        if fm.fileExists(atPath: url.path) { try? fm.removeItem(at: url) }
+    }
 }
 
 final class NotificationResponder: NSObject, UNUserNotificationCenterDelegate {

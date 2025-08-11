@@ -23,6 +23,7 @@ struct RecordView: View {
     @State private var reviewText: String = ""
     @AppStorage("freeCount") private var freeCount: Int = 0
     @AppStorage("deeplink.startRecording") private var deepLinkStart: Bool = false
+    @AppStorage("firstRunEducationShown") private var firstRunEducationShown: Bool = false
     @State private var showPaywall: Bool = false
     @State private var isPaused: Bool = false
     @State private var didDiscardToggle: Bool = false
@@ -81,6 +82,7 @@ struct RecordView: View {
         .task(id: state) { await handleStateChange() }
         .task(id: lastResumeAt) { await enforceLongSessionGuardIfNeeded() }
         .sheet(isPresented: $showPaywall) { PaywallView() }
+        .sheet(isPresented: $showFirstRunTeach) { FirstRunTeachSheet() }
         .onChange(of: showPaywall) { if showPaywall { review.recordPaywallShown(now: .now) } }
         .task {
             if deepLinkStart {
@@ -90,6 +92,7 @@ struct RecordView: View {
         }
         .privacySensitive()
         .task { await checkForOrphanAudioToRecover() }
+        .onDisappear { restoreBackgroundTaskIfAny() }
         .alert("Recovered recording found", isPresented: $showRecoveryAlert) {
             Button("Discard", role: .destructive) { discardRecovered() }
             Button("Save") { Task { await saveRecovered() } }
@@ -121,6 +124,7 @@ struct RecordView: View {
                     Task {
                         await transcription.stop()
                         UserDefaults.standard.set(false, forKey: "recording.inProgress")
+                        restoreBackgroundTaskIfAny()
                         state = .review
                     }
                 }
@@ -143,6 +147,7 @@ struct RecordView: View {
                     Task {
                         await transcription.stop()
                         UserDefaults.standard.set(false, forKey: "recording.inProgress")
+                        restoreBackgroundTaskIfAny()
                         state = .review
                     }
                 }
@@ -203,6 +208,7 @@ struct RecordView: View {
                 if startTime == nil { startTime = .now }
                 lastResumeAt = Date()
                 elapsedBeforePause = 0
+                beginBackgroundAudioAllowance()
                 await streamTranscription()
             } catch {
                 state = .error(error.localizedDescription)
@@ -214,6 +220,7 @@ struct RecordView: View {
                 if startTime == nil { startTime = .now }
                 lastResumeAt = Date()
                 elapsedBeforePause = 0
+                beginBackgroundAudioAllowance()
                 try await transcription.startAudioOnlyRecording()
             } catch {
                 state = .error(error.localizedDescription)
@@ -330,6 +337,10 @@ struct RecordView: View {
             }
             await gateUsagePostSave()
             await requestReviewIfAppropriate()
+            if !firstRunEducationShown {
+                firstRunEducationShown = true
+                await MainActor.run { showFirstRunTeach = true }
+            }
         } catch {
             state = .error(error.localizedDescription)
         }
@@ -359,6 +370,54 @@ struct RecordView: View {
         if review.shouldRequestReview(after: .entrySaved, now: .now) {
             await MainActor.run { requestReview() }
         }
+    }
+
+    // MARK: - Long-running capture helpers
+
+    private func beginBackgroundAudioAllowance() {
+        // With UIBackgroundModes(audio) enabled in Info.plist and an active AVAudioSession
+        // configured by DefaultTranscriptionService, recording continues when the screen locks.
+        // No additional imperative work needed in the view.
+    }
+
+    private func restoreBackgroundTaskIfAny() {
+        // No-op: we are not manually managing background tasks here.
+    }
+
+    // MARK: - First run education
+
+    @State private var showFirstRunTeach: Bool = false
+
+    private struct FirstRunTeachSheet: View {
+        var body: some View {
+            NavigationStack {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("What you’ll see next").font(.title.bold())
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Summary")
+                            .font(.headline)
+                        Text("Sonar creates a short, on‑device summary to help you revisit entries quickly.")
+                            .foregroundStyle(.secondary)
+                        Text("• Made privately on your device\n• No cloud processing\n• You can change the style in Settings")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                    }
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Mood badge").font(.headline)
+                        HStack(spacing: 8) {
+                            MoodBadge(label: "Positive", score: 0.6)
+                            Text("A quick signal from −1 to +1 (Negative/Neutral/Positive), computed on device.")
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    Spacer()
+                }
+                .padding()
+                .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Done") { dismiss() } } }
+            }
+        }
+
+        @Environment(\.dismiss) private var dismiss
     }
 
     // MARK: - Recovery

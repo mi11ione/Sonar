@@ -42,7 +42,12 @@ struct OnboardingFlow: View {
                 }
                 HStack(alignment: .top, spacing: 8) {
                     Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
-                    Text("Instant summaries tailored to your style.")
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Instant summaries and mood at a glance.")
+                        Text("Summaries are computed on your device; mood badges use local sentiment and never leave your phone.")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                    }
                 }
                 HStack(alignment: .top, spacing: 8) {
                     Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
@@ -55,8 +60,12 @@ struct OnboardingFlow: View {
                 }
                 HStack(spacing: 8) {
                     Image(systemName: "lock.fill").foregroundStyle(.green)
-                    Text("No account required. Your data stays on device. Free plan includes 3 saves; upgrade anytime.")
-                        .foregroundStyle(.secondary)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("No account required. Your data stays on device. Free plan includes 3 saves; upgrade anytime.")
+                        Text("What’s stored: audio files and transcripts live only on your device by default. You can export or delete them anytime in Settings.")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                    }
                 }
             }
             Toggle("On-device transcription only", isOn: $onDeviceOnly)

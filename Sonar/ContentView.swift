@@ -11,6 +11,7 @@ struct ContentView: View {
     @AppStorage("onboardingComplete") private var onboardingComplete: Bool = false
     @AppStorage("deeplink.startRecording") private var deepLinkStart: Bool = false
     @State private var selectedTab: Int = 0
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     var body: some View {
         Group {
             if onboardingComplete {
@@ -18,7 +19,7 @@ struct ContentView: View {
                     NavigationStack { RecordView() }
                         .tabItem { Label("Record", systemImage: "mic.fill") }
                         .tag(0)
-                    NavigationStack { EntriesListView() }
+                    journalTab
                         .tabItem { Label("Journal", systemImage: "book.closed") }
                         .tag(1)
                     NavigationStack { SettingsView() }
@@ -69,6 +70,18 @@ struct ContentView: View {
                 selectedTab = 1
                 UserDefaults.standard.removeObject(forKey: "deeplink.showLastEntry")
             }
+        }
+    }
+
+    @ViewBuilder private var journalTab: some View {
+        if horizontalSizeClass == .regular {
+            NavigationSplitView {
+                EntriesListView()
+            } detail: {
+                ContentUnavailableView("Select an entry", systemImage: "note.text")
+            }
+        } else {
+            NavigationStack { EntriesListView() }
         }
     }
 }

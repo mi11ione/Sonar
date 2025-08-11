@@ -128,7 +128,8 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
 
     private func configureAudioSession() throws {
         let session = AVAudioSession.sharedInstance()
-        try session.setCategory(.playAndRecord, mode: .measurement, options: [.defaultToSpeaker, .allowBluetoothHFP])
+        // Allow recording to continue with screen off; prefer balanced options for capture
+        try session.setCategory(.playAndRecord, mode: .measurement, options: [.defaultToSpeaker, .allowBluetoothHFP, .allowBluetoothA2DP, .mixWithOthers])
         try session.setActive(true, options: [.notifyOthersOnDeactivation])
     }
 

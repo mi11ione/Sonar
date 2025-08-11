@@ -15,93 +15,94 @@ struct EntriesListView: View {
     @State private var selectedTags: Set<String> = []
     @State private var presentLastEntry: Bool = false
 
-    var body: some View {
+    var body: some View { content }
+
+    @ViewBuilder
+    private var content: some View {
         let pinned = entries.filter(\.isPinned)
         let others = entries.filter { !$0.isPinned }
 
-        NavigationStack {
-            // Deep link to open search with parameters via custom URL
-            // e.g., sonarai://search?query=...&mood=positive&tag=...
-            // Handled via .onOpenURL in ContentView; we mirror via UserDefaults already
-            // Hidden programmatic navigation to last entry when requested
-            NavigationLink(isActive: $presentLastEntry) {
-                if let first = entries.first { EntryDetailView(entry: first) }
-            } label: { EmptyView() }
+        // Deep link to open search with parameters via custom URL
+        // e.g., sonarai://search?query=...&mood=positive&tag=...
+        // Handled via .onOpenURL in ContentView; we mirror via UserDefaults already
+        // Hidden programmatic navigation to last entry when requested
+        NavigationLink(isActive: $presentLastEntry) {
+            if let first = entries.first { EntryDetailView(entry: first) }
+        } label: { EmptyView() }
 
-            List(selection: $selection) {
-                if !pinned.isEmpty {
-                    Section("Pinned") {
-                        ForEach(filtered(pinned), id: \.id) { entry in
-                            row(entry, highlight: query)
-                                .tag(entry.id)
-                        }
-                    }
-                }
-                Section("Recent") {
-                    ForEach(filtered(others), id: \.id) { entry in
+        List(selection: $selection) {
+            if !pinned.isEmpty {
+                Section("Pinned") {
+                    ForEach(filtered(pinned), id: \.id) { entry in
                         row(entry, highlight: query)
                             .tag(entry.id)
                     }
-                    .onMove { source, destination in moveWithinOthers(others: others, source: source, destination: destination) }
                 }
             }
-            .navigationTitle("Journal")
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) { filterMenu }
-                ToolbarItemGroup(placement: .topBarTrailing) {
-                    if !selection.isEmpty {
-                        Button(role: .destructive) { deleteSelected() } label: { Label("Delete", systemImage: "trash") }
-                    } else {
-                        NavigationLink(destination: ThreadsListView()) { Image(systemName: "rectangle.connected.to.line.below") }
-                        NavigationLink(destination: InsightsView()) { Image(systemName: "chart.line.uptrend.xyaxis") }
-                        EditButton()
-                    }
+            Section("Recent") {
+                ForEach(filtered(others), id: \.id) { entry in
+                    row(entry, highlight: query)
+                        .tag(entry.id)
+                }
+                .onMove { source, destination in moveWithinOthers(others: others, source: source, destination: destination) }
+            }
+        }
+        .navigationTitle("Journal")
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) { filterMenu }
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                if !selection.isEmpty {
+                    Button(role: .destructive) { deleteSelected() } label: { Label("Delete", systemImage: "trash") }
+                } else {
+                    NavigationLink(destination: ThreadsListView()) { Image(systemName: "rectangle.connected.to.line.below") }
+                    NavigationLink(destination: InsightsView()) { Image(systemName: "chart.line.uptrend.xyaxis") }
+                    EditButton()
                 }
             }
-            .searchable(text: $query)
-            .refreshable { await refreshDerivedContentIfNeeded() }
-            .sensoryFeedback(.selection, trigger: query.isEmpty)
-            .overlay {
-                if entries.isEmpty {
-                    ContentUnavailableView(
-                        "No entries yet",
-                        systemImage: "mic",
-                        description: Text("Tap the mic to start your first journal.")
-                    )
-                } else if filtered(others).isEmpty, filtered(pinned).isEmpty, !query.isEmpty {
-                    ContentUnavailableView(
-                        "No results",
-                        systemImage: "magnifyingglass",
-                        description: Text("Try broadening your query or clearing filters.")
-                    )
-                }
+        }
+        .searchable(text: $query)
+        .refreshable { await refreshDerivedContentIfNeeded() }
+        .sensoryFeedback(.selection, trigger: query.isEmpty)
+        .overlay {
+            if entries.isEmpty {
+                ContentUnavailableView(
+                    "No entries yet",
+                    systemImage: "mic",
+                    description: Text("Tap the mic to start your first journal.")
+                )
+            } else if filtered(others).isEmpty, filtered(pinned).isEmpty, !query.isEmpty {
+                ContentUnavailableView(
+                    "No results",
+                    systemImage: "magnifyingglass",
+                    description: Text("Try broadening your query or clearing filters.")
+                )
             }
-            .onAppear { selection.removeAll() }
-            .task {
-                // Handle incoming search requests from App Intent
-                if let payload = UserDefaults.standard.dictionary(forKey: "deeplink.searchRequest") {
-                    if let q = payload["query"] as? String { query = q }
-                    if let tag = payload["tag"] as? String { selectedTags = [tag] }
-                    if let mood = payload["mood"] as? String {
-                        switch mood { case "negative": moodBin = 0; case "neutral": moodBin = 1; case "positive": moodBin = 2; default: break }
-                    }
-                    UserDefaults.standard.removeObject(forKey: "deeplink.searchRequest")
+        }
+        .onAppear { selection.removeAll() }
+        .task {
+            // Handle incoming search requests from App Intent
+            if let payload = UserDefaults.standard.dictionary(forKey: "deeplink.searchRequest") {
+                if let q = payload["query"] as? String { query = q }
+                if let tag = payload["tag"] as? String { selectedTags = [tag] }
+                if let mood = payload["mood"] as? String {
+                    switch mood { case "negative": moodBin = 0; case "neutral": moodBin = 1; case "positive": moodBin = 2; default: break }
                 }
-                // Present last entry detail if requested (e.g., via intent)
-                if UserDefaults.standard.bool(forKey: "deeplink.showLastEntry") {
-                    UserDefaults.standard.removeObject(forKey: "deeplink.showLastEntry")
-                    // Only present if we actually have entries
-                    if entries.first != nil { presentLastEntry = true }
+                UserDefaults.standard.removeObject(forKey: "deeplink.searchRequest")
+            }
+            // Present last entry detail if requested (e.g., via intent)
+            if UserDefaults.standard.bool(forKey: "deeplink.showLastEntry") {
+                UserDefaults.standard.removeObject(forKey: "deeplink.showLastEntry")
+                // Only present if we actually have entries
+                if entries.first != nil { presentLastEntry = true }
+            }
+            // Handle deep link via URL parameters set by ContentView
+            if let urlPayload = UserDefaults.standard.dictionary(forKey: "deeplink.searchURL") {
+                if let q = urlPayload["query"] as? String { query = q }
+                if let tag = urlPayload["tag"] as? String { selectedTags = [tag] }
+                if let mood = urlPayload["mood"] as? String {
+                    switch mood { case "negative": moodBin = 0; case "neutral": moodBin = 1; case "positive": moodBin = 2; default: break }
                 }
-                // Handle deep link via URL parameters set by ContentView
-                if let urlPayload = UserDefaults.standard.dictionary(forKey: "deeplink.searchURL") {
-                    if let q = urlPayload["query"] as? String { query = q }
-                    if let tag = urlPayload["tag"] as? String { selectedTags = [tag] }
-                    if let mood = urlPayload["mood"] as? String {
-                        switch mood { case "negative": moodBin = 0; case "neutral": moodBin = 1; case "positive": moodBin = 2; default: break }
-                    }
-                    UserDefaults.standard.removeObject(forKey: "deeplink.searchURL")
-                }
+                UserDefaults.standard.removeObject(forKey: "deeplink.searchURL")
             }
         }
     }

@@ -20,6 +20,11 @@ struct SettingsView: View {
 
     var body: some View {
         List {
+            Section("How your data is stored") {
+                Text("Audio and transcripts are saved on this device by default. No account required, no cloud uploads. You can export or delete your data anytime from Settings.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
             Section("Subscription") {
                 if isSubscriber { LabeledContent("Status", value: planId ?? "Active") }
                 Button(isSubscriber ? "Change Plan" : "View Plans") { showPaywall = true }

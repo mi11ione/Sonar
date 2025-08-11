@@ -2,6 +2,28 @@
 
 Only fully completed items are listed below. Keep `checklist.md` for remaining work-in-progress.
 
+First‑Run & Core Value
+- [x] First-run teaches summary and mood badges
+
+Record — Start & Control
+- [x] Recording continues with screen off/locked when allowed
+
+Privacy — Local First
+- [x] Clear explanation of what’s stored
+
+File Management — Storage & Protection
+- [x] Temp files cleaned after export/playback
+
+Crash Resilience — Recovery
+- [x] Engine/session safely stopped on relaunch after crash
+- [x] Critical steps wrapped with user-visible fallback
+
+iPad
+- [x] iPad two-column layout (list + detail)
+
+Internationalization & Localization
+- [x] Dates and numbers use locale formats
+
 AI Agent — API Verification
 - [x] Use `framework-sources/` as canonical reference for framework symbols
 - [x] Verify function/type names, parameters, and availability in the relevant `*.md`
