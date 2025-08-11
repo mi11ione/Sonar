@@ -147,10 +147,27 @@ struct RecordView: View {
         case .saved:
             MicButton(title: "Start Recording") { state = .recording }
         case .error:
-            MicButton(title: "Try Again", systemImageName: "arrow.clockwise") {
-                state = .idle
-                liveTranscript = ""
+            VStack(spacing: 8) {
+                Text(errorMessage)
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                MicButton(title: "Try Again", systemImageName: "arrow.clockwise") {
+                    state = .idle
+                    liveTranscript = ""
+                }
+                Button("Open Settings") {
+                    if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
+                }
+                .buttonStyle(.bordered)
             }
+        }
+    }
+
+    private var errorMessage: String {
+        switch state {
+        case let .error(message): message
+        default: ""
         }
     }
 

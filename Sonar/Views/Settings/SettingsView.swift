@@ -20,9 +20,8 @@ struct SettingsView: View {
                 Button(isSubscriber ? "Change Plan" : "View Plans") { showPaywall = true }
                 Button("Restore Purchases") { Task { try? await purchases.restore() } }
             }
-            Section("Tags") {
-                NavigationLink("Manage tags") { ManageTagsView() }
-            }
+            Section("Tags") { NavigationLink("Manage tags") { ManageTagsView() } }
+            Section("Threads") { NavigationLink("Manage threads") { ManageThreadsView() } }
             Section("Developer") {
                 Toggle("Developer: Unlimited subscription", isOn: Binding(
                     get: { devOverride },
@@ -102,7 +101,7 @@ private struct TTSSettingsView: View {
         "Welcome to Sonar. Your summaries can be read in this voice.",
         "Hi there, this is Sonar giving you a quick voice check.",
         "Sonar speaking! Here's a short sample for you.",
-        "Preview from Sonar: this is your reading voice."
+        "Preview from Sonar: this is your reading voice.",
     ]
 
     private func randomSample() -> String {
@@ -112,7 +111,9 @@ private struct TTSSettingsView: View {
     private var voicesByLanguage: [(code: String, display: String, voices: [AVSpeechSynthesisVoice])] {
         let all = tts.availableVoices()
         var grouped: [String: [AVSpeechSynthesisVoice]] = [:]
-        for v in all { grouped[v.language, default: []].append(v) }
+        for v in all {
+            grouped[v.language, default: []].append(v)
+        }
 
         var result: [(code: String, display: String, voices: [AVSpeechSynthesisVoice])] = []
         for (code, voices) in grouped {
@@ -130,15 +131,16 @@ private struct TTSSettingsView: View {
         })
         return result
     }
+
     var body: some View {
         List {
             ForEach(voicesByLanguage, id: \.code) { group in
                 Section(group.display) {
                     ForEach(group.voices, id: \.identifier) { voice in
                         Button {
-                        selectedVoiceIdentifier = voice.identifier
-                        tts.stop()
-                        tts.speak(randomSample(), voice: voice, rate: rate, pitch: pitch)
+                            selectedVoiceIdentifier = voice.identifier
+                            tts.stop()
+                            tts.speak(randomSample(), voice: voice, rate: rate, pitch: pitch)
                         } label: {
                             HStack {
                                 Text(voice.name)
@@ -218,6 +220,70 @@ private struct ManageTagsView: View {
             modelContext.delete(tags[index])
         }
         try? modelContext.save()
+    }
+}
+
+private struct ManageThreadsView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query(sort: \MemoryThread.title) private var threads: [MemoryThread]
+    @State private var newTitle: String = ""
+    @State private var renamingThread: MemoryThread? = nil
+    @State private var renameText: String = ""
+
+    var body: some View {
+        List {
+            Section("New Thread") {
+                HStack {
+                    TextField("Title", text: $newTitle)
+                    Button("Add") { addThread() }.disabled(newTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                }
+            }
+            Section("All Threads") {
+                ForEach(threads) { thread in
+                    HStack { Text(thread.title); Spacer(); Text("\(thread.entries.count)").foregroundStyle(.secondary) }
+                        .swipeActions {
+                            Button("Rename") { renamingThread = thread; renameText = thread.title }.tint(.blue)
+                            Button(role: .destructive) {
+                                if let idx = threads.firstIndex(where: { $0.id == thread.id }) { delete(at: IndexSet(integer: idx)) }
+                            } label: { Label("Delete", systemImage: "trash") }
+                        }
+                }
+                .onDelete(perform: delete)
+            }
+        }
+        .navigationTitle("Manage Threads")
+        .alert("Rename Thread", isPresented: Binding(get: { renamingThread != nil }, set: { if !$0 { renamingThread = nil } })) {
+            TextField("Title", text: $renameText)
+            Button("Save") { renameThread() }
+            Button("Cancel", role: .cancel) { renamingThread = nil }
+        }
+    }
+
+    private func addThread() {
+        let title = newTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !title.isEmpty else { return }
+        if threads.first(where: { $0.title.caseInsensitiveCompare(title) == .orderedSame }) == nil {
+            let t = MemoryThread(title: title)
+            modelContext.insert(t)
+            try? modelContext.save()
+        }
+        newTitle = ""
+    }
+
+    private func delete(at offsets: IndexSet) {
+        for index in offsets {
+            modelContext.delete(threads[index])
+        }
+        try? modelContext.save()
+    }
+
+    private func renameThread() {
+        guard let thread = renamingThread else { return }
+        let title = renameText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !title.isEmpty else { return }
+        thread.title = title
+        try? modelContext.save()
+        renamingThread = nil
     }
 }
 
