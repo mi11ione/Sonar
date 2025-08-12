@@ -36,6 +36,8 @@ Widgets & Live Activities
 - [x] Live Activity timer alignment and level hint throttling
 - [x] Pause/Resume/Stop intent flags for deep link handling
 - [x] End activity on save/stop/app termination path
+- [x] Widget extension embedded in app bundle (Copy Files → Destination: PlugIns)
+- [x] Widget debug scheme configured with `_XCWidgetKind`/`_XCWidgetFamily` for on-device testing
 
 AI Agent — API Verification
 - [x] Use `framework-sources/` as canonical reference for framework symbols

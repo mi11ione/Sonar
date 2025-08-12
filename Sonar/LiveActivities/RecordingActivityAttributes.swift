@@ -25,5 +25,3 @@ struct RecordingActivityAttributes: ActivityAttributes {
     /// Device locale identifier (e.g., "en_US").
     var deviceLocale: String
 }
-
-

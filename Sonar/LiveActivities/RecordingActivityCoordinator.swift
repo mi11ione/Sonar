@@ -65,8 +65,8 @@ final class RecordingActivityCoordinator {
                 let now = Date()
                 if now.timeIntervalSince(lastEmit) >= 0.25 {
                     lastEmit = now
-                    self.lastLevelHint = min(max(level, 0), 1)
-                    await self.pushUpdate()
+                    lastLevelHint = min(max(level, 0), 1)
+                    await pushUpdate()
                 }
             }
         }
@@ -83,11 +83,11 @@ final class RecordingActivityCoordinator {
             entryId: entryId
         )
         // Cap to 23:59:59 visually by clamping seconds used in UI; content still uses exact value
-        if state.elapsedSeconds > 86_399 { state.elapsedSeconds = 86_399 }
+        if state.elapsedSeconds > 86399 { state.elapsedSeconds = 86399 }
         let finalContent = ActivityContent(state: state, staleDate: nil, relevanceScore: 1.0)
         await activity.end(finalContent, dismissalPolicy: .default)
         self.activity = nil
-        self.startedAt = nil
+        startedAt = nil
     }
 
     private func startTimer() {
@@ -98,8 +98,8 @@ final class RecordingActivityCoordinator {
             let remainder = 1.0 - (Date().timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: 1.0))
             try? await Task.sleep(for: .seconds(remainder))
             while !Task.isCancelled {
-                if !self.isPaused { self.elapsedSeconds += 1 }
-                await self.pushUpdate()
+                if !isPaused { elapsedSeconds += 1 }
+                await pushUpdate()
                 try? await Task.sleep(for: .seconds(1))
             }
         }
@@ -113,10 +113,8 @@ final class RecordingActivityCoordinator {
             levelHint: lastLevelHint,
             entryId: nil
         )
-        if state.elapsedSeconds > 86_399 { state.elapsedSeconds = 86_399 }
+        if state.elapsedSeconds > 86399 { state.elapsedSeconds = 86399 }
         let content = ActivityContent(state: state, staleDate: nil, relevanceScore: 1.0)
         await activity.update(content)
     }
 }
-
-

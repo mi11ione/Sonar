@@ -1,6 +1,6 @@
+import AppIntents
 import SwiftUI
 import WidgetKit
-import AppIntents
 
 struct RecentSummaryWidget: Widget {
     var body: some WidgetConfiguration {
@@ -17,9 +17,9 @@ struct RecentSummaryWidget: Widget {
     struct Provider: TimelineProvider {
         typealias Entry = RecentSummaryWidget.Entry
         private var defaults: UserDefaults { UserDefaults(suiteName: "group.com.mi11ion.Sonar") ?? .standard }
-        func placeholder(in: Context) -> Entry { Entry(date: .now, text: "No entries yet.", mood: nil, redacted: true) }
-        func getSnapshot(in: Context, completion: @escaping (Entry) -> Void) { completion(load()) }
-        func getTimeline(in: Context, completion: @escaping (Timeline<Entry>) -> Void) {
+        func placeholder(in _: Context) -> Entry { Entry(date: .now, text: "No entries yet.", mood: nil, redacted: true) }
+        func getSnapshot(in _: Context, completion: @escaping (Entry) -> Void) { completion(load()) }
+        func getTimeline(in _: Context, completion: @escaping (Timeline<Entry>) -> Void) {
             completion(Timeline(entries: [load()], policy: .atEnd))
         }
 
@@ -77,5 +77,3 @@ private struct RecentSummaryView: View {
         }
     }
 }
-
-

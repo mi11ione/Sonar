@@ -1,8 +1,8 @@
+import ActivityKit
 import AVFoundation
 import StoreKit
 import SwiftData
 import SwiftUI
-import ActivityKit
 
 struct RecordView: View {
     @Environment(\.transcription) private var transcription

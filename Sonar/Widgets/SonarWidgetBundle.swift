@@ -10,5 +10,3 @@ struct SonarWidgetBundle: WidgetBundle {
         RecordingActivityWidget()
     }
 }
-
-

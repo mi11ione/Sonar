@@ -17,9 +17,9 @@ struct DailyPromptWidget: Widget {
     struct Provider: TimelineProvider {
         typealias Entry = DailyPromptWidget.Entry
 
-        func placeholder(in: Context) -> Entry { Entry(date: .now, prompt: "Take a minute to reflect.", redacted: true) }
+        func placeholder(in _: Context) -> Entry { Entry(date: .now, prompt: "Take a minute to reflect.", redacted: true) }
 
-        func getSnapshot(in context: Context, completion: @escaping (Entry) -> Void) {
+        func getSnapshot(in _: Context, completion: @escaping (Entry) -> Void) {
             let d = groupDefaults()
             let seed = d.integer(forKey: "widget.promptSeed")
             let prompt = promptOfDay(locale: .current, seed: seed)
@@ -27,7 +27,7 @@ struct DailyPromptWidget: Widget {
             completion(Entry(date: .now, prompt: prompt, redacted: redacted))
         }
 
-        func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
+        func getTimeline(in _: Context, completion: @escaping (Timeline<Entry>) -> Void) {
             let d = groupDefaults()
             let seed = d.integer(forKey: "widget.promptSeed")
             let prompt = promptOfDay(locale: .current, seed: seed)
@@ -38,6 +38,7 @@ struct DailyPromptWidget: Widget {
         }
 
         // MARK: - Helpers
+
         private func groupDefaults() -> UserDefaults { UserDefaults(suiteName: "group.com.mi11ion.Sonar") ?? .standard }
         private func promptOfDay(locale: Locale, seed: Int) -> String {
             let list = prompts(locale: locale)
@@ -45,6 +46,7 @@ struct DailyPromptWidget: Widget {
             let dayIndex = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1
             return list[(dayIndex + seed) % list.count]
         }
+
         private func prompts(locale: Locale) -> [String] {
             if locale.language.languageCode?.identifier == "es" {
                 return [
@@ -111,5 +113,3 @@ private struct DailyPromptView: View {
         }
     }
 }
-
-

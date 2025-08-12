@@ -11,5 +11,3 @@ struct StopRecordingIntent: AppIntent {
         return .result(dialog: IntentDialog("intent_stopping_recording"))
     }
 }
-
-

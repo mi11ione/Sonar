@@ -19,5 +19,3 @@ actor WidgetBridge {
         defaults.set(date.timeIntervalSince1970, forKey: "widget.lastSave")
     }
 }
-
-

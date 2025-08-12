@@ -7,7 +7,7 @@ import WidgetKit
 actor WidgetReloader {
     static let shared = WidgetReloader()
 
-    private var lastReloadAt: Date? = nil
+    private var lastReloadAt: Date?
 
     /// Reloads all widget timelines if a minimum interval has elapsed.
     func reloadAllIfNeeded(minInterval: TimeInterval = 60) async {
@@ -35,5 +35,3 @@ actor WidgetReloader {
         return String(format: "%04d-%02d-%02d", comps.year ?? 0, comps.month ?? 0, comps.day ?? 0)
     }
 }
-
-

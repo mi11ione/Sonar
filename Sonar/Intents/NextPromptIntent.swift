@@ -12,5 +12,3 @@ struct NextPromptIntent: AppIntent {
         return .result()
     }
 }
-
-

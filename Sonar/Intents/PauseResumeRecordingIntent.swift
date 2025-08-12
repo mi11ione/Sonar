@@ -11,5 +11,3 @@ struct TogglePauseRecordingIntent: AppIntent {
         return .result()
     }
 }
-
-

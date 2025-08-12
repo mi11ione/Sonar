@@ -14,9 +14,9 @@ struct QuickRecordWidget: Widget {
 
     private struct Provider: TimelineProvider {
         struct Entry: TimelineEntry { let date: Date }
-        func placeholder(in: Context) -> Entry { Entry(date: .now) }
-        func getSnapshot(in: Context, completion: @escaping (Entry) -> Void) { completion(Entry(date: .now)) }
-        func getTimeline(in: Context, completion: @escaping (Timeline<Entry>) -> Void) {
+        func placeholder(in _: Context) -> Entry { Entry(date: .now) }
+        func getSnapshot(in _: Context, completion: @escaping (Entry) -> Void) { completion(Entry(date: .now)) }
+        func getTimeline(in _: Context, completion: @escaping (Timeline<Entry>) -> Void) {
             completion(Timeline(entries: [Entry(date: .now)], policy: .never))
         }
     }
@@ -64,5 +64,3 @@ private struct QuickRecordWidgetView: View {
         }
     }
 }
-
-
