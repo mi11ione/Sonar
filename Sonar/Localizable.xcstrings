@@ -49,6 +49,12 @@
             "value" : "Acerca de"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -69,6 +75,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Acerca de la señal de ánimo"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于情绪信号"
           }
         },
         "ru" : {
@@ -93,6 +105,12 @@
             "value" : "Activa"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有效"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -113,6 +131,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Añadir"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加"
           }
         },
         "ru" : {
@@ -137,6 +161,12 @@
             "value" : "Añadir etiqueta"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加标签"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -159,6 +189,12 @@
             "value" : "Todas las etiquetas"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有标签"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -179,6 +215,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Todos los temas"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有主题"
           }
         },
         "ru" : {
@@ -204,6 +246,12 @@
             "value" : "Cualquiera"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "任意"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -215,12 +263,6 @@
     "app_name" : {
       "extractionState" : "manual",
       "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sonar"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -228,12 +270,6 @@
           }
         },
         "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sonar"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sonar"
@@ -268,6 +304,12 @@
             "value" : "Asignar"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分配"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -291,6 +333,12 @@
             "value" : "Asigna entradas a temas desde los detalles de la entrada."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可在条目详情中将条目分配到主题。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -311,6 +359,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Asignar tema"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分配主题"
           }
         },
         "ru" : {
@@ -336,6 +390,12 @@
             "value" : "La transcripción en el dispositivo no está disponible. Se grabará solo audio."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设备端转写不可用。仅录制音频。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -357,6 +417,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ánimo medio"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平均情绪"
           }
         },
         "ru" : {
@@ -382,6 +448,12 @@
             "value" : "Atrás"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "返回"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -402,6 +474,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reintento de cobro"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "账单重试"
           }
         },
         "ru" : {
@@ -426,6 +504,12 @@
             "value" : "Comprar"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "购买"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -446,6 +530,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancelar"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
           }
         },
         "ru" : {
@@ -470,6 +560,12 @@
             "value" : "Esta acción no se puede deshacer."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此操作无法撤销。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -492,6 +588,12 @@
             "value" : "Cambiar plan"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更改方案"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -512,6 +614,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cambiar plan con Apple"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通过 Apple 更改方案"
           }
         },
         "ru" : {
@@ -537,6 +645,12 @@
             "value" : "Borrar filtros"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清除筛选器"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -559,6 +673,12 @@
             "value" : "Cerrar"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -579,6 +699,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Contactar con soporte"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "联系支持"
           }
         },
         "ru" : {
@@ -604,6 +730,12 @@
             "value" : "Continuar"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "继续"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -625,6 +757,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rango personalizado"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定义范围"
           }
         },
         "ru" : {
@@ -649,6 +787,12 @@
             "value" : "Pregunta diaria"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每日问题"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -669,6 +813,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reflexión diaria"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每日反思"
           }
         },
         "ru" : {
@@ -693,6 +843,12 @@
             "value" : "Tómate un minuto para capturar tus pensamientos."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "花一分钟记录你的想法。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -715,6 +871,12 @@
             "value" : "Recordatorio diario"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每日提醒"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -733,6 +895,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "–"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "–"
@@ -760,6 +928,12 @@
             "value" : "Datos"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -780,6 +954,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "El audio y las transcripciones se guardan en este dispositivo de forma predeterminada. No se requiere cuenta ni subidas a la nube. Puedes exportar o borrar tus datos en cualquier momento desde Ajustes."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "音频和转录默认保存在此设备上。无需账户，不会上传到云端。你可以随时在“设置”中导出或删除你的数据。"
           }
         },
         "ru" : {
@@ -805,6 +985,12 @@
             "value" : "Predeterminado"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "默认"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -825,6 +1011,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Estilo de resumen predeterminado"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "默认摘要样式"
           }
         },
         "ru" : {
@@ -850,6 +1042,12 @@
             "value" : "Eliminar"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -870,6 +1068,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Eliminar todos los datos"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除所有数据"
           }
         },
         "ru" : {
@@ -894,6 +1098,12 @@
             "value" : "Esto elimina todas las entradas, etiquetas, temas, audio local, notificaciones e índices de búsqueda de este dispositivo."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这将从此设备中移除所有条目、标签、主题、本地音频、通知和搜索索引。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -914,6 +1124,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "¿Eliminar todos los datos?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除所有数据？"
           }
         },
         "ru" : {
@@ -938,6 +1154,12 @@
             "value" : "¿Eliminar esta entrada?"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除此条目？"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -960,6 +1182,12 @@
             "value" : "Desarrollador"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开发者"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -980,6 +1208,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Desarrollador: suscripción ilimitada"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开发者：无限订阅"
           }
         },
         "ru" : {
@@ -1005,6 +1239,12 @@
             "value" : "Descartar"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "丢弃"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1025,6 +1265,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Listo"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成"
           }
         },
         "ru" : {
@@ -1049,6 +1295,12 @@
             "value" : "Listo"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1071,6 +1323,12 @@
             "value" : "Editar"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1091,6 +1349,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Editar etiquetas"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑标签"
           }
         },
         "ru" : {
@@ -1116,6 +1380,12 @@
             "value" : "Una señal rápida de −1 a +1 (Negativo/Neutral/Positivo), calculada en el dispositivo."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从 −1 到 +1 的快速信号（消极/中性/积极），在设备端计算。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1138,6 +1408,12 @@
             "value" : "Insignia de ánimo"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "情绪徽章"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1158,6 +1434,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lo que verás a continuación"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接下来你会看到"
           }
         },
         "ru" : {
@@ -1183,6 +1465,12 @@
             "value" : "• Se hace de forma privada en tu dispositivo\n• Sin procesamiento en la nube\n• Puedes cambiar el estilo en Ajustes"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "• 在你的设备上私密完成\n• 无云端处理\n• 你可以在“设置”中更改样式"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1205,6 +1493,12 @@
             "value" : "Sonar crea un breve resumen en el dispositivo para ayudarte a revisar las entradas rápidamente."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonar 会在设备端生成简短摘要，帮助你快速回顾条目。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1225,6 +1519,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Resumen"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "摘要"
           }
         },
         "ru" : {
@@ -1250,6 +1550,12 @@
             "value" : "Activar micrófono y voz"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用麦克风与语音"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1271,6 +1577,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Activar notificaciones"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用通知"
           }
         },
         "ru" : {
@@ -1296,6 +1608,12 @@
             "value" : "Finalizar"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "结束"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1317,6 +1635,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "entradas"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "条目"
           }
         },
         "ru" : {
@@ -1342,6 +1666,12 @@
             "value" : "Algo salió mal durante la grabación. Inténtalo de nuevo."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "录音过程中出现问题。请重试。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1363,6 +1693,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "El permiso del micrófono está denegado. Activa el acceso al micrófono en Ajustes para grabar."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "麦克风权限被拒绝。请在“设置”中启用麦克风以进行录音。"
           }
         },
         "ru" : {
@@ -1388,6 +1724,12 @@
             "value" : "La transcripción en el dispositivo no está disponible para tu idioma o dispositivo. Aún puedes grabar audio."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的语言或设备不支持设备端转写。你仍然可以录制音频。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1409,6 +1751,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "El permiso de reconocimiento de voz está denegado. Activa el reconocimiento de voz en Ajustes para transcribir."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "语音识别权限被拒绝。请在“设置”中启用语音识别以进行转写。"
           }
         },
         "ru" : {
@@ -1433,6 +1781,12 @@
             "value" : "Caducada"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已过期"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1453,6 +1807,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Exportar JSON (solo entradas)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出 JSON（仅条目）"
           }
         },
         "ru" : {
@@ -1478,6 +1838,12 @@
             "value" : "Fecha"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日期"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1499,6 +1865,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ánimo"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "情绪"
           }
         },
         "ru" : {
@@ -1523,6 +1895,12 @@
             "value" : "Etiquetas"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "标签"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1543,6 +1921,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tema"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主题"
           }
         },
         "ru" : {
@@ -1568,6 +1952,12 @@
             "value" : "Filtros"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "筛选器"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1588,6 +1978,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Período de gracia"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "宽限期"
           }
         },
         "ru" : {
@@ -1613,6 +2009,12 @@
             "value" : "Destacados"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "亮点"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1635,6 +2037,12 @@
             "value" : "Cómo se almacenan tus datos"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的数据如何存储"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1655,6 +2063,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sincronización con iCloud"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud 同步"
           }
         },
         "ru" : {
@@ -1680,6 +2094,12 @@
             "value" : "Los análisis se calculan en tu dispositivo. Ningún resumen ni transcripción sale de tu teléfono."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "洞察在你的设备上计算。不会有任何摘要或转录离开你的手机。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1700,6 +2120,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abriendo tu última entrada…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在打开你的最新条目…"
           }
         },
         "ru" : {
@@ -1724,6 +2150,12 @@
             "value" : "Abriendo búsqueda…"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在打开搜索…"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1741,6 +2173,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Busca tus entradas por texto, etiqueta o ánimo." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "按文本、标签或情绪搜索你的条目。" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1758,6 +2191,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Buscando: " } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "搜索：" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1775,6 +2209,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Comienza una nueva entrada de diario por voz." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "开始新的语音日记条目。" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1797,6 +2232,12 @@
             "value" : "Iniciando grabación…"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开始录音…"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1817,6 +2258,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Regenera un resumen de tu entrada de diario más reciente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "为你最近的日记条目重新生成摘要。"
           }
         },
         "ru" : {
@@ -1842,6 +2289,12 @@
             "value" : "Entrada de diario"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日记条目"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1860,6 +2313,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Diario" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "日记" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1878,6 +2332,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Últimos 7 días" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "最近 7 天" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1895,6 +2350,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Forma de onda en vivo" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "实时波形" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1917,6 +2373,12 @@
             "value" : "Administrar suscripción"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "管理订阅"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1934,6 +2396,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Administrar etiquetas" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "管理标签" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1951,6 +2414,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Administrar temas" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "管理主题" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1968,6 +2432,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Ánimo" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "情绪" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1985,6 +2450,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Ánimo: %1$@" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "情绪：%1$@" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2002,6 +2468,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Sonar estima el ánimo localmente usando el análisis de sentimiento en el dispositivo de Apple. Las puntuaciones van de −1 a +1 y se agrupan en Negativo, Neutral o Positivo. Tu contenido nunca sale del dispositivo." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Sonar 使用苹果设备端情感分析在本地估算情绪。分数范围为 −1 到 +1，并分为消极、中性或积极。你的内容永远不会离开设备。" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2020,6 +2487,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Tendencia del ánimo" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "情绪趋势" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2038,6 +2506,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Nombre" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "名称" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2059,6 +2528,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Análisis"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "洞察"
           }
         },
         "ru" : {
@@ -2084,6 +2559,12 @@
             "value" : "Diario"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日记"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2101,6 +2582,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Administrar etiquetas" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "管理标签" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2118,6 +2600,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Administrar temas" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "管理主题" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2136,6 +2619,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Grabar" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "录音" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2153,6 +2637,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Buscar" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "搜索" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2170,6 +2655,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Ajustes" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "设置" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2188,6 +2674,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Temas" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "主题" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2205,6 +2692,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Texto a voz" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "文本转语音" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2226,6 +2714,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Negativo"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "消极"
           }
         },
         "ru" : {
@@ -2251,6 +2745,12 @@
             "value" : "Neutral"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中性"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2271,6 +2771,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nueva etiqueta"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新标签"
           }
         },
         "ru" : {
@@ -2295,6 +2801,12 @@
             "value" : "Nuevo tema"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新主题"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2315,6 +2827,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sin audio adjunto"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无附加音频"
           }
         },
         "ru" : {
@@ -2340,6 +2858,12 @@
             "value" : "Aún no hay entradas"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚无条目"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2360,6 +2884,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Exportación no disponible"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法导出"
           }
         },
         "ru" : {
@@ -2385,6 +2915,12 @@
             "value" : "Aún no hay destacados"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无亮点"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2405,6 +2941,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sin productos"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无产品"
           }
         },
         "ru" : {
@@ -2430,6 +2972,12 @@
             "value" : "Sin resultados"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无结果"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2450,6 +2998,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sin etiquetas"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无标签"
           }
         },
         "ru" : {
@@ -2475,6 +3029,12 @@
             "value" : "Aún no hay temas"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚无主题"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2496,6 +3056,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sin tema"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无主题"
           }
         },
         "ru" : {
@@ -2521,6 +3087,12 @@
             "value" : "Aún no hay temas"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚无主题"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2543,6 +3115,12 @@
             "value" : "Sin suscripción"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未订阅"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2563,6 +3141,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notas"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "备注"
           }
         },
         "ru" : {
@@ -2588,6 +3172,12 @@
             "value" : "Solo transcripción en el dispositivo"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅设备端转写"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2609,6 +3199,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Siempre puedes encontrar entradas pasadas en la pestaña Diario y buscar más tarde."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你随时可以在“日记”标签页找到以往条目，并在稍后再搜索。"
           }
         },
         "ru" : {
@@ -2634,6 +3230,12 @@
             "value" : "Resúmenes instantáneos y ánimo de un vistazo."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "即时摘要，情绪一目了然。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2655,6 +3257,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hazlo tuyo"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "让它成为你的"
           }
         },
         "ru" : {
@@ -2680,6 +3288,12 @@
             "value" : "Las insignias de ánimo resumen el tono sin compartir tus datos."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "情绪徽章在不分享你的数据的情况下概括语气。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2701,6 +3315,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ánimo de un vistazo. Búsqueda rápida por tus pensamientos."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "情绪一目了然。快速搜索你的想法。"
           }
         },
         "ru" : {
@@ -2726,6 +3346,12 @@
             "value" : "No se requiere cuenta. Tus datos permanecen en el dispositivo. El plan gratuito incluye 3 guardados; puedes mejorar en cualquier momento."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无需账户。你的数据保留在设备上。免费方案包含 3 次保存；可随时升级。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2747,6 +3373,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Permisos"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "权限"
           }
         },
         "ru" : {
@@ -2772,6 +3404,12 @@
             "value" : "Solicitaremos Micrófono y Voz para que puedas grabar y transcribir en el dispositivo. Las notificaciones son opcionales para recordatorios suaves."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我们将请求麦克风和语音权限，以便你可以在设备上录音并转写。通知是可选的，用于温和的提醒。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2793,6 +3431,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Diario de voz privado en el dispositivo."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "私密、在设备上的语音日记。"
           }
         },
         "ru" : {
@@ -2818,6 +3462,12 @@
             "value" : "Puedes activar los recordatorios más tarde en Ajustes → Preferencias."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你可以稍后在 设置 → 偏好设置 中开启提醒。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2839,6 +3489,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Los resúmenes se calculan en tu dispositivo; las insignias de ánimo usan sentimiento local y nunca salen de tu teléfono."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "摘要在你的设备上计算；情绪徽章使用本地情感，数据从不离开你的手机。"
           }
         },
         "ru" : {
@@ -2864,6 +3520,12 @@
             "value" : "Toca para grabar. Transcripción local de baja latencia."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "轻点以录音。低延迟，本地转写。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2885,6 +3547,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bienvenido a Sonar"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "欢迎使用 Sonar"
           }
         },
         "ru" : {
@@ -2910,6 +3578,12 @@
             "value" : "Qué se guarda: los archivos de audio y las transcripciones viven solo en tu dispositivo por defecto. Puedes exportarlos o borrarlos en cualquier momento en Ajustes."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存储内容：音频文件和转写默认仅保存在你的设备上。你可以随时在“设置”中导出或删除。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2931,6 +3605,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abrir Ajustes"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开设置"
           }
         },
         "ru" : {
@@ -2956,6 +3636,7 @@
             "value" : "Pausa"
           }
         },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "暂停" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2976,6 +3657,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Entradas ilimitadas, estilos personalizados y perspectivas."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无限条目、自定义样式与洞察。"
           }
         },
         "ru" : {
@@ -3000,6 +3687,12 @@
             "value" : "Desbloquear Sonar"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解锁 Sonar"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3020,6 +3713,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "/día"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/天"
           }
         },
         "ru" : {
@@ -3044,6 +3743,12 @@
             "value" : "/mes"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/月"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3066,6 +3771,12 @@
             "value" : "/semana"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/周"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3086,6 +3797,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "/año"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/年"
           }
         },
         "ru" : {
@@ -3111,6 +3828,12 @@
             "value" : "Fijar"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "固定"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3133,6 +3856,12 @@
             "value" : "Fijado"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已固定"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3153,6 +3882,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reproducir muestra"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "播放示例"
           }
         },
         "ru" : {
@@ -3178,6 +3913,12 @@
             "value" : "Posición de reproducción"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "播放位置"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3199,6 +3940,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Positivo"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "积极"
           }
         },
         "ru" : {
@@ -3223,6 +3970,7 @@
             "value" : "Preferencias"
           }
         },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "偏好设置" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3245,6 +3993,7 @@
             "value" : "Vista previa"
           }
         },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "预览" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3266,6 +4015,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Privacidad"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐私"
           }
         },
         "ru" : {
@@ -3290,6 +4045,7 @@
             "value" : "Política de privacidad"
           }
         },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "隐私政策" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3313,6 +4069,7 @@
             "value" : "Procesando…"
           }
         },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在处理…" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3336,6 +4093,7 @@
             "value" : "¿Qué te dio energía esta semana? ¿Qué te agotó?"
           }
         },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "本周什么让你充满能量？什么让你感到耗尽？" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3359,6 +4117,7 @@
             "value" : "¿De qué pequeño logro te sientes orgulloso?"
           }
         },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "你为哪一个小小的胜利感到自豪？" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3382,6 +4141,7 @@
             "value" : "¿Qué tendencia notas en tu ánimo?"
           }
         },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "你在自己的情绪中注意到了什么趋势？" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3404,6 +4164,7 @@
             "value" : "Consulta"
           }
         },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "查询" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3426,6 +4187,7 @@
             "value" : "Leer"
           }
         },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "朗读" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3446,6 +4208,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recientes"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近"
           }
         },
         "ru" : {
@@ -3471,6 +4239,7 @@
             "value" : "Grabar"
           }
         },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "录音" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3493,6 +4262,7 @@
             "value" : "Graba para comenzar tu diario."
           }
         },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "开始录音，开启你的日记。" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3516,6 +4286,7 @@
             "value" : "Se encontró una grabación recuperada"
           }
         },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "发现已恢复的录音" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3539,6 +4310,7 @@
             "value" : "Una grabación anterior no terminó de guardarse. Puedes guardarla como una nueva entrada o descartarla."
           }
         },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "上一次录音未完成保存。你可以将其另存为新条目或丢弃。" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3561,6 +4333,7 @@
             "value" : "Recuperado tras una interrupción."
           }
         },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "因中断后已恢复。" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3583,6 +4356,7 @@
             "value" : "Grabación recuperada"
           }
         },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已恢复的录音" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3605,6 +4379,7 @@
             "value" : "Regenerar resumen"
           }
         },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重新生成摘要" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3622,6 +4397,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Recordarme en 1 hora" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "1 小时后提醒我" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3639,6 +4415,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Recordatorio: %1$lld:00" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "提醒：%1$lld:00" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3657,6 +4434,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Renombrar" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重命名" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3674,6 +4452,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Renombrar etiqueta" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重命名标签" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3692,6 +4471,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Renombrar tema" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重命名主题" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3709,6 +4489,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Restaurar compras" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "恢复购买" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3727,6 +4508,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Reanudar" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "继续" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3745,6 +4527,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Revisar transcripción" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "检查转写" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3762,6 +4545,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Revocada" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已撤销" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3780,6 +4564,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Guardar" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "保存" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3798,6 +4583,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Guardado" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已保存" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3815,6 +4601,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Buscar entradas" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "搜索条目" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3832,6 +4619,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Buscar entradas en %1$@" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "在 %1$@ 中搜索条目" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3850,6 +4638,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Selecciona una entrada" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "选择一个条目" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3868,6 +4657,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Ajustes" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "设置" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3886,6 +4676,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Compartir" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "分享" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3903,6 +4694,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Compartir exportación" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "分享导出内容" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3921,6 +4713,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Compartir destacados semanales" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "分享每周亮点" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3938,6 +4731,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Compartir tu exportación" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "分享你的导出" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3956,6 +4750,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Ordenar" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "排序" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3974,6 +4769,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Más recientes" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "最新" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3992,6 +4788,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Más antiguas" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "最早" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4010,6 +4807,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Relevancia" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "相关性" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4027,6 +4825,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Velocidad: %1$@" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "速度：%1$@" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4044,6 +4843,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Indexación de Spotlight" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Spotlight 索引" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4062,6 +4862,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Iniciar" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "开始" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4080,6 +4881,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Comenzar a grabar" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "开始录音" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4097,6 +4899,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Comenzar a grabar en %1$@" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "在 %1$@ 中开始录音" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4114,6 +4917,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Estado" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "状态" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4132,6 +4936,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Detener" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "停止" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4149,6 +4954,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Con viñetas" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "项目符号" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4166,6 +4972,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Conciso" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "简洁" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4183,6 +4990,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Reflexivo" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "反思" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4200,6 +5008,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Suscripción activa" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "订阅有效" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4217,6 +5026,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Suscripción" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "订阅" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4235,6 +5045,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Preguntas sugeridas" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "建议的问题" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4252,6 +5063,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Resumir la última entrada" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "总结上一条记录" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4269,6 +5081,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Resumir la última entrada en %1$@" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "在 %1$@ 中总结上一条记录" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4287,6 +5100,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Estilo de resumen" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "摘要样式" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4304,6 +5118,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Etiqueta" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "标签" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4321,6 +5136,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Etiquetas" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "标签" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4339,6 +5155,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Toca el micrófono para empezar tu primer diario." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "轻点麦克风，开始你的第一篇日记。" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4356,6 +5173,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Términos del servicio" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "服务条款" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4374,6 +5192,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Tema:" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "主题：" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4392,6 +5211,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Esta semana" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "本周" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4410,6 +5230,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Tema" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "主题" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4427,6 +5248,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Temas" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "主题" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4444,6 +5266,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Título" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "标题" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4461,6 +5284,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Título (opcional)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "标题（可选）" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4479,6 +5303,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Hoy" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "今天" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4496,6 +5321,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "puntos con frases cortas" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "使用简短短语的项目符号" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4513,6 +5339,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "tono suave y reflexivo" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "温和、反思的语气" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4531,6 +5358,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Temas principales" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "热门主题" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4549,6 +5377,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Intentar de nuevo" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重试" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4567,6 +5396,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Prueba a ampliar tu consulta o a borrar filtros." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "尝试扩大查询范围或清除筛选器。" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4584,6 +5414,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Opciones de texto a voz" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "文本转语音选项" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4601,6 +5432,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Tono" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "音调" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4618,6 +5450,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Velocidad" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "语速" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4636,6 +5469,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "No se pudo cargar el audio" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "无法加载音频" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4653,6 +5487,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Desconocido" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "未知" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4671,6 +5506,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Desfijar" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "取消固定" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4688,6 +5524,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Versión" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "版本" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4705,6 +5542,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Ver planes" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "查看方案" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4723,6 +5561,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Destacados de Sonar de esta semana (privado)\n\n" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "本周 Sonar 亮点（私密）\n\n" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4740,6 +5579,7 @@
           }
         },
         "es" : { "stringUnit" : { "state" : "translated", "value" : "Resumen semanal" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "每周洞察" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",

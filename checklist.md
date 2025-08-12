@@ -3,9 +3,6 @@
 Privacy — Local First
 - [ ] Privacy Manifest accurately describes use
 
-Internationalization & Localization
-- [ ] proper .strings file setup and full translation to EN, RU, ES, IT, GE, CH
-
 Offline & Reliability
 - [ ] Saving never silently fails
 - [ ] Clear recovery if something goes wrong

@@ -23,6 +23,7 @@ iPad
 
 Internationalization & Localization
 - [x] Dates and numbers use locale formats
+- [x] proper .strings file setup and full translation to EN, RU, ES, CH
 
 AI Agent — API Verification
 - [x] Use `framework-sources/` as canonical reference for framework symbols
