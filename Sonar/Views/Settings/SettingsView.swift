@@ -113,6 +113,7 @@ struct SettingsView: View {
                 }
             }
             Section("about") {
+                NavigationLink("how_it_works") { HowItWorksView() }
                 LabeledContent("version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-")
                 Button("privacy_policy") { open(url: "https://example.com/privacy") }
                 Button("terms_of_service") { open(url: "https://example.com/terms") }
@@ -232,26 +233,26 @@ struct SettingsView: View {
     }
 }
 
-private struct TTSSettingsView: View {
+    private struct TTSSettingsView: View {
     @Environment(\.tts) private var tts
     @Query private var settingsRows: [UserSettings]
     @State private var selectedVoiceIdentifier: String? = nil
     @State private var rate: Float = 0.5
     @State private var pitch: Float = 1.0
-    private let samplePhrases: [String] = [
-        "Hi, I'm Sonar. I'll read your summaries just like this.",
-        "Hello from Sonar. Here's a quick preview of your journal voice.",
-        "Hey! Sonar here. This is how entries will sound when spoken.",
-        "Nice to meet you! I'm Sonar, reading a sample out loud.",
-        "Welcome to Sonar. Your summaries can be read in this voice.",
-        "Hi there, this is Sonar giving you a quick voice check.",
-        "Sonar speaking! Here's a short sample for you.",
-        "Preview from Sonar: this is your reading voice.",
-    ]
+        private let samplePhrases: [String] = [
+            String(localized: "tts_sample_1"),
+            String(localized: "tts_sample_2"),
+            String(localized: "tts_sample_3"),
+            String(localized: "tts_sample_4"),
+            String(localized: "tts_sample_5"),
+            String(localized: "tts_sample_6"),
+            String(localized: "tts_sample_7"),
+            String(localized: "tts_sample_8"),
+        ]
 
-    private func randomSample() -> String {
-        samplePhrases.randomElement() ?? "Hi from Sonar."
-    }
+        private func randomSample() -> String {
+            samplePhrases.randomElement() ?? String(localized: "tts_sample_fallback")
+        }
 
     private var voicesByLanguage: [(code: String, display: String, voices: [AVSpeechSynthesisVoice])] {
         let all = tts.availableVoices()
@@ -459,6 +460,113 @@ private struct ManageThreadsView: View {
         thread.title = title
         try? modelContext.save()
         renamingThread = nil
+    }
+}
+
+private struct HowItWorksView: View {
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                intro
+                section(title: "howit_recording_title", content: recording)
+                section(title: "howit_summaries_title", content: summaries)
+                section(title: "howit_search_title", content: search)
+                section(title: "howit_privacy_title", content: privacy)
+                section(title: "howit_icloud_title", content: icloud)
+                section(title: "howit_export_title", content: exportDelete)
+                section(title: "howit_tips_title", content: tips)
+                section(title: "howit_support_title", content: support)
+            }
+            .padding()
+        }
+        .navigationTitle("nav_how_it_works")
+    }
+
+    private var intro: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("onboard_welcome")
+                .font(.title.bold())
+            Text("howit_intro_copy")
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private func section(title: LocalizedStringKey, content: () -> some View) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(title).font(.headline)
+            content()
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    // MARK: - Sections
+
+    private func recording() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            bullet("howit_record_bullet_1")
+            bullet("howit_record_bullet_2")
+            bullet("howit_record_bullet_3")
+        }
+    }
+
+    private func summaries() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            bullet("howit_summaries_bullet_1")
+            bullet("howit_summaries_bullet_2")
+            bullet("howit_summaries_bullet_3")
+        }
+    }
+
+    private func search() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            bullet("howit_search_bullet_1")
+            bullet("howit_search_bullet_2")
+        }
+    }
+
+    private func privacy() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            bullet("howit_privacy_bullet_1")
+            bullet("howit_privacy_bullet_2")
+            bullet("howit_privacy_bullet_3")
+        }
+    }
+
+    private func icloud() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            bullet("howit_icloud_bullet_1")
+            bullet("howit_icloud_bullet_2")
+        }
+    }
+
+    private func exportDelete() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            bullet("howit_export_bullet_1")
+            bullet("howit_export_bullet_2")
+        }
+    }
+
+    private func tips() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            bullet("howit_tips_bullet_1")
+            bullet("howit_tips_bullet_2")
+            bullet("howit_tips_bullet_3")
+        }
+    }
+
+    private func support() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            bullet("howit_support_bullet_1")
+            bullet("howit_support_bullet_2")
+        }
+    }
+
+    private func bullet(_ text: LocalizedStringKey) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
+            Image(systemName: "checkmark.seal.fill").foregroundStyle(.tint)
+            Text(text)
+        }
+        .accessibilityElement(children: .combine)
     }
 }
 
