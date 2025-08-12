@@ -13,10 +13,9 @@ struct CloudSyncService: Sendable {
 
     /// Quick preflight to determine if iCloud is available on this device/user.
     func isICloudAvailable() async -> Bool {
-        // We avoid direct CloudKit account queries to minimize entitlements dependency here.
-        // Simple heuristic: if iCloud Drive is disabled, URL for ubiquity container is nil.
-        // Note: This API is part of FileManager and does not require special entitlements for read.
-        FileManager.default.url(forUbiquityContainerIdentifier: nil) != nil
+        // Be permissive: attempt to proceed and let CloudKit/SwiftData handle network/account availability later.
+        // This avoids false negatives when iCloud Drive is off but CloudKit account exists.
+        true
     }
 
     /// Enable or disable sync. When enabling, migrates local content to cloud and switches container.
