@@ -42,6 +42,18 @@
             "state" : "translated",
             "value" : "About"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acerca de"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "О приложении"
+          }
         }
       }
     },
@@ -51,6 +63,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "About mood signal"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acerca de la señal de ánimo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "О сигнале настроения"
           }
         }
       }
@@ -62,6 +86,18 @@
             "state" : "translated",
             "value" : "Active"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activa"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Активна"
+          }
         }
       }
     },
@@ -71,6 +107,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Add"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añadir"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить"
           }
         }
       }
@@ -82,6 +130,18 @@
             "state" : "translated",
             "value" : "Add tag"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añadir etiqueta"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить метку"
+          }
         }
       }
     },
@@ -91,6 +151,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "All tags"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todas las etiquetas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Все метки"
           }
         }
       }
@@ -102,6 +174,18 @@
             "state" : "translated",
             "value" : "All threads"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todos los temas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Все темы"
+          }
         }
       }
     },
@@ -112,6 +196,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Any"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cualquiera"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Любые"
           }
         }
       }
@@ -165,6 +261,18 @@
             "state" : "translated",
             "value" : "Assign"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asignar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назначить"
+          }
         }
       }
     },
@@ -176,6 +284,18 @@
             "state" : "translated",
             "value" : "Assign entries to threads from entry details."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asigna entradas a temas desde los detalles de la entrada."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назначайте записи темам на экране деталей записи."
+          }
         }
       }
     },
@@ -185,6 +305,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Assign Thread"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asignar tema"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назначить тему"
           }
         }
       }
@@ -197,6 +329,18 @@
             "state" : "translated",
             "value" : "On-device transcription unavailable. Recording audio only."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La transcripción en el dispositivo no está disponible. Se grabará solo audio."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Локальная транскрипция недоступна. Запись только аудио."
+          }
         }
       }
     },
@@ -207,6 +351,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Average mood"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ánimo medio"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Среднее настроение"
           }
         }
       }
@@ -219,6 +375,18 @@
             "state" : "translated",
             "value" : "Back"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atrás"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назад"
+          }
         }
       }
     },
@@ -228,6 +396,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Billing Retry"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reintento de cobro"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Повтор оплаты"
           }
         }
       }
@@ -239,6 +419,18 @@
             "state" : "translated",
             "value" : "Buy"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comprar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Купить"
+          }
         }
       }
     },
@@ -248,6 +440,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancel"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отмена"
           }
         }
       }
@@ -259,6 +463,18 @@
             "state" : "translated",
             "value" : "This action cannot be undone."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta acción no se puede deshacer."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это действие нельзя отменить."
+          }
         }
       }
     },
@@ -269,6 +485,18 @@
             "state" : "translated",
             "value" : "Change plan"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambiar plan"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сменить план"
+          }
         }
       }
     },
@@ -278,6 +506,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Change plan via Apple"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambiar plan con Apple"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменить план через Apple"
           }
         }
       }
@@ -290,6 +530,18 @@
             "state" : "translated",
             "value" : "Clear filters"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Borrar filtros"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сбросить фильтры"
+          }
         }
       }
     },
@@ -300,6 +552,18 @@
             "state" : "translated",
             "value" : "Close"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerrar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрыть"
+          }
         }
       }
     },
@@ -309,6 +573,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Contact support"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contactar con soporte"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Связаться с поддержкой"
           }
         }
       }
@@ -321,6 +597,18 @@
             "state" : "translated",
             "value" : "Continue"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продолжить"
+          }
         }
       }
     },
@@ -332,6 +620,18 @@
             "state" : "translated",
             "value" : "Custom range"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rango personalizado"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Произвольный период"
+          }
         }
       }
     },
@@ -341,6 +641,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Daily prompt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pregunta diaria"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ежедневный вопрос"
           }
         }
       }
@@ -352,6 +664,18 @@
             "state" : "translated",
             "value" : "Daily reflection"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reflexión diaria"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ежедневное размышление"
+          }
         }
       }
     },
@@ -361,6 +685,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Take a minute to capture your thoughts."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tómate un minuto para capturar tus pensamientos."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выделите минуту, чтобы записать свои мысли."
           }
         }
       }
@@ -372,6 +708,18 @@
             "state" : "translated",
             "value" : "Daily reminder"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recordatorio diario"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ежедневное напоминание"
+          }
         }
       }
     },
@@ -379,6 +727,18 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "–"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "–"
+          }
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "–"
@@ -393,6 +753,18 @@
             "state" : "translated",
             "value" : "Data"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datos"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Данные"
+          }
         }
       }
     },
@@ -402,6 +774,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Audio and transcripts are saved on this device by default. No account required, no cloud uploads. You can export or delete your data anytime from Settings."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El audio y las transcripciones se guardan en este dispositivo de forma predeterminada. No se requiere cuenta ni subidas a la nube. Puedes exportar o borrar tus datos en cualquier momento desde Ajustes."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Аудио и расшифровки по умолчанию сохраняются на этом устройстве. Аккаунт не требуется, загрузки в облако отсутствуют. Вы можете экспортировать или удалить свои данные в любое время в Настройках."
           }
         }
       }
@@ -414,6 +798,18 @@
             "state" : "translated",
             "value" : "Default"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Predeterminado"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "По умолчанию"
+          }
         }
       }
     },
@@ -423,6 +819,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Default summary style"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estilo de resumen predeterminado"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Стиль сводки по умолчанию"
           }
         }
       }
@@ -435,6 +843,18 @@
             "state" : "translated",
             "value" : "Delete"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить"
+          }
         }
       }
     },
@@ -444,6 +864,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete all data"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar todos los datos"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить все данные"
           }
         }
       }
@@ -455,6 +887,18 @@
             "state" : "translated",
             "value" : "This removes all entries, tags, threads, local audio, notifications, and search indexes from this device."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esto elimina todas las entradas, etiquetas, temas, audio local, notificaciones e índices de búsqueda de este dispositivo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это удалит все записи, метки, темы, локальные аудиофайлы, уведомления и поисковые индексы с этого устройства."
+          }
         }
       }
     },
@@ -464,6 +908,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete all data?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Eliminar todos los datos?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить все данные?"
           }
         }
       }
@@ -475,6 +931,18 @@
             "state" : "translated",
             "value" : "Delete this entry?"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Eliminar esta entrada?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить эту запись?"
+          }
         }
       }
     },
@@ -485,6 +953,18 @@
             "state" : "translated",
             "value" : "Developer"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desarrollador"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разработчик"
+          }
         }
       }
     },
@@ -494,6 +974,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Developer: Unlimited subscription"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desarrollador: suscripción ilimitada"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разработчик: безлимитная подписка"
           }
         }
       }
@@ -506,6 +998,18 @@
             "state" : "translated",
             "value" : "Discard"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descartar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сбросить"
+          }
         }
       }
     },
@@ -515,6 +1019,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Done"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Listo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Готово"
           }
         }
       }
@@ -526,6 +1042,18 @@
             "state" : "translated",
             "value" : "Done"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Listo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Готово"
+          }
         }
       }
     },
@@ -536,6 +1064,18 @@
             "state" : "translated",
             "value" : "Edit"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменить"
+          }
         }
       }
     },
@@ -545,6 +1085,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edit Tags"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar etiquetas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Редактировать метки"
           }
         }
       }
@@ -557,6 +1109,18 @@
             "state" : "translated",
             "value" : "A quick signal from −1 to +1 (Negative/Neutral/Positive), computed on device."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Una señal rápida de −1 a +1 (Negativo/Neutral/Positivo), calculada en el dispositivo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Короткий индикатор от −1 до +1 (Негатив/Нейтрально/Позитив), вычисляется на устройстве."
+          }
         }
       }
     },
@@ -567,6 +1131,18 @@
             "state" : "translated",
             "value" : "Mood badge"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insignia de ánimo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значок настроения"
+          }
         }
       }
     },
@@ -576,6 +1152,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "What you’ll see next"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lo que verás a continuación"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Что вы увидите дальше"
           }
         }
       }
@@ -588,6 +1176,18 @@
             "state" : "translated",
             "value" : "• Made privately on your device\n• No cloud processing\n• You can change the style in Settings"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "• Se hace de forma privada en tu dispositivo\n• Sin procesamiento en la nube\n• Puedes cambiar el estilo en Ajustes"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "• Выполняется приватно на вашем устройстве\n• Без облачной обработки\n• Стиль можно изменить в Настройках"
+          }
         }
       }
     },
@@ -598,6 +1198,18 @@
             "state" : "translated",
             "value" : "Sonar creates a short, on‑device summary to help you revisit entries quickly."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonar crea un breve resumen en el dispositivo para ayudarte a revisar las entradas rápidamente."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonar создаёт краткую сводку прямо на устройстве, чтобы вы могли быстро возвращаться к записям."
+          }
         }
       }
     },
@@ -607,6 +1219,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Summary"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resumen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сводка"
           }
         }
       }
@@ -619,6 +1243,18 @@
             "state" : "translated",
             "value" : "Enable Mic & Speech"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar micrófono y voz"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включить микрофон и речь"
+          }
         }
       }
     },
@@ -629,6 +1265,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enable Notifications"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar notificaciones"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включить уведомления"
           }
         }
       }
@@ -641,6 +1289,18 @@
             "state" : "translated",
             "value" : "End"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finalizar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завершить"
+          }
         }
       }
     },
@@ -651,6 +1311,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "entries"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "entradas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "записей"
           }
         }
       }
@@ -663,6 +1335,12 @@
             "state" : "translated",
             "value" : "Something went wrong during recording. Please try again."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Во время записи что‑то пошло не так. Повторите попытку."
+          }
         }
       }
     },
@@ -673,6 +1351,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Microphone permission is denied. Enable microphone access in Settings to record."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Доступ к микрофону запрещён. Включите доступ к микрофону в Настройках, чтобы записывать."
           }
         }
       }
@@ -685,6 +1369,12 @@
             "state" : "translated",
             "value" : "On-device transcription isn't available for your language or device. You can still record audio."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Локальная транскрипция недоступна для вашего языка или устройства. Вы всё ещё можете записывать аудио."
+          }
         }
       }
     },
@@ -696,6 +1386,12 @@
             "state" : "translated",
             "value" : "Speech Recognition permission is denied. Enable Speech Recognition in Settings to transcribe."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Доступ к распознаванию речи запрещён. Включите распознавание речи в Настройках, чтобы делать транскрипции."
+          }
         }
       }
     },
@@ -706,6 +1402,12 @@
             "state" : "translated",
             "value" : "Expired"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Истекла"
+          }
         }
       }
     },
@@ -715,6 +1417,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Export JSON (entries only)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экспорт JSON (только записи)"
           }
         }
       }
@@ -727,6 +1435,12 @@
             "state" : "translated",
             "value" : "Date"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дата"
+          }
         }
       }
     },
@@ -738,6 +1452,12 @@
             "state" : "translated",
             "value" : "Mood"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настроение"
+          }
         }
       }
     },
@@ -748,6 +1468,12 @@
             "state" : "translated",
             "value" : "Tags"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Метки"
+          }
         }
       }
     },
@@ -757,6 +1483,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Thread"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тема"
           }
         }
       }
@@ -769,6 +1501,12 @@
             "state" : "translated",
             "value" : "Filters"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фильтры"
+          }
         }
       }
     },
@@ -778,6 +1516,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Grace Period"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Льготный период"
           }
         }
       }
@@ -790,6 +1534,12 @@
             "state" : "translated",
             "value" : "Highlights"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Главное"
+          }
         }
       }
     },
@@ -800,6 +1550,12 @@
             "state" : "translated",
             "value" : "How your data is stored"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Как хранятся ваши данные"
+          }
         }
       }
     },
@@ -809,6 +1565,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "iCloud sync"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Синхронизация iCloud"
           }
         }
       }
@@ -821,6 +1583,12 @@
             "state" : "translated",
             "value" : "Insights are computed on your device. No summaries or transcripts leave your phone."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Аналитика вычисляется на вашем устройстве. Ни сводки, ни расшифровки не покидают ваш телефон."
+          }
         }
       }
     },
@@ -830,6 +1598,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opening your latest entry…"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открываю вашу последнюю запись…"
           }
         }
       }
@@ -841,6 +1615,12 @@
             "state" : "translated",
             "value" : "Opening search…"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открываю поиск…"
+          }
         }
       }
     },
@@ -850,6 +1630,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Search your entries by text, tag, or mood."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ищите записи по тексту, метке или настроению."
           }
         }
       }
@@ -861,6 +1647,12 @@
             "state" : "translated",
             "value" : "Searching: "
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поиск: "
+          }
         }
       }
     },
@@ -870,6 +1662,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Begin a new voice journal entry."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начните новую голосовую запись в дневнике."
           }
         }
       }
@@ -881,6 +1679,12 @@
             "state" : "translated",
             "value" : "Starting recording…"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запуск записи…"
+          }
         }
       }
     },
@@ -890,6 +1694,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Regenerates a summary for your most recent journal entry."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создаёт сводку заново для вашей последней записи в дневнике."
           }
         }
       }
@@ -902,6 +1712,12 @@
             "state" : "translated",
             "value" : "Journal Entry"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запись дневника"
+          }
         }
       }
     },
@@ -912,6 +1728,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Journal"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дневник"
           }
         }
       }
@@ -924,6 +1746,12 @@
             "state" : "translated",
             "value" : "Last 7 days"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Последние 7 дней"
+          }
         }
       }
     },
@@ -933,6 +1761,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Live waveform"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Живая волна"
           }
         }
       }
@@ -944,6 +1778,12 @@
             "state" : "translated",
             "value" : "Manage Subscription"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Управление подпиской"
+          }
         }
       }
     },
@@ -953,6 +1793,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Manage tags"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Управление метками"
           }
         }
       }
@@ -964,6 +1810,12 @@
             "state" : "translated",
             "value" : "Manage threads"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Управление темами"
+          }
         }
       }
     },
@@ -973,6 +1825,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mood"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настроение"
           }
         }
       }
@@ -984,6 +1842,12 @@
             "state" : "translated",
             "value" : "Mood: %1$@"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настроение: %1$@"
+          }
         }
       }
     },
@@ -993,6 +1857,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sonar estimates mood locally using Apple's on‑device sentiment. Scores range from −1 to +1 and are grouped as Negative, Neutral, or Positive. Your content never leaves the device."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonar оценивает настроение локально, используя встроенную модель тональности Apple. Оценки варьируются от −1 до +1 и группируются как Негативное, Нейтральное или Позитивное. Ваш контент никогда не покидает устройство."
           }
         }
       }
@@ -1005,6 +1875,12 @@
             "state" : "translated",
             "value" : "Mood trend"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тренд настроения"
+          }
         }
       }
     },
@@ -1015,6 +1891,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Name"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя"
           }
         }
       }
@@ -1027,6 +1909,12 @@
             "state" : "translated",
             "value" : "Insights"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Аналитика"
+          }
         }
       }
     },
@@ -1038,6 +1926,12 @@
             "state" : "translated",
             "value" : "Journal"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дневник"
+          }
         }
       }
     },
@@ -1048,6 +1942,12 @@
             "state" : "translated",
             "value" : "Manage Tags"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Управление метками"
+          }
         }
       }
     },
@@ -1057,6 +1957,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Manage Threads"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Управление темами"
           }
         }
       }
@@ -1069,6 +1975,12 @@
             "state" : "translated",
             "value" : "Record"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запись"
+          }
         }
       }
     },
@@ -1079,6 +1991,12 @@
             "state" : "translated",
             "value" : "Search"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поиск"
+          }
         }
       }
     },
@@ -1088,6 +2006,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Settings"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройки"
           }
         }
       }
@@ -1100,6 +2024,12 @@
             "state" : "translated",
             "value" : "Threads"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Темы"
+          }
         }
       }
     },
@@ -1109,6 +2039,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Text-to-speech"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Синтез речи"
           }
         }
       }
@@ -1121,6 +2057,12 @@
             "state" : "translated",
             "value" : "Negative"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Негативное"
+          }
         }
       }
     },
@@ -1132,6 +2074,12 @@
             "state" : "translated",
             "value" : "Neutral"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нейтральное"
+          }
         }
       }
     },
@@ -1141,6 +2089,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "New tag"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Новая метка"
           }
         }
       }
@@ -1152,6 +2106,12 @@
             "state" : "translated",
             "value" : "New Thread"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Новая тема"
+          }
         }
       }
     },
@@ -1161,6 +2121,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No audio attached"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin audio adjunto"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет прикреплённого аудио"
           }
         }
       }
@@ -1173,6 +2145,18 @@
             "state" : "translated",
             "value" : "No entries yet"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún no hay entradas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Записей пока нет"
+          }
         }
       }
     },
@@ -1182,6 +2166,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No export available"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exportación no disponible"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экспорт недоступен"
           }
         }
       }
@@ -1194,6 +2190,18 @@
             "state" : "translated",
             "value" : "No highlights yet"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún no hay destacados"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пока нет главных моментов"
+          }
         }
       }
     },
@@ -1203,6 +2211,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No products"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin productos"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет продуктов"
           }
         }
       }
@@ -1215,6 +2235,18 @@
             "state" : "translated",
             "value" : "No results"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin resultados"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет результатов"
+          }
         }
       }
     },
@@ -1224,6 +2256,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No tags"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin etiquetas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет меток"
           }
         }
       }
@@ -1236,6 +2280,18 @@
             "state" : "translated",
             "value" : "No themes yet"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún no hay temas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пока нет тем"
+          }
         }
       }
     },
@@ -1246,6 +2302,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No thread"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin tema"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет темы"
           }
         }
       }
@@ -1258,6 +2326,18 @@
             "state" : "translated",
             "value" : "No threads yet"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún no hay temas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пока нет тем"
+          }
         }
       }
     },
@@ -1268,6 +2348,18 @@
             "state" : "translated",
             "value" : "Not subscribed"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin suscripción"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет подписки"
+          }
         }
       }
     },
@@ -1277,6 +2369,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заметки"
           }
         }
       }
@@ -1289,6 +2393,18 @@
             "state" : "translated",
             "value" : "On-device transcription only"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo transcripción en el dispositivo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Только локальная транскрипция"
+          }
         }
       }
     },
@@ -1299,6 +2415,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You can always find past entries in the Journal tab and search later."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы всегда можете найти прошлые записи на вкладке «Дневник» и позже воспользоваться поиском."
           }
         }
       }
@@ -1311,6 +2433,12 @@
             "state" : "translated",
             "value" : "Instant summaries and mood at a glance."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мгновенные сводки и настроение одним взглядом."
+          }
         }
       }
     },
@@ -1321,6 +2449,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Make it yours"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сделайте по‑своему"
           }
         }
       }
@@ -1333,6 +2467,12 @@
             "state" : "translated",
             "value" : "Mood badges summarize tone without sharing your data."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значки настроения показывают тон без передачи ваших данных."
+          }
         }
       }
     },
@@ -1343,6 +2483,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mood insight at a glance. Fast search across your thoughts."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настроение с первого взгляда. Быстрый поиск по вашим мыслям."
           }
         }
       }
@@ -1355,6 +2501,12 @@
             "state" : "translated",
             "value" : "No account required. Your data stays on device. Free plan includes 3 saves; upgrade anytime."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Аккаунт не требуется. Ваши данные остаются на устройстве. Бесплатный план включает 3 сохранения; обновить можно в любой момент."
+          }
         }
       }
     },
@@ -1365,6 +2517,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Permissions"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разрешения"
           }
         }
       }
@@ -1377,6 +2535,12 @@
             "state" : "translated",
             "value" : "We'll ask for Microphone and Speech so you can record and transcribe on device. Notifications are optional for gentle reminders."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мы попросим Микрофон и Речь, чтобы вы могли записывать и расшифровывать на устройстве. Уведомления — по желанию для мягких напоминаний."
+          }
         }
       }
     },
@@ -1387,6 +2551,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Private, on-device voice journaling."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приватный голосовой дневник на устройстве."
           }
         }
       }
@@ -1399,6 +2569,12 @@
             "state" : "translated",
             "value" : "You can turn on reminders later in Settings → Preferences."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы можете включить напоминания позже в Настройки → Предпочтения."
+          }
         }
       }
     },
@@ -1409,6 +2585,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Summaries are computed on your device; mood badges use local sentiment and never leave your phone."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сводки вычисляются на вашем устройстве; значки настроения используют локальную тональность и никогда не покидают ваш телефон."
           }
         }
       }
@@ -1421,6 +2603,12 @@
             "state" : "translated",
             "value" : "Tap to record. Low-latency, on-device transcription."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нажмите, чтобы записать. Низкая задержка, локальная транскрипция."
+          }
         }
       }
     },
@@ -1431,6 +2619,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Welcome to Sonar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добро пожаловать в Sonar"
           }
         }
       }
@@ -1443,6 +2637,12 @@
             "state" : "translated",
             "value" : "What’s stored: audio files and transcripts live only on your device by default. You can export or delete them anytime in Settings."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Что сохраняется: аудиофайлы и расшифровки по умолчанию живут только на вашем устройстве. Вы можете экспортировать или удалить их в любое время в Настройках."
+          }
         }
       }
     },
@@ -1453,6 +2653,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Open Settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir Ajustes"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть Настройки"
           }
         }
       }
@@ -1465,6 +2677,18 @@
             "state" : "translated",
             "value" : "Pause"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausa"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пауза"
+          }
         }
       }
     },
@@ -1474,6 +2698,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unlimited entries, custom styles, and insights."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entradas ilimitadas, estilos personalizados y perspectivas."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неограниченные записи, пользовательские стили и аналитика."
           }
         }
       }
@@ -1485,6 +2721,18 @@
             "state" : "translated",
             "value" : "Unlock Sonar"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desbloquear Sonar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разблокируйте Sonar"
+          }
         }
       }
     },
@@ -1494,6 +2742,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "/day"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/día"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/день"
           }
         }
       }
@@ -1505,6 +2765,18 @@
             "state" : "translated",
             "value" : "/month"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/mes"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/месяц"
+          }
         }
       }
     },
@@ -1515,6 +2787,18 @@
             "state" : "translated",
             "value" : "/week"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/semana"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/неделя"
+          }
         }
       }
     },
@@ -1524,6 +2808,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "/year"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/año"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/год"
           }
         }
       }
@@ -1536,6 +2832,18 @@
             "state" : "translated",
             "value" : "Pin"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fijar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрепить"
+          }
         }
       }
     },
@@ -1546,6 +2854,18 @@
             "state" : "translated",
             "value" : "Pinned"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fijado"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закреплено"
+          }
         }
       }
     },
@@ -1555,6 +2875,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Play sample"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reproducir muestra"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Воспроизвести пример"
           }
         }
       }
@@ -1567,6 +2899,18 @@
             "state" : "translated",
             "value" : "Playback position"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posición de reproducción"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Позиция воспроизведения"
+          }
         }
       }
     },
@@ -1578,6 +2922,18 @@
             "state" : "translated",
             "value" : "Positive"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Positivo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Позитивное"
+          }
         }
       }
     },
@@ -1588,6 +2944,18 @@
             "state" : "translated",
             "value" : "Preferences"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preferencias"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Предпочтения"
+          }
         }
       }
     },
@@ -1597,6 +2965,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Preview"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vista previa"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Предпросмотр"
           }
         }
       }
@@ -1609,6 +2989,18 @@
             "state" : "translated",
             "value" : "Privacy"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacidad"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Конфиденциальность"
+          }
         }
       }
     },
@@ -1618,6 +3010,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Privacy Policy"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Política de privacidad"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Политика конфиденциальности"
           }
         }
       }
@@ -1630,6 +3034,18 @@
             "state" : "translated",
             "value" : "Processing…"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Procesando…"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обработка…"
+          }
         }
       }
     },
@@ -1640,6 +3056,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "What energized you this week? What drained you?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Qué te dio energía esta semana? ¿Qué te agotó?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Что придало вам сил на этой неделе? Что вымотало?"
           }
         }
       }
@@ -1652,6 +3080,18 @@
             "state" : "translated",
             "value" : "What small win are you proud of?"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿De qué pequeño logro te sientes orgulloso?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Какой маленькой победой вы гордитесь?"
+          }
         }
       }
     },
@@ -1663,6 +3103,18 @@
             "state" : "translated",
             "value" : "What trend do you notice in your mood?"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Qué tendencia notas en tu ánimo?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Какую тенденцию вы замечаете в своём настроении?"
+          }
         }
       }
     },
@@ -1672,6 +3124,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Query"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consulta"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запрос"
           }
         }
       }
@@ -1683,6 +3147,18 @@
             "state" : "translated",
             "value" : "Read"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leer"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Читать вслух"
+          }
         }
       }
     },
@@ -1692,6 +3168,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recent"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recientes"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Недавние"
           }
         }
       }
@@ -1704,6 +3192,18 @@
             "state" : "translated",
             "value" : "Record"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grabar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запись"
+          }
         }
       }
     },
@@ -1713,6 +3213,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Record to start building your journal."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Graba para comenzar tu diario."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запишите, чтобы начать вести дневник."
           }
         }
       }
@@ -1725,6 +3237,18 @@
             "state" : "translated",
             "value" : "Recovered recording found"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se encontró una grabación recuperada"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Найдена восстановленная запись"
+          }
         }
       }
     },
@@ -1736,6 +3260,18 @@
             "state" : "translated",
             "value" : "A previous recording didn’t finish saving. You can save it as a new entry or discard it."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Una grabación anterior no terminó de guardarse. Puedes guardarla como una nueva entrada o descartarla."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Предыдущая запись не завершила сохранение. Вы можете сохранить её как новую запись или удалить."
+          }
         }
       }
     },
@@ -1745,6 +3281,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recovered after an interruption."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recuperado tras una interrupción."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Восстановлено после прерывания."
           }
         }
       }
@@ -1756,6 +3304,18 @@
             "state" : "translated",
             "value" : "Recovered recording"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grabación recuperada"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Восстановленная запись"
+          }
         }
       }
     },
@@ -1765,6 +3325,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Regenerate Summary"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regenerar resumen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пересоздать сводку"
           }
         }
       }
@@ -1776,6 +3348,13 @@
             "state" : "translated",
             "value" : "Remind me in 1 hour"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Recordarme en 1 hora" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Напомнить через 1 час"
+          }
         }
       }
     },
@@ -1785,6 +3364,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reminder: %1$lld:00"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Recordatorio: %1$lld:00" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Напоминание: %1$lld:00"
           }
         }
       }
@@ -1797,6 +3383,13 @@
             "state" : "translated",
             "value" : "Rename"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Renombrar" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переименовать"
+          }
         }
       }
     },
@@ -1806,6 +3399,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rename Tag"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Renombrar etiqueta" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переименовать метку"
           }
         }
       }
@@ -1818,6 +3418,13 @@
             "state" : "translated",
             "value" : "Rename Thread"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Renombrar tema" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переименовать тему"
+          }
         }
       }
     },
@@ -1827,6 +3434,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Restore Purchases"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Restaurar compras" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Восстановить покупки"
           }
         }
       }
@@ -1839,6 +3453,13 @@
             "state" : "translated",
             "value" : "Resume"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Reanudar" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продолжить"
+          }
         }
       }
     },
@@ -1850,6 +3471,13 @@
             "state" : "translated",
             "value" : "Review transcript"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Revisar transcripción" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверить расшифровку"
+          }
         }
       }
     },
@@ -1859,6 +3487,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Revoked"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Revocada" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отозвана"
           }
         }
       }
@@ -1871,6 +3506,13 @@
             "state" : "translated",
             "value" : "Save"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Guardar" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранить"
+          }
         }
       }
     },
@@ -1882,6 +3524,13 @@
             "state" : "translated",
             "value" : "Saved"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Guardado" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранено"
+          }
         }
       }
     },
@@ -1892,16 +3541,29 @@
             "state" : "translated",
             "value" : "Search Entries"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Buscar entradas" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Искать записи"
+          }
         }
       }
     },
     "search_entries_in_app %1$@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Search entries in %1$@"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Buscar entradas en %1$@" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Искать записи в %1$@"
           }
         }
       }
@@ -1914,6 +3576,13 @@
             "state" : "translated",
             "value" : "Select an entry"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Selecciona una entrada" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите запись"
+          }
         }
       }
     },
@@ -1924,6 +3593,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Settings"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ajustes" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройки"
           }
         }
       }
@@ -1936,6 +3612,13 @@
             "state" : "translated",
             "value" : "Share"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Compartir" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поделиться"
+          }
         }
       }
     },
@@ -1945,6 +3628,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Share Export"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Compartir exportación" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поделиться экспортом"
           }
         }
       }
@@ -1957,6 +3647,13 @@
             "state" : "translated",
             "value" : "Share weekly highlights"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Compartir destacados semanales" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поделиться еженедельными главными моментами"
+          }
         }
       }
     },
@@ -1966,6 +3663,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Share your export"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Compartir tu exportación" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поделиться экспортом"
           }
         }
       }
@@ -1978,6 +3682,13 @@
             "state" : "translated",
             "value" : "Sort"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ordenar" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сортировка"
+          }
         }
       }
     },
@@ -1988,6 +3699,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Newest"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Más recientes" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сначала новые"
           }
         }
       }
@@ -2000,6 +3718,13 @@
             "state" : "translated",
             "value" : "Oldest"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Más antiguas" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сначала старые"
+          }
         }
       }
     },
@@ -2011,6 +3736,13 @@
             "state" : "translated",
             "value" : "Relevance"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Relevancia" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "По релевантности"
+          }
         }
       }
     },
@@ -2021,6 +3753,13 @@
             "state" : "translated",
             "value" : "Speed: %1$@"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Velocidad: %1$@" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скорость: %1$@"
+          }
         }
       }
     },
@@ -2030,6 +3769,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Spotlight indexing"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Indexación de Spotlight" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Индексирование Spotlight"
           }
         }
       }
@@ -2042,6 +3788,13 @@
             "state" : "translated",
             "value" : "Start"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Iniciar" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начать"
+          }
         }
       }
     },
@@ -2053,16 +3806,29 @@
             "state" : "translated",
             "value" : "Start Recording"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Comenzar a grabar" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начать запись"
+          }
         }
       }
     },
     "start_recording_app %1$@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Start recording in %1$@"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Comenzar a grabar en %1$@" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начать запись в %1$@"
           }
         }
       }
@@ -2073,6 +3839,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Status"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Estado" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Статус"
           }
         }
       }
@@ -2085,6 +3858,13 @@
             "state" : "translated",
             "value" : "Stop"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Detener" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завершить"
+          }
         }
       }
     },
@@ -2094,6 +3874,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bulleted"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Con viñetas" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Списком"
           }
         }
       }
@@ -2105,6 +3892,13 @@
             "state" : "translated",
             "value" : "Concise"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Conciso" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Краткая"
+          }
         }
       }
     },
@@ -2114,6 +3908,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reflective"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Reflexivo" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Размышляющая"
           }
         }
       }
@@ -2125,6 +3926,13 @@
             "state" : "translated",
             "value" : "Subscribed"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Suscripción activa" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подписка активна"
+          }
         }
       }
     },
@@ -2134,6 +3942,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Subscription"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Suscripción" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подписка"
           }
         }
       }
@@ -2146,6 +3961,13 @@
             "state" : "translated",
             "value" : "Suggested prompts"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Preguntas sugeridas" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Предложенные вопросы"
+          }
         }
       }
     },
@@ -2156,16 +3978,29 @@
             "state" : "translated",
             "value" : "Summarize Last Entry"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Resumir la última entrada" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Суммировать последнюю запись"
+          }
         }
       }
     },
     "summarize_last_in_app %1$@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Summarize last entry in %1$@"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Resumir la última entrada en %1$@" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Суммировать последнюю запись в %1$@"
           }
         }
       }
@@ -2178,6 +4013,13 @@
             "state" : "translated",
             "value" : "Summary style"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Estilo de resumen" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Стиль сводки"
+          }
         }
       }
     },
@@ -2188,6 +4030,13 @@
             "state" : "translated",
             "value" : "Tag"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Etiqueta" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Метка"
+          }
         }
       }
     },
@@ -2197,6 +4046,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tags"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Etiquetas" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Метки"
           }
         }
       }
@@ -2209,6 +4065,13 @@
             "state" : "translated",
             "value" : "Tap the mic to start your first journal."
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Toca el micrófono para empezar tu primer diario." } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нажмите на микрофон, чтобы начать первую запись в дневнике."
+          }
         }
       }
     },
@@ -2218,6 +4081,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Terms of service"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Términos del servicio" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Условия использования"
           }
         }
       }
@@ -2230,6 +4100,13 @@
             "state" : "translated",
             "value" : "Theme:"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tema:" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тема:"
+          }
         }
       }
     },
@@ -2240,6 +4117,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "This week"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Esta semana" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "На этой неделе"
           }
         }
       }
@@ -2252,6 +4136,13 @@
             "state" : "translated",
             "value" : "Thread"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tema" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тема"
+          }
         }
       }
     },
@@ -2261,6 +4152,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Threads"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Temas" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Темы"
           }
         }
       }
@@ -2272,6 +4170,13 @@
             "state" : "translated",
             "value" : "Title"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Título" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заголовок"
+          }
         }
       }
     },
@@ -2281,6 +4186,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Title (optional)"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Título (opcional)" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заголовок (необязательно)"
           }
         }
       }
@@ -2293,6 +4205,13 @@
             "state" : "translated",
             "value" : "Today"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Hoy" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сегодня"
+          }
         }
       }
     },
@@ -2303,6 +4222,13 @@
             "state" : "translated",
             "value" : "bullet points with short phrases"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "puntos con frases cortas" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "маркированные пункты с короткими фразами"
+          }
         }
       }
     },
@@ -2312,6 +4238,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "gentle, reflective tone"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "tono suave y reflexivo" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "мягкий, размышляющий тон"
           }
         }
       }
@@ -2324,6 +4257,13 @@
             "state" : "translated",
             "value" : "Top themes"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Temas principales" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Главные темы"
+          }
         }
       }
     },
@@ -2334,6 +4274,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Try Again"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Intentar de nuevo" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Повторить"
           }
         }
       }
@@ -2346,6 +4293,13 @@
             "state" : "translated",
             "value" : "Try broadening your query or clearing filters."
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Prueba a ampliar tu consulta o a borrar filtros." } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Попробуйте расширить запрос или сбросить фильтры."
+          }
         }
       }
     },
@@ -2355,6 +4309,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Text-to-speech options"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Opciones de texto a voz" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Параметры синтеза речи"
           }
         }
       }
@@ -2366,6 +4327,13 @@
             "state" : "translated",
             "value" : "Pitch"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tono" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тон"
+          }
         }
       }
     },
@@ -2375,6 +4343,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rate"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Velocidad" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скорость"
           }
         }
       }
@@ -2387,6 +4362,13 @@
             "state" : "translated",
             "value" : "Unable to load audio"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "No se pudo cargar el audio" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось загрузить аудио"
+          }
         }
       }
     },
@@ -2396,6 +4378,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unknown"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Desconocido" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неизвестно"
           }
         }
       }
@@ -2408,6 +4397,13 @@
             "state" : "translated",
             "value" : "Unpin"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Desfijar" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открепить"
+          }
         }
       }
     },
@@ -2418,6 +4414,13 @@
             "state" : "translated",
             "value" : "Version"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Versión" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Версия"
+          }
         }
       }
     },
@@ -2427,6 +4430,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "View plans"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ver planes" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Посмотреть планы"
           }
         }
       }
@@ -2439,6 +4449,13 @@
             "state" : "translated",
             "value" : "This week’s Sonar highlights (private)\n\n"
           }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Destacados de Sonar de esta semana (privado)\n\n" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Главные моменты недели в Sonar (приватно)\n\n"
+          }
         }
       }
     },
@@ -2448,6 +4465,13 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Weekly insights"
+          }
+        },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Resumen semanal" } },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Еженедельная аналитика"
           }
         }
       }
