@@ -1336,6 +1336,12 @@
             "value" : "Something went wrong during recording. Please try again."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Algo salió mal durante la grabación. Inténtalo de nuevo."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1351,6 +1357,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Microphone permission is denied. Enable microphone access in Settings to record."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El permiso del micrófono está denegado. Activa el acceso al micrófono en Ajustes para grabar."
           }
         },
         "ru" : {
@@ -1370,6 +1382,12 @@
             "value" : "On-device transcription isn't available for your language or device. You can still record audio."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La transcripción en el dispositivo no está disponible para tu idioma o dispositivo. Aún puedes grabar audio."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1385,6 +1403,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Speech Recognition permission is denied. Enable Speech Recognition in Settings to transcribe."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El permiso de reconocimiento de voz está denegado. Activa el reconocimiento de voz en Ajustes para transcribir."
           }
         },
         "ru" : {
@@ -1403,6 +1427,12 @@
             "value" : "Expired"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caducada"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1417,6 +1447,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Export JSON (entries only)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exportar JSON (solo entradas)"
           }
         },
         "ru" : {
@@ -1436,6 +1472,12 @@
             "value" : "Date"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fecha"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1451,6 +1493,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mood"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ánimo"
           }
         },
         "ru" : {
@@ -1469,6 +1517,12 @@
             "value" : "Tags"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etiquetas"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1483,6 +1537,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Thread"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tema"
           }
         },
         "ru" : {
@@ -1502,6 +1562,12 @@
             "value" : "Filters"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtros"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1516,6 +1582,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Grace Period"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Período de gracia"
           }
         },
         "ru" : {
@@ -1535,6 +1607,12 @@
             "value" : "Highlights"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Destacados"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1551,6 +1629,12 @@
             "value" : "How your data is stored"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cómo se almacenan tus datos"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1565,6 +1649,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "iCloud sync"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sincronización con iCloud"
           }
         },
         "ru" : {
@@ -1584,6 +1674,12 @@
             "value" : "Insights are computed on your device. No summaries or transcripts leave your phone."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los análisis se calculan en tu dispositivo. Ningún resumen ni transcripción sale de tu teléfono."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1598,6 +1694,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opening your latest entry…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abriendo tu última entrada…"
           }
         },
         "ru" : {
@@ -1616,6 +1718,12 @@
             "value" : "Opening search…"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abriendo búsqueda…"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1632,6 +1740,7 @@
             "value" : "Search your entries by text, tag, or mood."
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Busca tus entradas por texto, etiqueta o ánimo." } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1648,6 +1757,7 @@
             "value" : "Searching: "
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Buscando: " } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1664,6 +1774,7 @@
             "value" : "Begin a new voice journal entry."
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Comienza una nueva entrada de diario por voz." } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1680,6 +1791,12 @@
             "value" : "Starting recording…"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciando grabación…"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1694,6 +1811,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Regenerates a summary for your most recent journal entry."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regenera un resumen de tu entrada de diario más reciente."
           }
         },
         "ru" : {
@@ -1713,6 +1836,12 @@
             "value" : "Journal Entry"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrada de diario"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1730,6 +1859,7 @@
             "value" : "Journal"
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Diario" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1747,6 +1877,7 @@
             "value" : "Last 7 days"
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Últimos 7 días" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1763,6 +1894,7 @@
             "value" : "Live waveform"
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Forma de onda en vivo" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1777,6 +1909,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Manage Subscription"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Administrar suscripción"
           }
         },
         "ru" : {
@@ -1795,6 +1933,7 @@
             "value" : "Manage tags"
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Administrar etiquetas" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1811,6 +1950,7 @@
             "value" : "Manage threads"
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Administrar temas" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1827,6 +1967,7 @@
             "value" : "Mood"
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ánimo" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1843,6 +1984,7 @@
             "value" : "Mood: %1$@"
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ánimo: %1$@" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1859,6 +2001,7 @@
             "value" : "Sonar estimates mood locally using Apple's on‑device sentiment. Scores range from −1 to +1 and are grouped as Negative, Neutral, or Positive. Your content never leaves the device."
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Sonar estima el ánimo localmente usando el análisis de sentimiento en el dispositivo de Apple. Las puntuaciones van de −1 a +1 y se agrupan en Negativo, Neutral o Positivo. Tu contenido nunca sale del dispositivo." } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1876,6 +2019,7 @@
             "value" : "Mood trend"
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Tendencia del ánimo" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1893,6 +2037,7 @@
             "value" : "Name"
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Nombre" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1908,6 +2053,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Insights"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Análisis"
           }
         },
         "ru" : {
@@ -1927,6 +2078,12 @@
             "value" : "Journal"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diario"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1943,6 +2100,7 @@
             "value" : "Manage Tags"
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Administrar etiquetas" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1959,6 +2117,7 @@
             "value" : "Manage Threads"
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Administrar temas" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1976,6 +2135,7 @@
             "value" : "Record"
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Grabar" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1992,6 +2152,7 @@
             "value" : "Search"
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Buscar" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2008,6 +2169,7 @@
             "value" : "Settings"
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ajustes" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2025,6 +2187,7 @@
             "value" : "Threads"
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Temas" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2041,6 +2204,7 @@
             "value" : "Text-to-speech"
           }
         },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Texto a voz" } },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2058,6 +2222,12 @@
             "value" : "Negative"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Negativo"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2070,6 +2240,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neutral"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Neutral"
@@ -2091,6 +2267,12 @@
             "value" : "New tag"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nueva etiqueta"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2105,6 +2287,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "New Thread"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuevo tema"
           }
         },
         "ru" : {
@@ -2417,6 +2605,12 @@
             "value" : "You can always find past entries in the Journal tab and search later."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siempre puedes encontrar entradas pasadas en la pestaña Diario y buscar más tarde."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2432,6 +2626,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Instant summaries and mood at a glance."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resúmenes instantáneos y ánimo de un vistazo."
           }
         },
         "ru" : {
@@ -2451,6 +2651,12 @@
             "value" : "Make it yours"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hazlo tuyo"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2466,6 +2672,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mood badges summarize tone without sharing your data."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las insignias de ánimo resumen el tono sin compartir tus datos."
           }
         },
         "ru" : {
@@ -2485,6 +2697,12 @@
             "value" : "Mood insight at a glance. Fast search across your thoughts."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ánimo de un vistazo. Búsqueda rápida por tus pensamientos."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2500,6 +2718,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No account required. Your data stays on device. Free plan includes 3 saves; upgrade anytime."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se requiere cuenta. Tus datos permanecen en el dispositivo. El plan gratuito incluye 3 guardados; puedes mejorar en cualquier momento."
           }
         },
         "ru" : {
@@ -2519,6 +2743,12 @@
             "value" : "Permissions"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permisos"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2534,6 +2764,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "We'll ask for Microphone and Speech so you can record and transcribe on device. Notifications are optional for gentle reminders."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solicitaremos Micrófono y Voz para que puedas grabar y transcribir en el dispositivo. Las notificaciones son opcionales para recordatorios suaves."
           }
         },
         "ru" : {
@@ -2553,6 +2789,12 @@
             "value" : "Private, on-device voice journaling."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diario de voz privado en el dispositivo."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2568,6 +2810,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You can turn on reminders later in Settings → Preferences."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puedes activar los recordatorios más tarde en Ajustes → Preferencias."
           }
         },
         "ru" : {
@@ -2587,6 +2835,12 @@
             "value" : "Summaries are computed on your device; mood badges use local sentiment and never leave your phone."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los resúmenes se calculan en tu dispositivo; las insignias de ánimo usan sentimiento local y nunca salen de tu teléfono."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2602,6 +2856,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tap to record. Low-latency, on-device transcription."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toca para grabar. Transcripción local de baja latencia."
           }
         },
         "ru" : {
@@ -2621,6 +2881,12 @@
             "value" : "Welcome to Sonar"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenido a Sonar"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2636,6 +2902,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "What’s stored: audio files and transcripts live only on your device by default. You can export or delete them anytime in Settings."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qué se guarda: los archivos de audio y las transcripciones viven solo en tu dispositivo por defecto. Puedes exportarlos o borrarlos en cualquier momento en Ajustes."
           }
         },
         "ru" : {
