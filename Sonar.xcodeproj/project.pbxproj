@@ -9,7 +9,22 @@
 /* Begin PBXBuildFile section */
 		330D4CD92E4BDC9700887DBB /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 330D4CD82E4BDC9700887DBB /* WidgetKit.framework */; };
 		330D4CDB2E4BDC9700887DBB /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 330D4CDA2E4BDC9700887DBB /* SwiftUI.framework */; };
+		330D4D192E4BF05A00887DBB /* SonarWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 330D4CD62E4BDC9700887DBB /* SonarWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		330D4D182E4BF04E00887DBB /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				330D4D192E4BF05A00887DBB /* SonarWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		330D4CD62E4BDC9700887DBB /* SonarWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SonarWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,6 +177,7 @@
 				337A9ED22E48E66200F920E3 /* Sources */,
 				337A9ED32E48E66200F920E3 /* Frameworks */,
 				337A9ED42E48E66200F920E3 /* Resources */,
+				330D4D182E4BF04E00887DBB /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
