@@ -1800,25 +1800,53 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Export JSON (entries only)"
+            "value" : "Export JSON"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Exportar JSON (solo entradas)"
+            "value" : "Exportar JSON"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Экспорт JSON (только записи)"
+            "value" : "Экспорт JSON"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "导出 JSON（仅条目）"
+            "value" : "导出 JSON"
+          }
+        }
+      }
+    },
+    "import_json" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import JSON"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importar JSON"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Импорт JSON"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入 JSON"
           }
         }
       }
@@ -2084,25 +2112,25 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Export your data anytime from Settings → Data. Share a JSON export or a ZIP package."
+            "value" : "Export your data anytime from Settings → Data. Share a JSON export."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Exporta tus datos en cualquier momento desde Ajustes → Datos. Comparte un JSON o un paquete ZIP."
+            "value" : "Exporta tus datos en cualquier momento desde Ajustes → Datos. Comparte un JSON."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Экспортируйте данные в любое время в Настройки → Данные. Можно поделиться JSON или ZIP-пакетом."
+            "value" : "Экспортируйте данные в любое время в Настройки → Данные. Можно поделиться JSON."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "可在“设置 → 数据”中随时导出你的数据。可分享 JSON 导出或 ZIP 包。"
+            "value" : "可在“设置 → 数据”中随时导出你的数据。可分享 JSON 导出。"
           }
         }
       }
@@ -3964,6 +3992,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法导出"
+          }
+        }
+      }
+    },
+    "import_success" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import complete"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importación completada"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Импорт завершён"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入完成"
           }
         }
       }

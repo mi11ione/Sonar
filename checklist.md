@@ -167,7 +167,7 @@ Settings — Control & Confidence
 - [x] Manage subscription (plans, upgrade/downgrade)
 - [x] Restore purchases
 - [x] iCloud sync toggle with explanation
-- [x] Export data (ZIP) and Import (advanced)
+- [x] Export data (JSON) and Import (basic)
 - [x] Default summary style selector
 - [x] Text-to-speech voice and rate selection
 - [x] Notification preferences (hour, enable/disable)

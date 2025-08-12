@@ -172,7 +172,7 @@ Feature Gating Map (Complete App)
 - Export & Sharing
   - Free: Share single entry as text only.
   - Pro: Share single entry as text or audio (if recorded); no bulk export.
-  - Premium/Lifetime: Bulk export (ZIP) of selected entries with audio; optional password protection when implemented.
+  - Premium/Lifetime: Bulk export (JSON) of selected entries with audio; optional password protection when implemented.
 
 - Tags & Threads
   - Free: View tags/threads; assign up to 3 tags per entry; create up to 5 tags total.

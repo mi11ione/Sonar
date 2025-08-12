@@ -2,11 +2,13 @@ import SwiftData
 import SwiftUI
 internal import AVFAudio
 import CoreSpotlight
+import UniformTypeIdentifiers
 
 struct SettingsView: View {
     @Environment(\.purchases) private var purchases
     @Environment(\.openURL) private var openURL
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.backup) private var backup
     @Query private var settingsRows: [UserSettings]
     @Query(sort: \PromptStyle.displayName) private var promptStyles: [PromptStyle]
     @State private var isSubscriber: Bool = false
@@ -17,6 +19,7 @@ struct SettingsView: View {
     @State private var showExporter: Bool = false
     @AppStorage("onboardingComplete") private var onboardingComplete: Bool = true
     @State private var confirmDeleteAll: Bool = false
+    @State private var showingImporter: Bool = false
 
     var body: some View {
         List {
@@ -108,7 +111,8 @@ struct SettingsView: View {
                     ))
                 }
                 Section("data") {
-                    Button("export_json") { generateExportJSON() }
+                    Button("export_json") { Task { await exportAll() } }
+                    Button("import_json") { showingImporter = true }
                     Button("delete_all_data", role: .destructive) { confirmDeleteAll = true }
                 }
             }
@@ -138,6 +142,14 @@ struct SettingsView: View {
             }
             .padding()
         }
+        .fileImporter(isPresented: $showingImporter, allowedContentTypes: [UTType.json]) { result in
+            switch result {
+            case let .success(url):
+                Task { await importFrom(url: url) }
+            case .failure:
+                break
+            }
+        }
         .onChange(of: showExporter) { isPresented in
             if !isPresented, let url = exportURL {
                 try? FileManager.default.removeItem(at: url)
@@ -164,35 +176,24 @@ struct SettingsView: View {
         open(url: urlString)
     }
 
-    // MARK: - Lightweight JSON export
+    // MARK: - Export / Import via BackupService
 
-    private func generateExportJSON() {
-        let entries: [JournalEntry] = (try? modelContext.fetch(FetchDescriptor<JournalEntry>())) ?? []
-        let payload: [[String: Any]] = entries.map { e in
-            var dict: [String: Any] = [
-                "id": e.id.uuidString,
-                "createdAt": e.createdAt.timeIntervalSince1970,
-                "updatedAt": e.updatedAt.timeIntervalSince1970,
-                "title": e.title ?? "",
-                "transcript": e.transcript,
-                "summary": e.summary ?? "",
-                "tags": e.tags.map(\.name),
-            ]
-            if let s = e.moodScore { dict["moodScore"] = s }
-            if let l = e.moodLabel { dict["moodLabel"] = l }
-            return dict
-        }
-        guard JSONSerialization.isValidJSONObject(payload),
-              let data = try? JSONSerialization.data(withJSONObject: payload, options: [.prettyPrinted])
-        else { return }
-        let url = FileManager.default.temporaryDirectory.appendingPathComponent("Sonar-Export.json")
-        do {
-            try data.write(to: url)
+    private func exportAll() async {
+        if let url = try? await backup.exportAll(toTemporaryFilename: nil, using: modelContext) {
             exportURL = url
             showExporter = true
-        } catch {
+        } else {
             exportURL = nil
             showExporter = false
+        }
+    }
+
+    private func importFrom(url: URL) async {
+        if let result = try? await backup.import(from: url, using: modelContext) {
+            let message = String(localized: "import_success") + " (\(result.entriesUpserted + result.entriesUpdated))"
+            await MainActor.run {
+                let _ = message // placeholder to keep message in scope if showing a toast later
+            }
         }
     }
 
@@ -233,26 +234,26 @@ struct SettingsView: View {
     }
 }
 
-    private struct TTSSettingsView: View {
+private struct TTSSettingsView: View {
     @Environment(\.tts) private var tts
     @Query private var settingsRows: [UserSettings]
     @State private var selectedVoiceIdentifier: String? = nil
     @State private var rate: Float = 0.5
     @State private var pitch: Float = 1.0
-        private let samplePhrases: [String] = [
-            String(localized: "tts_sample_1"),
-            String(localized: "tts_sample_2"),
-            String(localized: "tts_sample_3"),
-            String(localized: "tts_sample_4"),
-            String(localized: "tts_sample_5"),
-            String(localized: "tts_sample_6"),
-            String(localized: "tts_sample_7"),
-            String(localized: "tts_sample_8"),
-        ]
+    private let samplePhrases: [String] = [
+        String(localized: "tts_sample_1"),
+        String(localized: "tts_sample_2"),
+        String(localized: "tts_sample_3"),
+        String(localized: "tts_sample_4"),
+        String(localized: "tts_sample_5"),
+        String(localized: "tts_sample_6"),
+        String(localized: "tts_sample_7"),
+        String(localized: "tts_sample_8"),
+    ]
 
-        private func randomSample() -> String {
-            samplePhrases.randomElement() ?? String(localized: "tts_sample_fallback")
-        }
+    private func randomSample() -> String {
+        samplePhrases.randomElement() ?? String(localized: "tts_sample_fallback")
+    }
 
     private var voicesByLanguage: [(code: String, display: String, voices: [AVSpeechSynthesisVoice])] {
         let all = tts.availableVoices()

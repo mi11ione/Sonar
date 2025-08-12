@@ -5,4 +5,5 @@ extension Logger {
     static let nlp = Logger(subsystem: "app.sonar.ai", category: "nlp")
     static let purchase = Logger(subsystem: "app.sonar.ai", category: "purchase")
     static let perf = Logger(subsystem: "app.sonar.ai", category: "performance")
+    static let data = Logger(subsystem: "app.sonar.ai", category: "data")
 }

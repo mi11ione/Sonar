@@ -10,6 +10,7 @@ private struct TTSKey: EnvironmentKey { static let defaultValue: any TextToSpeec
 private struct InsightsKey: EnvironmentKey { static let defaultValue: any InsightsService = DefaultInsightsService() }
 private struct PromptsKey: EnvironmentKey { static let defaultValue: any PromptsService = DefaultPromptsService() }
 private struct ReviewKey: EnvironmentKey { static let defaultValue: any ReviewRequestService = DefaultReviewRequestService() }
+private struct BackupKey: EnvironmentKey { static let defaultValue: any BackupService = DefaultBackupService() }
 
 extension EnvironmentValues {
     var transcription: any SpeechTranscriptionService {
@@ -55,5 +56,10 @@ extension EnvironmentValues {
     var review: any ReviewRequestService {
         get { self[ReviewKey.self] }
         set { self[ReviewKey.self] = newValue }
+    }
+
+    var backup: any BackupService {
+        get { self[BackupKey.self] }
+        set { self[BackupKey.self] = newValue }
     }
 }

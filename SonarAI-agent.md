@@ -76,8 +76,8 @@ Proposed plans (execute only after explicit approval):
 5. Organize entries into long‑term Memory Threads (topics/people/goals); get per‑thread rollups.
 6. Weekly Insights feed: mood trends, themes, highlights, and suggested reflection prompts.
 7. Full‑text search with filters (date, mood bins, tags, threads) and Spotlight integration.
-8. Encrypted sharing of selected entries or threads as password‑protected packages; import on another device.
-9. Export to PDF/Text/ZIP; AirDrop or Files share.
+8. Encrypted sharing of selected entries or threads (future); import on another device.
+9. Export to Text/JSON; AirDrop or Files share.
 10. Start quickly from Widgets, Live Activity, and App Shortcuts.
 11. Daily reminders with gentle prompts; optional prompt packs.
 12. Optional iCloud sync toggle.
@@ -406,10 +406,10 @@ protocol InsightsService: Sendable {
 import Foundation
 
 protocol SharePackageService: Sendable {
-    /// Builds an encrypted package (ZIP) for selected entries with passphrase.
-    func exportEncryptedPackage(entries: [JournalEntry], passphrase: String) async throws -> URL
-    /// Imports a previously exported package into the local store.
-    func `import`(from url: URL, passphrase: String) async throws -> [JournalEntry]
+    /// Builds a JSON export for selected entries (optionally base64‑inlining audio).
+    func exportJSON(entries: [JournalEntry]) async throws -> URL
+    /// Imports a previously exported JSON file into the local store.
+    func `import`(from url: URL) async throws -> [JournalEntry]
 }
 ```
 
@@ -648,8 +648,8 @@ Implementation:
 
 Include:
 - Manage subscription (StoreKit views), Restore purchases.
-- iCloud sync toggle; encryption level toggle.
-- Export data (ZIP of JSON + audio). Import data (advanced).
+- iCloud sync toggle.
+- Export data (JSON with optional inlined audio). Import data (basic merge).
 - Privacy policy, Terms, Contact support (mailto:), App version.
 - Notification preferences (reminder hour).
 
@@ -795,11 +795,11 @@ Results list shows summary, mood badge, and timestamp. Swipe actions: Pin, Share
 ### 29) Export/Import
 
 Export:
-- Generate a ZIP containing `entries.json` (transcript, summary, mood, tags) + `audio/` files.
-- Use `ShareLink` to share ZIP. If encrypted mode, include a password flow and caution about recovery.
+- Generate a single `Sonar-Export.json` file (entries, tags/threads, optional base64 audio).
+- Use `ShareLink` to share JSON.
 
 Import:
-- Advanced: parse ZIP and merge by UUID. Non‑MVP.
+- Parse JSON and merge by UUID; write audio files to Application Support/Audio.
 
 ---
 
