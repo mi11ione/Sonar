@@ -29,6 +29,8 @@ struct SettingsView: View {
     @State private var migrationToken: CloudSyncMigrationService.CancellationToken? = nil
     @State private var showDisableConfirm: Bool = false
     @State private var showICloudUnavailableAlert: Bool = false
+    @AppStorage("widgets.showPromptsOnLock") private var showPromptsOnLock: Bool = false
+    @AppStorage("widgets.showSummaryOnLock") private var showSummaryOnLock: Bool = false
 
     var body: some View {
         List {
@@ -102,6 +104,9 @@ struct SettingsView: View {
                         get: { settings.weeklyInsightsEnabled },
                         set: { settings.weeklyInsightsEnabled = $0 }
                     ))
+                    // Widget privacy preferences
+                    Toggle("show_prompts_on_lock", isOn: $showPromptsOnLock)
+                    Toggle("show_summary_on_lock", isOn: $showSummaryOnLock)
                     Toggle("spotlight_indexing", isOn: Binding(
                         get: { settings.spotlightIndexingEnabled },
                         set: { enabled in

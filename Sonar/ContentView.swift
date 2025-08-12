@@ -36,6 +36,16 @@ struct ContentView: View {
             case "start-recording":
                 selectedTab = 0
                 deepLinkStart = true
+                if let comps = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+                    for item in comps.queryItems ?? [] {
+                        if item.name == "stop", item.value == "1" {
+                            UserDefaults.standard.set(true, forKey: "deeplink.stopNow")
+                        }
+                        if item.name == "pause", item.value == "1" {
+                            UserDefaults.standard.set(true, forKey: "deeplink.togglePause")
+                        }
+                    }
+                }
             case "search":
                 selectedTab = 1
                 if let comps = URLComponents(url: url, resolvingAgainstBaseURL: false) {

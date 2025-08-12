@@ -11,6 +11,8 @@ import SwiftData
 import SwiftUI
 import UserNotifications
 internal import AVFAudio
+import ActivityKit
+import WidgetKit
 
 @main
 struct SonarApp: App {
@@ -71,6 +73,12 @@ struct SonarApp: App {
                     container = ModelContainerManager.shared.currentContainer
                 }
                 .task {
+                    // End any stale recording activities from prior runs to avoid dangling UI
+                    for activity in Activity<RecordingActivityAttributes>.activities {
+                        await activity.end(nil, dismissalPolicy: .default)
+                    }
+                }
+                .task {
                     // Preload default prompt styles on first launch
                     let context = ModelContext(container)
                     let request = FetchDescriptor<PromptStyle>()
@@ -88,6 +96,10 @@ struct SonarApp: App {
                         context.insert(UserSettings())
                         try? context.save()
                     }
+                }
+                .task {
+                    // Reload widgets on day rollover for Daily Prompt
+                    await WidgetReloader.shared.reloadIfNewDay()
                 }
         }
     }

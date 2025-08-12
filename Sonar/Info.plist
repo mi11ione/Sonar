@@ -2,22 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>ICloudContainerIdentifier</key>
-    <string>iCloud.app.sonar.ai</string>
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>sonarai</string>
-            </array>
-            <key>CFBundleURLName</key>
-            <string>app.sonar.ai</string>
-        </dict>
-    </array>
-    <key>UIBackgroundModes</key>
-    <array>
-        <string>audio</string>
-    </array>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
+	<key>ICloudContainerIdentifier</key>
+	<string>iCloud.app.sonar.ai</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>sonarai</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>app.sonar.ai</string>
+		</dict>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
 </dict>
 </plist>

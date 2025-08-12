@@ -2,6 +2,7 @@ import AVFoundation
 import StoreKit
 import SwiftData
 import SwiftUI
+import ActivityKit
 
 struct RecordView: View {
     @Environment(\.transcription) private var transcription
@@ -23,6 +24,8 @@ struct RecordView: View {
     @State private var reviewText: String = ""
     @AppStorage("freeCount") private var freeCount: Int = 0
     @AppStorage("deeplink.startRecording") private var deepLinkStart: Bool = false
+    @AppStorage("deeplink.stopNow") private var deepLinkStop: Bool = false
+    @AppStorage("deeplink.togglePause") private var deepLinkTogglePause: Bool = false
     @AppStorage("firstRunEducationShown") private var firstRunEducationShown: Bool = false
     @State private var showPaywall: Bool = false
     @State private var isPaused: Bool = false
@@ -89,6 +92,14 @@ struct RecordView: View {
                 deepLinkStart = false
                 await startRecordingOrGate()
             }
+            if deepLinkStop {
+                deepLinkStop = false
+                if state == .recording || state == .recordingAudioOnly { await stopFromExternalTrigger() }
+            }
+            if deepLinkTogglePause {
+                deepLinkTogglePause = false
+                if state == .recording { togglePause() }
+            }
         }
         .privacySensitive()
         .task { await checkForOrphanAudioToRecover() }
@@ -107,18 +118,7 @@ struct RecordView: View {
             MicButton(title: "start_recording") { Task { await startRecordingOrGate() } }
         case .recording:
             HStack(spacing: 12) {
-                MicButton(title: isPaused ? "resume" : "pause", systemImageName: isPaused ? "play.fill" : "pause.fill", tint: .orange) {
-                    if !isPaused {
-                        committedTranscript = liveTranscript
-                        if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
-                        isPaused = true
-                        Task { await transcription.stop() }
-                    } else {
-                        isPaused = false
-                        lastResumeAt = Date()
-                        Task { await streamTranscription() }
-                    }
-                }
+                MicButton(title: isPaused ? "resume" : "pause", systemImageName: isPaused ? "play.fill" : "pause.fill", tint: .orange) { togglePause() }
                 MicButton(title: "stop", systemImageName: "stop.fill", tint: .red) {
                     if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
                     Task {
@@ -209,6 +209,8 @@ struct RecordView: View {
                 lastResumeAt = Date()
                 elapsedBeforePause = 0
                 beginBackgroundAudioAllowance()
+                RecordingActivityCoordinator.shared.start()
+                RecordingActivityCoordinator.shared.bindLevelStream(transcription.amplitudeStream())
                 await streamTranscription()
             } catch {
                 state = .error(error.localizedDescription)
@@ -334,7 +336,10 @@ struct RecordView: View {
                     try? modelContext.save()
                 }
                 await indexing.index(entry: entry)
+                await WidgetBridge.shared.updateRecentSummary(entry: entry)
             }
+            await RecordingActivityCoordinator.shared.end(entryId: entry.id)
+            await WidgetReloader.shared.reloadAllIfNeeded()
             await gateUsagePostSave()
             await requestReviewIfAppropriate()
             if !firstRunEducationShown {
@@ -344,6 +349,29 @@ struct RecordView: View {
         } catch {
             state = .error(error.localizedDescription)
         }
+    }
+
+    private func togglePause() {
+        if !isPaused {
+            committedTranscript = liveTranscript
+            if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
+            isPaused = true
+            RecordingActivityCoordinator.shared.pause()
+            Task { await transcription.stop() }
+        } else {
+            isPaused = false
+            lastResumeAt = Date()
+            RecordingActivityCoordinator.shared.resume()
+            Task { await streamTranscription() }
+        }
+    }
+
+    private func stopFromExternalTrigger() async {
+        if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
+        await transcription.stop()
+        UserDefaults.standard.set(false, forKey: "recording.inProgress")
+        restoreBackgroundTaskIfAny()
+        state = .review
     }
 
     private func startRecordingOrGate() async {

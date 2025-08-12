@@ -26,6 +26,17 @@ Internationalization & Localization
 - [x] Dates and numbers use locale formats
 - [x] proper .strings file setup and full translation to EN, RU, ES, CH
 
+Widgets & Live Activities
+- [x] App Intents: Start Recording, Summarize Last, Search Entries
+- [x] Quick action plumbing for widgets (AppIntent-based, in-app deep links)
+- [x] Daily Prompt source wired to `DefaultPromptsService`
+- [x] Widget reload throttler added; day roll-over reload
+- [x] Settings toggles for Lock Screen redaction (Prompts/Summary)
+- [x] Recording Live Activity attributes and coordinator
+- [x] Live Activity timer alignment and level hint throttling
+- [x] Pause/Resume/Stop intent flags for deep link handling
+- [x] End activity on save/stop/app termination path
+
 AI Agent — API Verification
 - [x] Use `framework-sources/` as canonical reference for framework symbols
 - [x] Verify function/type names, parameters, and availability in the relevant `*.md`

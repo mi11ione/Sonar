@@ -56,6 +56,7 @@ Performance
 QA
 - Verify action triggers app and starts recording with `.openAppWhenRun = true` intent behavior.
 - Verify VoiceOver labels; contrast; focus order.
+- Verify deep link variants `sonarai://start-recording?stop=1` and `?pause=1` toggle Stop/Pause when triggered by intents.
 
 ---
 
@@ -92,6 +93,7 @@ Performance
 QA
 - Verify scheduling: appears at set hour; changes at midnight; opt‑in redaction works.
 - Ensure long prompts truncate gracefully (line limit + fade).
+- Verify widget timelines reload at day rollover via in‑app task.
 
 ---
 
@@ -129,6 +131,7 @@ Performance
 
 QA
 - Verify redaction; verify correct last item; verify actions.
+- Verify widget reload happens after saving an entry (throttled).
 
 ---
 
