@@ -2,13 +2,13 @@ import AppIntents
 import Foundation
 
 struct StartRecordingIntent: AppIntent {
-    static var title: LocalizedStringResource = "Start Recording"
-    static var description = IntentDescription("Begin a new voice journal entry.")
+    static var title: LocalizedStringResource = "start_recording"
+    static var description = IntentDescription("intent_start_recording_desc")
     static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
         UserDefaults.standard.set(true, forKey: "deeplink.startRecording")
-        return .result(dialog: IntentDialog("Starting recording…"))
+        return .result(dialog: IntentDialog("intent_starting_recording"))
     }
 }
 
@@ -20,20 +20,20 @@ struct SonarAppShortcuts: AppShortcutsProvider {
         return [
             AppShortcut(
                 intent: StartRecordingIntent(),
-                phrases: ["Start recording in \(.applicationName)"],
-                shortTitle: "Start Recording",
+                phrases: ["start_recording_app \(.applicationName)"],
+                shortTitle: "start_recording",
                 systemImageName: "mic.fill"
             ),
             AppShortcut(
                 intent: SummarizeLastEntryIntent(),
-                phrases: ["Summarize last entry in \(.applicationName)"],
-                shortTitle: "Summarize Last",
+                phrases: ["summarize_last_in_app \(.applicationName)"],
+                shortTitle: "summarize_last_entry",
                 systemImageName: "text.alignleft"
             ),
             AppShortcut(
                 intent: SearchEntriesIntent(),
-                phrases: ["Search entries in \(.applicationName)"],
-                shortTitle: "Search Entries",
+                phrases: ["search_entries_in_app \(.applicationName)"],
+                shortTitle: "search_entries",
                 systemImageName: "magnifyingglass"
             ),
         ]

@@ -7,9 +7,9 @@ struct DefaultMoodAnalysisService: MoodAnalysisService, Sendable {
         tagger.string = text
         let (sentiment, _) = tagger.tag(at: text.startIndex, unit: .paragraph, scheme: .sentimentScore)
         let score = Double(sentiment?.rawValue ?? "0") ?? 0
-        let label = if score < -0.2 { "Negative" }
-        else if score > 0.2 { "Positive" }
-        else { "Neutral" }
+        let label = if score < -0.2 { String(localized: "negative") }
+        else if score > 0.2 { String(localized: "positive") }
+        else { String(localized: "neutral") }
         return (score, label)
     }
 }

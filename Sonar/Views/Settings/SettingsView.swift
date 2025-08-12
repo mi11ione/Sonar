@@ -20,20 +20,20 @@ struct SettingsView: View {
 
     var body: some View {
         List {
-            Section("How your data is stored") {
-                Text("Audio and transcripts are saved on this device by default. No account required, no cloud uploads. You can export or delete your data anytime from Settings.")
+            Section("how_data_stored") {
+                Text("data_storage_copy")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
-            Section("Subscription") {
-                if isSubscriber { LabeledContent("Status", value: planId ?? "Active") }
-                Button(isSubscriber ? "Change Plan" : "View Plans") { showPaywall = true }
-                Button("Restore Purchases") { Task { try? await purchases.restore() } }
+            Section("subscription") {
+                if isSubscriber { LabeledContent("status", value: planId ?? String(localized: "active")) }
+                Button(isSubscriber ? "change_plan" : "view_plans") { showPaywall = true }
+                Button("restore_purchases") { Task { try? await purchases.restore() } }
             }
-            Section("Tags") { NavigationLink("Manage tags") { ManageTagsView() } }
-            Section("Threads") { NavigationLink("Manage threads") { ManageThreadsView() } }
-            Section("Developer") {
-                Toggle("Developer: Unlimited subscription", isOn: Binding(
+            Section("tags") { NavigationLink("manage_tags") { ManageTagsView() } }
+            Section("threads") { NavigationLink("manage_threads") { ManageThreadsView() } }
+            Section("developer") {
+                Toggle("developer_unlimited_sub", isOn: Binding(
                     get: { devOverride },
                     set: { newValue in
                         devOverride = newValue
@@ -47,10 +47,10 @@ struct SettingsView: View {
                 .tint(.pink)
             }
             if let settings = settingsRows.first {
-                Section("Preferences") {
-                    Toggle("iCloud sync", isOn: Binding(get: { settings.iCloudSyncEnabled }, set: { settings.iCloudSyncEnabled = $0 }))
-                    Toggle("On-device transcription only", isOn: Binding(get: { settings.allowOnDeviceOnly }, set: { settings.allowOnDeviceOnly = $0 }))
-                    Toggle("Daily prompt", isOn: Binding(
+                Section("preferences") {
+                    Toggle("icloud_sync", isOn: Binding(get: { settings.iCloudSyncEnabled }, set: { settings.iCloudSyncEnabled = $0 }))
+                    Toggle("on_device_only", isOn: Binding(get: { settings.allowOnDeviceOnly }, set: { settings.allowOnDeviceOnly = $0 }))
+                    Toggle("daily_prompt", isOn: Binding(
                         get: { (settings.dailyReminderHour ?? 20) >= 0 },
                         set: { enabled in
                             settings.dailyReminderHour = enabled ? (settings.dailyReminderHour ?? 20) : nil
@@ -61,7 +61,7 @@ struct SettingsView: View {
                             }
                         }
                     ))
-                    Toggle("Daily reminder", isOn: Binding(
+                    Toggle("daily_reminder", isOn: Binding(
                         get: { settings.dailyReminderHour != nil },
                         set: { enabled in
                             settings.dailyReminderHour = enabled ? (settings.dailyReminderHour ?? 20) : nil
@@ -69,24 +69,24 @@ struct SettingsView: View {
                         }
                     ))
                     if settings.dailyReminderHour != nil {
-                        Stepper("Reminder: \(settings.dailyReminderHour ?? 20):00", value: Binding(get: { settings.dailyReminderHour ?? 20 }, set: { newVal in
+                        Stepper(String(format: String(localized: "reminder_time_format %lld"), settings.dailyReminderHour ?? 20), value: Binding(get: { settings.dailyReminderHour ?? 20 }, set: { newVal in
                             settings.dailyReminderHour = newVal
                             // Reschedule with new time
                             Task { await NotificationResponder.shared.scheduleDailyPrompt(atHour: newVal) }
                         }), in: 5 ... 22)
                     }
-                    Picker("Default summary style", selection: Binding(get: { settings.selectedPromptStyleId }, set: { settings.selectedPromptStyleId = $0 })) {
-                        Text("Default").tag(UUID?.none)
+                    Picker("default_summary_style", selection: Binding(get: { settings.selectedPromptStyleId }, set: { settings.selectedPromptStyleId = $0 })) {
+                        Text("default").tag(UUID?.none)
                         ForEach(promptStyles, id: \.id) { style in
                             Text(style.displayName).tag(Optional(style.id))
                         }
                     }
-                    NavigationLink("Text-to-speech options") { TTSSettingsView() }
-                    Toggle("Weekly insights", isOn: Binding(
+                    NavigationLink("tts_options") { TTSSettingsView() }
+                    Toggle("weekly_insights", isOn: Binding(
                         get: { settings.weeklyInsightsEnabled },
                         set: { settings.weeklyInsightsEnabled = $0 }
                     ))
-                    Toggle("Spotlight indexing", isOn: Binding(
+                    Toggle("spotlight_indexing", isOn: Binding(
                         get: { settings.spotlightIndexingEnabled },
                         set: { enabled in
                             settings.spotlightIndexingEnabled = enabled
@@ -107,19 +107,19 @@ struct SettingsView: View {
                         }
                     ))
                 }
-                Section("Data") {
-                    Button("Export JSON (entries only)") { generateExportJSON() }
-                    Button("Delete all data", role: .destructive) { confirmDeleteAll = true }
+                Section("data") {
+                    Button("export_json") { generateExportJSON() }
+                    Button("delete_all_data", role: .destructive) { confirmDeleteAll = true }
                 }
             }
-            Section("About") {
-                LabeledContent("Version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-")
-                Button("Privacy Policy") { open(url: "https://example.com/privacy") }
-                Button("Terms of Service") { open(url: "https://example.com/terms") }
-                Button("Contact Support") { contactSupport() }
+            Section("about") {
+                LabeledContent("version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-")
+                Button("privacy_policy") { open(url: "https://example.com/privacy") }
+                Button("terms_of_service") { open(url: "https://example.com/terms") }
+                Button("contact_support") { contactSupport() }
             }
         }
-        .navigationTitle("Settings")
+        .navigationTitle("nav_settings")
         .task {
             isSubscriber = await purchases.isSubscriber()
             planId = await purchases.currentPlanIdentifier()
@@ -128,11 +128,11 @@ struct SettingsView: View {
         .sheet(isPresented: $showPaywall) { PaywallView() }
         .sheet(isPresented: $showExporter) {
             VStack(spacing: 16) {
-                Text("Share your export").font(.headline)
+                Text("share_your_export").font(.headline)
                 if let url = exportURL {
-                    ShareLink(item: url) { Label("Share Export", systemImage: "square.and.arrow.up") }
+                    ShareLink(item: url) { Label("share_export", systemImage: "square.and.arrow.up") }
                 } else {
-                    ContentUnavailableView("No export available", systemImage: "doc")
+                    ContentUnavailableView("no_export_available", systemImage: "doc")
                 }
             }
             .padding()
@@ -143,11 +143,11 @@ struct SettingsView: View {
                 exportURL = nil
             }
         }
-        .alert("Delete all data?", isPresented: $confirmDeleteAll) {
-            Button("Delete", role: .destructive) { performDeleteAllDataCleanup() }
-            Button("Cancel", role: .cancel) {}
+        .alert("delete_all_data_q", isPresented: $confirmDeleteAll) {
+            Button("delete", role: .destructive) { performDeleteAllDataCleanup() }
+            Button("cancel", role: .cancel) {}
         } message: {
-            Text("This removes all entries, tags, threads, local audio, notifications, and search indexes from this device.")
+            Text("delete_all_data_message")
         }
     }
 
@@ -296,17 +296,17 @@ private struct TTSSettingsView: View {
                     }
                 }
             }
-            Section("Preview") {
-                Slider(value: Binding(get: { Double(rate) }, set: { rate = Float($0) }), in: 0.2 ... 0.7) { Text("Rate") }
-                Slider(value: Binding(get: { Double(pitch) }, set: { pitch = Float($0) }), in: 0.5 ... 2.0) { Text("Pitch") }
-                Button("Play sample") {
+            Section("preview") {
+                Slider(value: Binding(get: { Double(rate) }, set: { rate = Float($0) }), in: 0.2 ... 0.7) { Text("tts_rate") }
+                Slider(value: Binding(get: { Double(pitch) }, set: { pitch = Float($0) }), in: 0.5 ... 2.0) { Text("tts_pitch") }
+                Button("play_sample") {
                     let voice = tts.availableVoices().first(where: { $0.identifier == selectedVoiceIdentifier })
                     tts.speak(randomSample(), voice: voice, rate: rate, pitch: pitch)
                 }
-                Button("Stop") { tts.stop() }
+                Button("stop") { tts.stop() }
             }
         }
-        .navigationTitle("Text-to-speech")
+        .navigationTitle("nav_tts")
         .task { hydrate() }
         .onDisappear { persist() }
     }
@@ -335,30 +335,30 @@ private struct ManageTagsView: View {
     @State private var renameText: String = ""
     var body: some View {
         List {
-            Section("New Tag") {
+            Section("new_tag") {
                 HStack {
-                    TextField("Name", text: $newTag)
-                    Button("Add") { addTag() }.disabled(newTag.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    TextField("name", text: $newTag)
+                    Button("add") { addTag() }.disabled(newTag.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
             }
-            Section("All Tags") {
+            Section("all_tags") {
                 ForEach(tags) { tag in
                     HStack { Text(tag.name); Spacer() }
                         .swipeActions {
-                            Button("Rename") { renamingTag = tag; renameText = tag.name }.tint(.blue)
+                            Button("rename") { renamingTag = tag; renameText = tag.name }.tint(.blue)
                             Button(role: .destructive) {
                                 if let idx = tags.firstIndex(where: { $0.id == tag.id }) { delete(at: IndexSet(integer: idx)) }
-                            } label: { Label("Delete", systemImage: "trash") }
+                            } label: { Label("delete", systemImage: "trash") }
                         }
                 }
                 .onDelete(perform: delete)
             }
         }
-        .navigationTitle("Manage Tags")
-        .alert("Rename Tag", isPresented: Binding(get: { renamingTag != nil }, set: { if !$0 { renamingTag = nil } })) {
-            TextField("Name", text: $renameText)
-            Button("Save") { renameTag() }
-            Button("Cancel", role: .cancel) { renamingTag = nil }
+        .navigationTitle("nav_manage_tags")
+        .alert("rename_tag", isPresented: Binding(get: { renamingTag != nil }, set: { if !$0 { renamingTag = nil } })) {
+            TextField("name", text: $renameText)
+            Button("save") { renameTag() }
+            Button("cancel", role: .cancel) { renamingTag = nil }
         }
     }
 
@@ -407,30 +407,30 @@ private struct ManageThreadsView: View {
 
     var body: some View {
         List {
-            Section("New Thread") {
+            Section("new_thread") {
                 HStack {
-                    TextField("Title", text: $newTitle)
-                    Button("Add") { addThread() }.disabled(newTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    TextField("title", text: $newTitle)
+                    Button("add") { addThread() }.disabled(newTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
             }
-            Section("All Threads") {
+            Section("all_threads") {
                 ForEach(threads) { thread in
                     HStack { Text(thread.title); Spacer(); Text("\(thread.entries.count)").foregroundStyle(.secondary) }
                         .swipeActions {
-                            Button("Rename") { renamingThread = thread; renameText = thread.title }.tint(.blue)
+                            Button("rename") { renamingThread = thread; renameText = thread.title }.tint(.blue)
                             Button(role: .destructive) {
                                 if let idx = threads.firstIndex(where: { $0.id == thread.id }) { delete(at: IndexSet(integer: idx)) }
-                            } label: { Label("Delete", systemImage: "trash") }
+                            } label: { Label("delete", systemImage: "trash") }
                         }
                 }
                 .onDelete(perform: delete)
             }
         }
-        .navigationTitle("Manage Threads")
-        .alert("Rename Thread", isPresented: Binding(get: { renamingThread != nil }, set: { if !$0 { renamingThread = nil } })) {
-            TextField("Title", text: $renameText)
-            Button("Save") { renameThread() }
-            Button("Cancel", role: .cancel) { renamingThread = nil }
+        .navigationTitle("nav_manage_threads")
+        .alert("rename_thread", isPresented: Binding(get: { renamingThread != nil }, set: { if !$0 { renamingThread = nil } })) {
+            TextField("title", text: $renameText)
+            Button("save") { renameThread() }
+            Button("cancel", role: .cancel) { renamingThread = nil }
         }
     }
 

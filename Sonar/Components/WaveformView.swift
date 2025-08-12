@@ -26,7 +26,7 @@ struct WaveformView: View {
             }
         }
         .onChange(of: transcript) { startAnimation() }
-        .accessibilityLabel("Live waveform")
+        .accessibilityLabel("live_waveform")
         // Optional bloom via a SwiftUI colorEffect shader if present
         .modifier(ShaderGlowModifier(amplitude: amplitude, phase: phase))
     }

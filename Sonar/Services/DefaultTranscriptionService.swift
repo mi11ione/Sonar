@@ -312,13 +312,13 @@ extension CaptureError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .micDenied:
-            "Microphone permission is denied. Enable microphone access in Settings to record."
+            String(localized: "err_mic_denied")
         case .speechDenied:
-            "Speech Recognition permission is denied. Enable Speech Recognition in Settings to transcribe."
+            String(localized: "err_speech_denied")
         case .onDeviceUnavailable:
-            "On-device transcription isn't available for your language or device. You can still record audio."
+            String(localized: "err_ondevice_unavailable")
         case .internalError:
-            "Something went wrong during recording. Please try again."
+            String(localized: "err_generic_recording")
         }
     }
 }

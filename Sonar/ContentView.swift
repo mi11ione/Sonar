@@ -17,13 +17,13 @@ struct ContentView: View {
             if onboardingComplete {
                 TabView(selection: $selectedTab) {
                     NavigationStack { RecordView() }
-                        .tabItem { Label("Record", systemImage: "mic.fill") }
+                        .tabItem { Label("record_tab", systemImage: "mic.fill") }
                         .tag(0)
                     journalTab
-                        .tabItem { Label("Journal", systemImage: "book.closed") }
+                        .tabItem { Label("journal_tab", systemImage: "book.closed") }
                         .tag(1)
                     NavigationStack { SettingsView() }
-                        .tabItem { Label("Settings", systemImage: "gear") }
+                        .tabItem { Label("settings_tab", systemImage: "gear") }
                         .tag(2)
                 }
             } else {
@@ -78,7 +78,7 @@ struct ContentView: View {
             NavigationSplitView {
                 EntriesListView()
             } detail: {
-                ContentUnavailableView("Select an entry", systemImage: "note.text")
+                ContentUnavailableView("select_an_entry", systemImage: "note.text")
             }
         } else {
             NavigationStack { EntriesListView() }

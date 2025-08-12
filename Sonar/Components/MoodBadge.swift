@@ -11,7 +11,7 @@ struct MoodBadge: View {
             .padding(.vertical, 4)
             .background(color.opacity(0.15), in: Capsule())
             .foregroundStyle(color)
-            .accessibilityLabel("Mood: \(label)")
+            .accessibilityLabel("mood_prefix \(label)")
     }
 
     private var color: Color {

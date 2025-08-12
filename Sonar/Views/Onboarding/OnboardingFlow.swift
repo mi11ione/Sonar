@@ -31,48 +31,48 @@ struct OnboardingFlow: View {
 
     private var intro: some View {
         VStack(spacing: 16) {
-            Text("Welcome to Sonar")
+            Text("onboard_welcome")
                 .font(.largeTitle.bold())
             VStack(alignment: .leading, spacing: 8) {
-                Text("Private, on-device voice journaling.")
+                Text("onboard_private_local")
                     .foregroundStyle(.secondary)
                 HStack(alignment: .top, spacing: 8) {
                     Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
-                    Text("Tap to record. Low-latency, on-device transcription.")
+                    Text("onboard_tap_to_record")
                 }
                 HStack(alignment: .top, spacing: 8) {
                     Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Instant summaries and mood at a glance.")
-                        Text("Summaries are computed on your device; mood badges use local sentiment and never leave your phone.")
+                        Text("onboard_instant_summaries")
+                        Text("onboard_summary_privacy")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
                     }
                 }
                 HStack(alignment: .top, spacing: 8) {
                     Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
-                    Text("Mood insight at a glance. Fast search across your thoughts.")
+                    Text("onboard_mood_search")
                 }
                 HStack(spacing: 8) {
                     MoodBadge(label: "Positive", score: 0.6)
-                    Text("Mood badges summarize tone without sharing your data.")
+                    Text("onboard_mood_privacy")
                         .foregroundStyle(.secondary)
                 }
                 HStack(spacing: 8) {
                     Image(systemName: "lock.fill").foregroundStyle(.green)
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("No account required. Your data stays on device. Free plan includes 3 saves; upgrade anytime.")
-                        Text("What’s stored: audio files and transcripts live only on your device by default. You can export or delete them anytime in Settings.")
+                        Text("onboard_no_account")
+                        Text("onboard_whats_stored")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
                     }
                 }
             }
-            Toggle("On-device transcription only", isOn: $onDeviceOnly)
+            Toggle("on_device_only", isOn: $onDeviceOnly)
             Spacer(minLength: 8)
-            Button("Continue") { step = 1 }
+            Button("continue") { step = 1 }
                 .buttonStyle(.borderedProminent)
-            Text("You can always find past entries in the Journal tab and search later.")
+            Text("onboard_find_later")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
         }
@@ -80,26 +80,26 @@ struct OnboardingFlow: View {
 
     private var permissions: some View {
         VStack(spacing: 16) {
-            Text("Permissions")
+            Text("onboard_permissions")
                 .font(.title.bold())
-            Text("We'll ask for Microphone and Speech so you can record and transcribe on device. Notifications are optional for gentle reminders.")
+            Text("onboard_permissions_copy")
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
             HStack(spacing: 12) {
-                Button("Enable Mic & Speech") { Task { try? await transcription.requestAuthorization() } }
-                Button("Enable Notifications") { Task { await requestNotifications() } }
+                Button("enable_mic_speech") { Task { try? await transcription.requestAuthorization() } }
+                Button("enable_notifications") { Task { await requestNotifications() } }
             }
             .buttonStyle(.bordered)
             if !notificationsEnabled {
-                Text("You can turn on reminders later in Settings → Preferences.")
+                Text("onboard_reminders_later")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
             Spacer(minLength: 8)
             HStack {
-                Button("Back") { step = 0 }
+                Button("back") { step = 0 }
                 Spacer()
-                Button("Continue") { step = 2 }
+                Button("continue") { step = 2 }
                     .buttonStyle(.borderedProminent)
             }
         }
@@ -107,16 +107,16 @@ struct OnboardingFlow: View {
 
     private var personalization: some View {
         VStack(spacing: 16) {
-            Text("Make it yours")
+            Text("onboard_make_it_yours")
                 .font(.title.bold())
             HStack {
-                Text("Daily reminder")
+                Text("daily_reminder")
                 Spacer()
                 Stepper("\(reminderHour):00", value: $reminderHour, in: 5 ... 22)
                     .labelsHidden()
             }
-            Picker("Summary style", selection: $selectedPromptStyleId) {
-                Text("Default").tag(UUID?.none)
+            Picker("summary_style", selection: $selectedPromptStyleId) {
+                Text("default").tag(UUID?.none)
                 ForEach(promptStyles, id: \.id) { style in
                     Text(style.displayName).tag(Optional(style.id))
                 }
@@ -124,9 +124,9 @@ struct OnboardingFlow: View {
             .pickerStyle(.menu)
             Spacer(minLength: 8)
             HStack {
-                Button("Back") { step = 1 }
+                Button("back") { step = 1 }
                 Spacer()
-                Button("Start Recording") { finish() }
+                Button("start_recording") { finish() }
                     .buttonStyle(.borderedProminent)
             }
         }
@@ -160,8 +160,8 @@ struct OnboardingFlow: View {
 
     private func scheduleDailyReminder(at hour: Int) {
         let content = UNMutableNotificationContent()
-        content.title = "Daily reflection"
-        content.body = "Take a minute to capture your thoughts."
+        content.title = String(localized: "daily_reflection")
+        content.body = String(localized: "daily_reflection_body")
         var date = DateComponents()
         date.hour = hour
         let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)

@@ -44,7 +44,7 @@ struct RecordView: View {
                 case .processing:
                     ProgressView().progressViewStyle(.circular)
                 case .saved:
-                    Label("Saved", systemImage: "checkmark.circle")
+                    Label("saved", systemImage: "checkmark.circle")
                         .foregroundStyle(.green)
                         .font(.headline)
                 default:
@@ -54,14 +54,14 @@ struct RecordView: View {
 
             if state == .recording || state == .recordingAudioOnly { WaveformView(transcript: liveTranscript) }
             if state == .recordingAudioOnly {
-                Text("On-device transcription unavailable. Recording audio only.")
+                Text("audio_only_fallback")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
 
             if state == .review {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Review transcript").font(.headline)
+                    Text("review_transcript").font(.headline)
                     TextEditor(text: $reviewText)
                         .frame(minHeight: 160)
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(.quaternary))
@@ -73,7 +73,7 @@ struct RecordView: View {
             micControl
         }
         .padding()
-        .navigationTitle("Record")
+        .navigationTitle("nav_record")
         .sensoryFeedback(.impact(weight: .light), trigger: state == .recording)
         .sensoryFeedback(.impact(weight: .light), trigger: state == .processing)
         .sensoryFeedback(.success, trigger: state == .saved)
@@ -93,21 +93,21 @@ struct RecordView: View {
         .privacySensitive()
         .task { await checkForOrphanAudioToRecover() }
         .onDisappear { restoreBackgroundTaskIfAny() }
-        .alert("Recovered recording found", isPresented: $showRecoveryAlert) {
-            Button("Discard", role: .destructive) { discardRecovered() }
-            Button("Save") { Task { await saveRecovered() } }
+        .alert("recovered_recording_found", isPresented: $showRecoveryAlert) {
+            Button("discard", role: .destructive) { discardRecovered() }
+            Button("save") { Task { await saveRecovered() } }
         } message: {
-            Text("A previous recording didn’t finish saving. You can save it as a new entry or discard it.")
+            Text("recovered_recording_message")
         }
     }
 
     @ViewBuilder private var micControl: some View {
         switch state {
         case .idle:
-            MicButton(title: "Start Recording") { Task { await startRecordingOrGate() } }
+            MicButton(title: "start_recording") { Task { await startRecordingOrGate() } }
         case .recording:
             HStack(spacing: 12) {
-                MicButton(title: isPaused ? "Resume" : "Pause", systemImageName: isPaused ? "play.fill" : "pause.fill", tint: .orange) {
+                MicButton(title: isPaused ? "resume" : "pause", systemImageName: isPaused ? "play.fill" : "pause.fill", tint: .orange) {
                     if !isPaused {
                         committedTranscript = liveTranscript
                         if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
@@ -119,7 +119,7 @@ struct RecordView: View {
                         Task { await streamTranscription() }
                     }
                 }
-                MicButton(title: "Stop", systemImageName: "stop.fill", tint: .red) {
+                MicButton(title: "stop", systemImageName: "stop.fill", tint: .red) {
                     if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
                     Task {
                         await transcription.stop()
@@ -131,7 +131,7 @@ struct RecordView: View {
             }
         case .recordingAudioOnly:
             HStack(spacing: 12) {
-                MicButton(title: isPaused ? "Resume" : "Pause", systemImageName: isPaused ? "play.fill" : "pause.fill", tint: .orange) {
+                MicButton(title: isPaused ? "resume" : "pause", systemImageName: isPaused ? "play.fill" : "pause.fill", tint: .orange) {
                     if !isPaused {
                         if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
                         isPaused = true
@@ -142,7 +142,7 @@ struct RecordView: View {
                         Task { try? await transcription.startAudioOnlyRecording() }
                     }
                 }
-                MicButton(title: "Stop", systemImageName: "stop.fill", tint: .red) {
+                MicButton(title: "stop", systemImageName: "stop.fill", tint: .red) {
                     if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
                     Task {
                         await transcription.stop()
@@ -154,11 +154,11 @@ struct RecordView: View {
             }
         case .review:
             HStack(spacing: 12) {
-                MicButton(title: "Save", systemImageName: "checkmark", tint: .green, font: .title3.bold()) {
+                MicButton(title: "save", systemImageName: "checkmark", tint: .green, font: .title3.bold()) {
                     liveTranscript = reviewText
                     state = .processing
                 }
-                MicButton(title: "Discard", systemImageName: "xmark", tint: .gray, font: .title3.bold()) {
+                MicButton(title: "discard", systemImageName: "xmark", tint: .gray, font: .title3.bold()) {
                     didDiscardToggle.toggle()
                     state = .idle
                     liveTranscript = ""
@@ -169,20 +169,20 @@ struct RecordView: View {
                 }
             }
         case .processing:
-            MicButton(title: "Processing…", systemImageName: "hourglass", tint: .gray, isDisabled: true) {}
+            MicButton(title: "processing_ellipsis", systemImageName: "hourglass", tint: .gray, isDisabled: true) {}
         case .saved:
-            MicButton(title: "Start Recording") { state = .recording }
+            MicButton(title: "start_recording") { state = .recording }
         case .error:
             VStack(spacing: 8) {
                 Text(errorMessage)
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
-                MicButton(title: "Try Again", systemImageName: "arrow.clockwise") {
+                MicButton(title: "try_again", systemImageName: "arrow.clockwise") {
                     state = .idle
                     liveTranscript = ""
                 }
-                Button("Open Settings") {
+                Button("open_settings") {
                     if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
                 }
                 .buttonStyle(.bordered)
@@ -392,21 +392,21 @@ struct RecordView: View {
         var body: some View {
             NavigationStack {
                 VStack(alignment: .leading, spacing: 16) {
-                    Text("What you’ll see next").font(.title.bold())
+                    Text("education_next_title").font(.title.bold())
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Summary")
+                        Text("education_summary_title")
                             .font(.headline)
-                        Text("Sonar creates a short, on‑device summary to help you revisit entries quickly.")
+                        Text("education_summary_copy")
                             .foregroundStyle(.secondary)
-                        Text("• Made privately on your device\n• No cloud processing\n• You can change the style in Settings")
+                        Text("education_summary_bullets")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
                     }
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Mood badge").font(.headline)
+                        Text("education_mood_title").font(.headline)
                         HStack(spacing: 8) {
-                            MoodBadge(label: "Positive", score: 0.6)
-                            Text("A quick signal from −1 to +1 (Negative/Neutral/Positive), computed on device.")
+                            MoodBadge(label: String(localized: "positive"), score: 0.6)
+                            Text("education_mood_badge_copy")
                                 .foregroundStyle(.secondary)
                         }
                     }
@@ -461,8 +461,8 @@ struct RecordView: View {
                 let duration = rate > 0 ? Double(file.length) / rate : 0
                 let asset = AudioAsset(fileURL: url, durationSec: duration, sampleRate: rate)
                 entry.audio = asset
-                entry.title = "Recovered recording"
-                entry.notes = "Recovered after an interruption."
+                entry.title = String(localized: "recovered_recording_title")
+                entry.notes = String(localized: "recovered_recording_notes")
             }
             modelContext.insert(entry)
             try modelContext.save()

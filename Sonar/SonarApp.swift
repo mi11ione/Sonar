@@ -62,9 +62,9 @@ struct SonarApp: App {
                     let context = ModelContext(container)
                     let request = FetchDescriptor<PromptStyle>()
                     if let existing = try? context.fetch(request), existing.isEmpty {
-                        context.insert(PromptStyle(displayName: "Concise", maxSentences: 3, includeActionItems: false, toneHint: nil, isPremium: false))
-                        context.insert(PromptStyle(displayName: "Reflective", maxSentences: 4, includeActionItems: false, toneHint: "gentle, reflective tone", isPremium: false))
-                        context.insert(PromptStyle(displayName: "Bulleted", maxSentences: 5, includeActionItems: true, toneHint: "bullet points with short phrases", isPremium: true))
+                        context.insert(PromptStyle(displayName: String(localized: "style_concise"), maxSentences: 3, includeActionItems: false, toneHint: nil, isPremium: false))
+                        context.insert(PromptStyle(displayName: String(localized: "style_reflective"), maxSentences: 4, includeActionItems: false, toneHint: String(localized: "tone_reflective_hint"), isPremium: false))
+                        context.insert(PromptStyle(displayName: String(localized: "style_bulleted"), maxSentences: 5, includeActionItems: true, toneHint: String(localized: "tone_bulleted_hint"), isPremium: true))
                         try? context.save()
                     }
 
@@ -98,8 +98,8 @@ private func cleanupTemporaryExports() {
 final class NotificationResponder: NSObject, UNUserNotificationCenterDelegate {
     static let shared = NotificationResponder()
     func registerCategories() async {
-        let start = UNNotificationAction(identifier: "start.recording", title: "Start Recording")
-        let snooze = UNNotificationAction(identifier: "snooze.reminder", title: "Remind me in 1 hour")
+        let start = UNNotificationAction(identifier: "start.recording", title: String(localized: "start_recording"))
+        let snooze = UNNotificationAction(identifier: "snooze.reminder", title: String(localized: "remind_in_1_hour"))
         let category = UNNotificationCategory(identifier: "daily.reminder.category", actions: [start, snooze], intentIdentifiers: [])
         UNUserNotificationCenter.current().setNotificationCategories([category])
     }
@@ -132,7 +132,7 @@ extension NotificationResponder {
         center.removePendingNotificationRequests(withIdentifiers: ["daily.reminder"])
 
         let content = UNMutableNotificationContent()
-        content.title = "Daily reflection"
+        content.title = String(localized: "daily_reflection")
         // Add a localized, friendly prompt pulled from PromptsService via plain lookup here
         let prompt = DefaultPromptsService().todayPrompt(locale: .current)
         content.body = prompt

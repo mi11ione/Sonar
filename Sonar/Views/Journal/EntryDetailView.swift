@@ -18,14 +18,14 @@ struct EntryDetailView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
                 // Editable title
-                TextField("Title (optional)", text: Binding(get: { entry.title ?? "" }, set: { newVal in entry.title = newVal.isEmpty ? nil : newVal; try? modelContext.save() }))
+                TextField("title_optional", text: Binding(get: { entry.title ?? "" }, set: { newVal in entry.title = newVal.isEmpty ? nil : newVal; try? modelContext.save() }))
                     .font(.title3.weight(.semibold))
                     .textInputAutocapitalization(.sentences)
                     .disableAutocorrection(false)
                 if let summary = entry.summary, !summary.isEmpty {
                     Text(summary).font(.title3.weight(.semibold))
                         .contextMenu {
-                            Button("Regenerate Summary") { Task { await regenerateSummary() } }
+                            Button("regenerate_summary") { Task { await regenerateSummary() } }
                         }
                 }
                 if let score = entry.moodScore, let label = entry.moodLabel {
@@ -44,7 +44,7 @@ struct EntryDetailView: View {
                         .id(audio.resolvedFileURL)
                 }
                 if entry.audio == nil {
-                    Text("No audio attached")
+                    Text("no_audio_attached")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
@@ -59,7 +59,7 @@ struct EntryDetailView: View {
                     .textSelection(.enabled)
                 // Editable notes
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Notes").font(.headline)
+                    Text("notes").font(.headline)
                     TextEditor(text: Binding(get: { entry.notes ?? "" }, set: { newVal in entry.notes = newVal.isEmpty ? nil : newVal }))
                         .frame(minHeight: 120)
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(.quaternary))
@@ -67,8 +67,8 @@ struct EntryDetailView: View {
                 }
                 Spacer(minLength: 12)
                 HStack {
-                    ShareLink(item: entry.summary ?? entry.transcript) { Label("Share", systemImage: "square.and.arrow.up") }
-                    Button { speakSummary() } label: { Label("Read", systemImage: "speaker.wave.2.fill") }
+                    ShareLink(item: entry.summary ?? entry.transcript) { Label("share", systemImage: "square.and.arrow.up") }
+                    Button { speakSummary() } label: { Label("read_aloud", systemImage: "speaker.wave.2.fill") }
                         .buttonStyle(.bordered)
                 }
             }
@@ -82,27 +82,27 @@ struct EntryDetailView: View {
                     Button {
                         entry.isPinned.toggle()
                         try? modelContext.save()
-                    } label: { Label(entry.isPinned ? "Unpin" : "Pin", systemImage: entry.isPinned ? "pin.slash" : "pin.fill") }
-                    Button(role: .destructive) { confirmDelete = true } label: { Label("Delete", systemImage: "trash") }
+                    } label: { Label(entry.isPinned ? "unpin" : "pin", systemImage: entry.isPinned ? "pin.slash" : "pin.fill") }
+                    Button(role: .destructive) { confirmDelete = true } label: { Label("delete", systemImage: "trash") }
                 } label: { Image(systemName: "ellipsis.circle") }
             }
         }
-        .alert("Delete this entry?", isPresented: $confirmDelete) {
-            Button("Delete", role: .destructive) { deleteEntry() }
-            Button("Cancel", role: .cancel) {}
+        .alert("delete_this_entry", isPresented: $confirmDelete) {
+            Button("delete", role: .destructive) { deleteEntry() }
+            Button("cancel", role: .cancel) {}
         } message: {
-            Text("This action cannot be undone.")
+            Text("cannot_undo")
         }
         .sheet(isPresented: $showingMoodInfo) {
             NavigationStack {
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("About mood signal").font(.title2.bold())
-                    Text("Sonar estimates mood locally using Apple's on‑device sentiment. Scores range from −1 to +1 and are grouped as Negative, Neutral, or Positive. Your content never leaves the device.")
+                    Text("about_mood_signal").font(.title2.bold())
+                    Text("mood_signal_description")
                         .foregroundStyle(.secondary)
                     Spacer()
                 }
                 .padding()
-                .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Close") { showingMoodInfo = false } } }
+                .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("close") { showingMoodInfo = false } } }
             }
             .presentationDetents([.medium])
         }
@@ -144,13 +144,13 @@ private extension EntryDetailView {
     @ViewBuilder var tagsEditor: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text("Tags").font(.headline)
+                Text("tags").font(.headline)
                 Spacer()
-                Button { showingTagSheet = true } label: { Label("Edit", systemImage: "tag") }
+                Button { showingTagSheet = true } label: { Label("edit", systemImage: "tag") }
                     .buttonStyle(.bordered)
             }
             if entry.tags.isEmpty {
-                Text("No tags").foregroundStyle(.secondary)
+                Text("no_tags").foregroundStyle(.secondary)
             } else {
                 FlowLayout(entry.tags.map(\.name)) { name in
                     Text(name)
@@ -176,13 +176,13 @@ private struct TagsSheet: View {
     var body: some View {
         NavigationStack {
             List {
-                Section("Add Tag") {
+                Section("add_tag") {
                     HStack {
-                        TextField("New tag", text: $newTagName)
-                        Button("Add") { addTag() }.disabled(newTagName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                        TextField("new_tag", text: $newTagName)
+                        Button("add") { addTag() }.disabled(newTagName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                     }
                 }
-                Section("All Tags") {
+                Section("all_tags") {
                     ForEach(allTags) { tag in
                         Button {
                             toggle(tag)
@@ -196,8 +196,8 @@ private struct TagsSheet: View {
                     }
                 }
             }
-            .navigationTitle("Edit Tags")
-            .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Done") { dismiss() } } }
+            .navigationTitle("edit_tags")
+            .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("done") { dismiss() } } }
         }
     }
 
@@ -231,15 +231,15 @@ private extension EntryDetailView {
     @ViewBuilder var threadEditor: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text("Thread").font(.headline)
+                Text("thread").font(.headline)
                 Spacer()
-                Button { showingThreadSheet = true } label: { Label("Assign", systemImage: "rectangle.connected.to.line.below") }
+                Button { showingThreadSheet = true } label: { Label("assign", systemImage: "rectangle.connected.to.line.below") }
                     .buttonStyle(.bordered)
             }
             if let thread = entryThreadTitle() {
                 Text(thread).font(.subheadline).foregroundStyle(.secondary)
             } else {
-                Text("No thread").foregroundStyle(.secondary)
+                Text("no_thread").foregroundStyle(.secondary)
             }
         }
         .sheet(isPresented: $showingThreadSheet) { ThreadSheet(entry: $entry) }
@@ -266,13 +266,13 @@ private struct ThreadSheet: View {
     var body: some View {
         NavigationStack {
             List {
-                Section("New Thread") {
+                Section("new_thread") {
                     HStack {
-                        TextField("Title", text: $newTitle)
-                        Button("Add") { addThread() }.disabled(newTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                        TextField("title", text: $newTitle)
+                        Button("add") { addThread() }.disabled(newTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                     }
                 }
-                Section("All Threads") {
+                Section("all_threads") {
                     ForEach(threads) { thread in
                         Button { assign(thread) } label: {
                             HStack {
@@ -284,8 +284,8 @@ private struct ThreadSheet: View {
                     }
                 }
             }
-            .navigationTitle("Assign Thread")
-            .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Done") { dismiss() } } }
+            .navigationTitle("assign_thread")
+            .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("done") { dismiss() } } }
         }
     }
 
@@ -381,9 +381,9 @@ private struct AudioPlayerView: View {
                 if let player { player.currentTime = newVal * player.duration }
             }))
             .disabled(player == nil)
-            .accessibilityLabel("Playback position")
+            .accessibilityLabel("playback_position")
             if loadFailed {
-                Text("Unable to load audio")
+                Text("unable_to_load_audio")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }

@@ -24,9 +24,9 @@ struct MicButton: View {
 
 #Preview {
     VStack(spacing: 16) {
-        MicButton(title: "Start Recording", action: {})
-        MicButton(title: "Stop", systemImageName: "stop.fill", tint: .red, action: {})
-        MicButton(title: "Processing…", systemImageName: "hourglass", tint: .gray, isDisabled: true, action: {})
+        MicButton(title: "start_recording", action: {})
+        MicButton(title: "stop", systemImageName: "stop.fill", tint: .red, action: {})
+        MicButton(title: "processing_ellipsis", systemImageName: "hourglass", tint: .gray, isDisabled: true, action: {})
     }
     .padding()
 }

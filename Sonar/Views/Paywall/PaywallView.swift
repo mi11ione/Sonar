@@ -21,15 +21,15 @@ struct PaywallView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    Text("Unlock Sonar").font(.largeTitle.bold())
-                    Text("Unlimited entries, custom styles, and insights.")
+                    Text("paywall_title").font(.largeTitle.bold())
+                    Text("paywall_subtitle")
                         .multilineTextAlignment(.center)
                         .foregroundStyle(.secondary)
 
                     if isLoading {
                         ProgressView()
                     } else if products.isEmpty {
-                        ContentUnavailableView("No products", systemImage: "cart")
+                        ContentUnavailableView("no_products", systemImage: "cart")
                     } else {
                         // Use indices to avoid any Binding overload inference
                         ForEach(products.indices, id: \.self) { index in
@@ -49,7 +49,7 @@ struct PaywallView: View {
                                         Text(unitLabel(info.subscriptionPeriod.unit)).foregroundStyle(.secondary)
                                     }
                                     Spacer()
-                                    Button("Buy") { Task { try? await purchases.purchase(productId: product.id) } }
+                                    Button("buy") { Task { try? await purchases.purchase(productId: product.id) } }
                                         .buttonStyle(.borderedProminent)
                                 }
                             }
@@ -57,7 +57,7 @@ struct PaywallView: View {
                             .padding()
                             .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12))
                         }
-                        Button("Restore Purchases") { Task { try? await purchases.restore() } }
+                        Button("restore_purchases") { Task { try? await purchases.restore() } }
                             .buttonStyle(.plain)
                             .padding(.top, 4)
                         Divider().padding(.vertical, 8)
@@ -65,22 +65,22 @@ struct PaywallView: View {
                         SubscriptionStatusView(groupID: groupID)
                         HStack {
                             Spacer()
-                            Button("Manage Subscription") { showManageSheet = true }
+                            Button("manage_subscription") { showManageSheet = true }
                                 .buttonStyle(.bordered)
                                 .manageSubscriptionsSheet(isPresented: $showManageSheet, subscriptionGroupID: groupID)
                         }
                     }
                     Spacer()
                     VStack(spacing: 6) {
-                        Button("Terms of Service") { openLegal(urlString: "https://example.com/terms") }
+                        Button("terms_of_service") { openLegal(urlString: "https://example.com/terms") }
                             .buttonStyle(.plain)
-                        Button("Privacy Policy") { openLegal(urlString: "https://example.com/privacy") }
+                        Button("privacy_policy") { openLegal(urlString: "https://example.com/privacy") }
                             .buttonStyle(.plain)
                     }
                 }
                 .padding()
             }
-            .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Close") { dismiss() } } }
+            .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("close") { dismiss() } } }
             .task { await loadProducts() }
         }
     }
@@ -102,11 +102,11 @@ struct PaywallView: View {
 
     private func unitLabel(_ unit: Product.SubscriptionPeriod.Unit) -> String {
         switch unit {
-        case .day: return "/day"
-        case .week: return "/week"
-        case .month: return "/month"
-        case .year: return "/year"
-        @unknown default: return ""
+        case .day: return String(localized: "per_day")
+        case .week: return String(localized: "per_week")
+        case .month: return String(localized: "per_month")
+        case .year: return String(localized: "per_year")
+        @unknown default: return "unknown"
         }
     }
 }
@@ -121,12 +121,12 @@ private struct SubscriptionStatusView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             if statuses.isEmpty {
-                Text("Not subscribed").font(.footnote).foregroundStyle(.secondary)
+                Text("not_subscribed").font(.footnote).foregroundStyle(.secondary)
             } else {
                 ForEach(Array(statuses.enumerated()), id: \.offset) { _, status in
                     Text(label(for: status.state)).bold()
                 }
-                Text("Change plan via Apple").font(.footnote).foregroundStyle(.secondary)
+                Text("change_plan_via_apple").font(.footnote).foregroundStyle(.secondary)
             }
         }
         .subscriptionStatusTask(for: groupID) { state in
@@ -134,14 +134,14 @@ private struct SubscriptionStatusView: View {
         }
     }
 
-    private func label(for state: Product.SubscriptionInfo.RenewalState) -> String {
+    private func label(for state: Product.SubscriptionInfo.RenewalState) -> LocalizedStringKey {
         switch state {
-        case .subscribed: "Subscribed"
-        case .expired: "Expired"
-        case .inBillingRetryPeriod: "Billing Retry"
-        case .inGracePeriod: "Grace Period"
-        case .revoked: "Revoked"
-        default: "Unknown"
+        case .subscribed: "subscribed"
+        case .expired: "expired"
+        case .inBillingRetryPeriod: "billing_retry"
+        case .inGracePeriod: "grace_period"
+        case .revoked: "revoked"
+        default: "unknown"
         }
     }
 }

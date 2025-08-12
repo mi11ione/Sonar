@@ -32,14 +32,14 @@ struct EntriesListView: View {
 
         List(selection: $selection) {
             if !pinned.isEmpty {
-                Section("Pinned") {
+                Section("pinned") {
                     ForEach(filtered(pinned), id: \.id) { entry in
                         row(entry, highlight: query)
                             .tag(entry.id)
                     }
                 }
             }
-            Section("Recent") {
+            Section("recent") {
                 ForEach(filtered(others), id: \.id) { entry in
                     row(entry, highlight: query)
                         .tag(entry.id)
@@ -47,12 +47,12 @@ struct EntriesListView: View {
                 .onMove { source, destination in moveWithinOthers(others: others, source: source, destination: destination) }
             }
         }
-        .navigationTitle("Journal")
+        .navigationTitle("nav_journal")
         .toolbar {
             ToolbarItem(placement: .topBarLeading) { filterMenu }
             ToolbarItemGroup(placement: .topBarTrailing) {
                 if !selection.isEmpty {
-                    Button(role: .destructive) { deleteSelected() } label: { Label("Delete", systemImage: "trash") }
+                    Button(role: .destructive) { deleteSelected() } label: { Label("delete", systemImage: "trash") }
                 } else {
                     NavigationLink(destination: ThreadsListView()) { Image(systemName: "rectangle.connected.to.line.below") }
                     NavigationLink(destination: InsightsView()) { Image(systemName: "chart.line.uptrend.xyaxis") }
@@ -66,15 +66,15 @@ struct EntriesListView: View {
         .overlay {
             if entries.isEmpty {
                 ContentUnavailableView(
-                    "No entries yet",
+                    "no_entries_yet",
                     systemImage: "mic",
-                    description: Text("Tap the mic to start your first journal.")
+                    description: Text("tap_mic_to_start_first_journal")
                 )
             } else if filtered(others).isEmpty, filtered(pinned).isEmpty, !query.isEmpty {
                 ContentUnavailableView(
-                    "No results",
+                    "no_results",
                     systemImage: "magnifyingglass",
-                    description: Text("Try broadening your query or clearing filters.")
+                    description: Text("try_broadening_or_clear_filters")
                 )
             }
         }
@@ -143,7 +143,7 @@ struct EntriesListView: View {
                 entry.isPinned.toggle()
                 try? modelContext.save()
             } label: {
-                Label(entry.isPinned ? "Unpin" : "Pin", systemImage: entry.isPinned ? "pin.slash" : "pin.fill")
+                Label(entry.isPinned ? "unpin" : "pin", systemImage: entry.isPinned ? "pin.slash" : "pin.fill")
             }.tint(.orange)
             Button(role: .destructive) {
                 let id = entry.id
@@ -151,24 +151,24 @@ struct EntriesListView: View {
                 try? modelContext.save()
                 Task { await indexing.deleteIndex(for: id) }
             } label: {
-                Label("Delete", systemImage: "trash")
+                Label("delete", systemImage: "trash")
             }
         }
         .swipeActions(edge: .leading, allowsFullSwipe: false) {
-            ShareLink(item: entry.summary ?? entry.transcript) { Label("Share", systemImage: "square.and.arrow.up") }
+            ShareLink(item: entry.summary ?? entry.transcript) { Label("share", systemImage: "square.and.arrow.up") }
                 .tint(.blue)
         }
         .contextMenu {
             Button {
                 entry.isPinned.toggle(); try? modelContext.save()
-            } label: { Label(entry.isPinned ? "Unpin" : "Pin", systemImage: entry.isPinned ? "pin.slash" : "pin.fill") }
-            ShareLink(item: entry.summary ?? entry.transcript) { Label("Share", systemImage: "square.and.arrow.up") }
+            } label: { Label(entry.isPinned ? "unpin" : "pin", systemImage: entry.isPinned ? "pin.slash" : "pin.fill") }
+            ShareLink(item: entry.summary ?? entry.transcript) { Label("share", systemImage: "square.and.arrow.up") }
             Button(role: .destructive) {
                 let id = entry.id
                 modelContext.delete(entry)
                 try? modelContext.save()
                 Task { await indexing.deleteIndex(for: id) }
-            } label: { Label("Delete", systemImage: "trash") }
+            } label: { Label("delete", systemImage: "trash") }
         }
     }
 
@@ -263,37 +263,37 @@ struct EntriesListView: View {
 
     private var filterMenu: some View {
         Menu {
-            Picker("Mood", selection: $moodBin) {
-                Text("Any").tag(Int?.none)
-                Text("Negative").tag(Optional(0))
-                Text("Neutral").tag(Optional(1))
-                Text("Positive").tag(Optional(2))
+            Picker("filter_mood", selection: $moodBin) {
+                Text("any").tag(Int?.none)
+                Text("negative").tag(Optional(0))
+                Text("neutral").tag(Optional(1))
+                Text("positive").tag(Optional(2))
             }
-            Picker("Date", selection: Binding(
+            Picker("filter_date", selection: Binding(
                 get: { datePreset },
                 set: { newValue in
                     datePreset = newValue
                 }
             )) {
-                Text("Any").tag(Int?.none)
-                Text("Today").tag(Optional(0))
-                Text("Last 7 days").tag(Optional(1))
-                Text("Custom range").tag(Optional(2))
+                Text("any").tag(Int?.none)
+                Text("today").tag(Optional(0))
+                Text("last_7_days").tag(Optional(1))
+                Text("custom_range").tag(Optional(2))
             }
             if datePreset == 2 {
                 // Simple inline controls to pick a custom range: past N days
                 let today = Date()
                 let start = Calendar.current.date(byAdding: .day, value: -30, to: today) ?? today
-                DatePicker("Start", selection: Binding(get: { dateRange?.lowerBound ?? start }, set: { lower in
+                DatePicker("start", selection: Binding(get: { dateRange?.lowerBound ?? start }, set: { lower in
                     let upper = dateRange?.upperBound ?? today
                     dateRange = min(lower, upper) ... max(lower, upper)
                 }), displayedComponents: .date)
-                DatePicker("End", selection: Binding(get: { dateRange?.upperBound ?? today }, set: { upper in
+                DatePicker("end", selection: Binding(get: { dateRange?.upperBound ?? today }, set: { upper in
                     let lower = dateRange?.lowerBound ?? start
                     dateRange = min(lower, upper) ... max(lower, upper)
                 }), displayedComponents: .date)
             }
-            Menu("Tags") {
+            Menu("filter_tags") {
                 let allTags: [String] = Array(Set(entries.flatMap { $0.tags.map(\.name) }))
                 ForEach(allTags, id: \.self) { tagName in
                     Button {
@@ -303,7 +303,7 @@ struct EntriesListView: View {
                     }
                 }
             }
-            Menu("Thread") {
+            Menu("filter_thread") {
                 let allThreads: [String] = {
                     let ctx = modelContext
                     let threads: [MemoryThread] = (try? ctx.fetch(FetchDescriptor<MemoryThread>())) ?? []
@@ -311,7 +311,7 @@ struct EntriesListView: View {
                 }()
                 Button {
                     selectedThreadTitle = nil
-                } label: { HStack { Text("Any"); if selectedThreadTitle == nil { Spacer(); Image(systemName: "checkmark") } } }
+                } label: { HStack { Text("any"); if selectedThreadTitle == nil { Spacer(); Image(systemName: "checkmark") } } }
                 ForEach(allThreads, id: \.self) { title in
                     Button {
                         selectedThreadTitle = title
@@ -320,12 +320,12 @@ struct EntriesListView: View {
                     }
                 }
             }
-            Picker("Sort", selection: $sortMode) {
-                ForEach(SortMode.allCases, id: \.self) { mode in Text(mode.label).tag(mode) }
+            Picker("sort", selection: $sortMode) {
+                ForEach(SortMode.allCases, id: \.self) { mode in Text(LocalizedStringKey(mode.label)).tag(mode) }
             }
-            Button("Clear filters") { moodBin = nil; dateRange = nil; datePreset = nil; selectedTags.removeAll() }
+            Button("clear_filters") { moodBin = nil; dateRange = nil; datePreset = nil; selectedTags.removeAll() }
         } label: {
-            Label("Filters", systemImage: "line.3.horizontal.decrease.circle")
+            Label("filters", systemImage: "line.3.horizontal.decrease.circle")
         }
     }
 
@@ -390,7 +390,7 @@ struct EntriesListView: View {
     private enum SortMode: String, CaseIterable {
         case newest, oldest, relevance
         var label: String {
-            switch self { case .newest: "Newest"; case .oldest: "Oldest"; case .relevance: "Relevance" }
+            switch self { case .newest: "sort_newest"; case .oldest: "sort_oldest"; case .relevance: "sort_relevance" }
         }
     }
 

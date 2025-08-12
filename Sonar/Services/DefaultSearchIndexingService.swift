@@ -60,7 +60,7 @@ struct DefaultSearchIndexingService: SearchIndexingService, Sendable {
         guard enabled else { return }
         let record = SearchIndexRecord(
             id: entry.id.uuidString,
-            title: entry.title ?? entry.summary ?? "Journal Entry",
+            title: entry.title ?? entry.summary ?? String(localized: "journal_entry"),
             contentDescription: [entry.summary, entry.transcript, entry.notes].compactMap(\.self).joined(separator: "\n\n"),
             keywords: entry.tags.map(\.name) + [entry.moodLabel].compactMap(\.self)
         )

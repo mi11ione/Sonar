@@ -12,10 +12,10 @@ struct ThreadsListView: View {
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(thread.title).font(.headline)
-                            Text("\(thread.entries.count) entries").font(.caption).foregroundStyle(.secondary)
+                            Text("\(thread.entries.count) \(String(localized: "entries_suffix"))").font(.caption).foregroundStyle(.secondary)
                             // Simple inline highlights using most common tag names in this thread
                             if let highlight = topThemes(for: thread).first {
-                                Text("Theme: \(highlight)").font(.caption2).foregroundStyle(.secondary)
+                                Text("\(String(localized: "theme_prefix")) \(highlight)").font(.caption2).foregroundStyle(.secondary)
                             }
                         }
                         Spacer()
@@ -25,20 +25,20 @@ struct ThreadsListView: View {
                     }
                 }
                 .swipeActions(edge: .trailing) {
-                    Button("Rename") { renamingThread = thread; renameText = thread.title }.tint(.blue)
+                    Button("rename") { renamingThread = thread; renameText = thread.title }.tint(.blue)
                 }
             }
         }
-        .navigationTitle("Threads")
+        .navigationTitle("nav_threads")
         .overlay {
             if threads.isEmpty {
-                ContentUnavailableView("No threads yet", systemImage: "rectangle.connected.to.line.below", description: Text("Assign entries to threads from entry details."))
+                ContentUnavailableView("no_threads_yet", systemImage: "rectangle.connected.to.line.below", description: Text("assign_entries_to_threads_hint"))
             }
         }
-        .alert("Rename Thread", isPresented: Binding(get: { renamingThread != nil }, set: { if !$0 { renamingThread = nil } })) {
-            TextField("Title", text: $renameText)
-            Button("Save") { rename() }
-            Button("Cancel", role: .cancel) { renamingThread = nil }
+        .alert("rename_thread", isPresented: Binding(get: { renamingThread != nil }, set: { if !$0 { renamingThread = nil } })) {
+            TextField("title", text: $renameText)
+            Button("save") { rename() }
+            Button("cancel", role: .cancel) { renamingThread = nil }
         }
     }
 
@@ -56,9 +56,9 @@ struct ThreadsListView: View {
     }
 
     private func label(for score: Double) -> String {
-        if score > 0.2 { return "Positive" }
-        if score < -0.2 { return "Negative" }
-        return "Neutral"
+        if score > 0.2 { return String(localized: "positive") }
+        if score < -0.2 { return String(localized: "negative") }
+        return String(localized: "neutral")
     }
 
     private func rename() {
@@ -79,7 +79,7 @@ struct ThreadDetailView: View {
             // Pinned section
             let pinned = thread.entries.filter(\.isPinned)
             if !pinned.isEmpty {
-                Section("Pinned") {
+                Section("pinned") {
                     ForEach(pinned.sorted(by: { $0.createdAt > $1.createdAt })) { entry in
                         NavigationLink(destination: EntryDetailView(entry: entry)) {
                             VStack(alignment: .leading, spacing: 6) {
@@ -109,7 +109,7 @@ struct ThreadDetailView: View {
         .navigationTitle(thread.title)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Rename") { rename() }
+                Button("rename") { rename() }
             }
         }
     }

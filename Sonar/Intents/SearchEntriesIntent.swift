@@ -2,19 +2,19 @@ import AppIntents
 import Foundation
 
 struct SearchEntriesIntent: AppIntent {
-    static var title: LocalizedStringResource = "Search Entries"
-    static var description = IntentDescription("Search your entries by text, tag, or mood.")
+    static var title: LocalizedStringResource = "search_entries"
+    static var description = IntentDescription("intent_search_entries_desc")
     static var openAppWhenRun: Bool = true
 
-    @Parameter(title: "Query") var query: String?
-    @Parameter(title: "Mood", default: .any) var mood: MoodBin
-    @Parameter(title: "Tag") var tag: String?
+    @Parameter(title: "query") var query: String?
+    @Parameter(title: "mood", default: .any) var mood: MoodBin
+    @Parameter(title: "tag") var tag: String?
 
     enum MoodBin: String, AppEnum, CaseDisplayRepresentable {
         case any, negative, neutral, positive
-        static var typeDisplayRepresentation: TypeDisplayRepresentation { "Mood" }
+        static var typeDisplayRepresentation: TypeDisplayRepresentation { "mood" }
         static var caseDisplayRepresentations: [MoodBin: DisplayRepresentation] = [
-            .any: "Any", .negative: "Negative", .neutral: "Neutral", .positive: "Positive",
+            .any: "any", .negative: "negative", .neutral: "neutral", .positive: "positive",
         ]
     }
 
@@ -30,7 +30,7 @@ struct SearchEntriesIntent: AppIntent {
         if let q = query, !q.isEmpty { pieces.append("\"\(q)\"") }
         if tag?.isEmpty == false { pieces.append("#\(tag!)") }
         if mood != .any { pieces.append(mood.rawValue) }
-        let summary = pieces.isEmpty ? "Opening search…" : "Searching: \(pieces.joined(separator: ", "))"
+        let summary = pieces.isEmpty ? String(localized: "intent_opening_search") : String(localized: "intent_searching_prefix") + pieces.joined(separator: ", ")
         return .result(dialog: IntentDialog(stringLiteral: summary))
     }
 }

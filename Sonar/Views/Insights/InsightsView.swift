@@ -9,42 +9,42 @@ struct InsightsView: View {
     @State private var lastFourWeeks: [[JournalEntry]] = []
     var body: some View {
         List {
-            Section("Privacy") {
-                Text("Insights are computed on your device. No summaries or transcripts leave your phone.")
+            Section("privacy") {
+                Text("insights_privacy_copy")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
-            Section("Top themes") {
-                if weekly.topThemes.isEmpty { Text("No themes yet") } else { ForEach(weekly.topThemes, id: \.self, content: Text.init) }
+            Section("top_themes") {
+                if weekly.topThemes.isEmpty { Text("no_themes_yet") } else { ForEach(weekly.topThemes, id: \.self, content: Text.init) }
             }
-            Section("Average mood") {
-                if let m = weekly.avgMood { Text(String(format: "%.2f", m)) } else { Text("–") }
+            Section("average_mood") {
+                if let m = weekly.avgMood { Text(String(format: "%.2f", m)) } else { Text("dash_placeholder") }
             }
-            Section("Mood trend") {
+            Section("mood_trend") {
                 Sparkline(values: moodAverages(lastFourWeeks))
                     .frame(height: 44)
                     .foregroundStyle(.blue)
             }
-            Section("Highlights") {
-                if weekly.highlightSummaries.isEmpty { Text("No highlights yet") } else { ForEach(weekly.highlightSummaries, id: \.self, content: Text.init) }
+            Section("highlights") {
+                if weekly.highlightSummaries.isEmpty { Text("no_highlights_yet") } else { ForEach(weekly.highlightSummaries, id: \.self, content: Text.init) }
                 if !weekly.highlightSummaries.isEmpty {
-                    let header = "This week’s Sonar highlights (private)\n\n"
+                    let header = String(localized: "weekly_highlights_header")
                     let content = weekly.highlightSummaries.map { "• \($0)" }.joined(separator: "\n")
                     let range = dateRangeOfCurrentWeek()
-                    let title = range.map { "\($0.0) – \($0.1)" } ?? "This week"
+                    let title = range.map { "\($0.0) – \($0.1)" } ?? String(localized: "this_week")
                     let payload = "\(title)\n\n" + header + content
-                    ShareLink(item: payload) { Label("Share weekly highlights", systemImage: "square.and.arrow.up") }
+                    ShareLink(item: payload) { Label("share_weekly_highlights", systemImage: "square.and.arrow.up") }
                         .buttonStyle(.bordered)
                 }
             }
-            Section("Suggested prompts") {
-                Text("What energized you this week? What drained you?")
-                Text("What small win are you proud of?")
-                Text("What trend do you notice in your mood?")
+            Section("suggested_prompts") {
+                Text("prompt_week_energized_drained")
+                Text("prompt_week_small_win")
+                Text("prompt_week_trend")
                     .foregroundStyle(.secondary)
             }
         }
-        .navigationTitle("Insights")
+        .navigationTitle("nav_insights")
         .task { await computeIfEnabled() }
         .refreshable { await computeIfEnabled() }
     }

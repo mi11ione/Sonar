@@ -4,9 +4,7 @@ Privacy — Local First
 - [ ] Privacy Manifest accurately describes use
 
 Internationalization & Localization
-- [ ] User-facing strings prepared for localization
-- [ ] English complete and consistent
-- [ ] RTL layouts render properly
+- [ ] proper .strings file setup and full translation to EN, RU, ES, IT, GE, CH
 
 Offline & Reliability
 - [ ] Saving never silently fails

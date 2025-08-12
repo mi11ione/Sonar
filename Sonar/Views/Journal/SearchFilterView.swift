@@ -26,32 +26,32 @@ struct SearchFilterView: View {
                 }
             }
         }
-        .navigationTitle("Search")
+        .navigationTitle("nav_search")
         .toolbar { ToolbarItem(placement: .topBarTrailing) { filterMenu } }
         .searchable(text: $query)
         .overlay {
             if entries.isEmpty {
-                ContentUnavailableView("No entries yet", systemImage: "mic", description: Text("Record to start building your journal."))
+                ContentUnavailableView("no_entries_yet", systemImage: "mic", description: Text("record_to_start_journal"))
             } else if filtered(entries).isEmpty, !query.isEmpty {
-                ContentUnavailableView("No results", systemImage: "magnifyingglass", description: Text("Try broadening your query or clearing filters."))
+                ContentUnavailableView("no_results", systemImage: "magnifyingglass", description: Text("try_broadening_or_clear_filters"))
             }
         }
     }
 
     private var filterMenu: some View {
         Menu {
-            Picker("Mood", selection: $moodBin) {
-                Text("Any").tag(Int?.none)
-                Text("Negative").tag(Optional(0))
-                Text("Neutral").tag(Optional(1))
-                Text("Positive").tag(Optional(2))
+            Picker("filter_mood", selection: $moodBin) {
+                Text("any").tag(Int?.none)
+                Text("negative").tag(Optional(0))
+                Text("neutral").tag(Optional(1))
+                Text("positive").tag(Optional(2))
             }
-            Picker("Date", selection: $datePreset) {
-                Text("Any").tag(Int?.none)
-                Text("Today").tag(Optional(0))
-                Text("Last 7 days").tag(Optional(1))
+            Picker("filter_date", selection: $datePreset) {
+                Text("any").tag(Int?.none)
+                Text("today").tag(Optional(0))
+                Text("last_7_days").tag(Optional(1))
             }
-            Menu("Tags") {
+            Menu("filter_tags") {
                 let allTags: [String] = Array(Set(entries.flatMap { $0.tags.map(\.name) })).sorted()
                 ForEach(allTags, id: \.self) { tagName in
                     Button {
@@ -61,15 +61,15 @@ struct SearchFilterView: View {
                     }
                 }
             }
-            Picker("Thread", selection: $selectedThreadId) {
-                Text("Any").tag(UUID?.none)
+            Picker("filter_thread", selection: $selectedThreadId) {
+                Text("any").tag(UUID?.none)
                 ForEach(threads) { thread in
                     Text(thread.title).tag(Optional(thread.id))
                 }
             }
-            Button("Clear filters") { moodBin = nil; datePreset = nil; selectedTags.removeAll() }
+            Button("clear_filters") { moodBin = nil; datePreset = nil; selectedTags.removeAll() }
         } label: {
-            Label("Filters", systemImage: "line.3.horizontal.decrease.circle")
+            Label("filters", systemImage: "line.3.horizontal.decrease.circle")
         }
     }
 
