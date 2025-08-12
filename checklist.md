@@ -167,6 +167,11 @@ Settings — Control & Confidence
 - [x] Manage subscription (plans, upgrade/downgrade)
 - [x] Restore purchases
 - [x] iCloud sync toggle with explanation
+- [x] iCloud SwiftData container switching at runtime
+- [x] Migration from local store to CloudKit with progress UI and cancellation
+- [x] Last synced status shown in Settings
+- [x] Conflict policy: last-write-wins via `updatedAt`; relationship unions
+- [x] OSLog events for sync lifecycle
 - [x] Export data (JSON) and Import (basic)
 - [x] Default summary style selector
 - [x] Text-to-speech voice and rate selection

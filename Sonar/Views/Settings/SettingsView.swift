@@ -9,6 +9,7 @@ struct SettingsView: View {
     @Environment(\.openURL) private var openURL
     @Environment(\.modelContext) private var modelContext
     @Environment(\.backup) private var backup
+    @Environment(\.cloudSync) private var cloudSync
     @Query private var settingsRows: [UserSettings]
     @Query(sort: \PromptStyle.displayName) private var promptStyles: [PromptStyle]
     @State private var isSubscriber: Bool = false
@@ -20,6 +21,14 @@ struct SettingsView: View {
     @AppStorage("onboardingComplete") private var onboardingComplete: Bool = true
     @State private var confirmDeleteAll: Bool = false
     @State private var showingImporter: Bool = false
+
+    @State private var isMigrating: Bool = false
+    @State private var migrationProgress: (current: Int, total: Int)? = nil
+    @State private var lastSyncedAt: Date? = nil
+    @State private var showMigrationSheet: Bool = false
+    @State private var migrationToken: CloudSyncMigrationService.CancellationToken? = nil
+    @State private var showDisableConfirm: Bool = false
+    @State private var showICloudUnavailableAlert: Bool = false
 
     var body: some View {
         List {
@@ -51,7 +60,11 @@ struct SettingsView: View {
             }
             if let settings = settingsRows.first {
                 Section("preferences") {
-                    Toggle("icloud_sync", isOn: Binding(get: { settings.iCloudSyncEnabled }, set: { settings.iCloudSyncEnabled = $0 }))
+                    Toggle("icloud_sync", isOn: Binding(get: { settings.iCloudSyncEnabled }, set: { newVal in
+                        Task {
+                            if !newVal { showDisableConfirm = true } else { await toggleICloudSync(true) }
+                        }
+                    }))
                     Toggle("on_device_only", isOn: Binding(get: { settings.allowOnDeviceOnly }, set: { settings.allowOnDeviceOnly = $0 }))
                     Toggle("daily_prompt", isOn: Binding(
                         get: { (settings.dailyReminderHour ?? 20) >= 0 },
@@ -110,6 +123,13 @@ struct SettingsView: View {
                         }
                     ))
                 }
+                Section("sync_status") {
+                    LabeledContent("last_synced", value: (lastSyncedAt ?? .distantPast).formatted(date: .abbreviated, time: .shortened))
+                    if let p = migrationProgress, isMigrating {
+                        ProgressView(value: Double(p.current), total: Double(max(p.total, 1))) { Text("migrating") }
+                            .progressViewStyle(.linear)
+                    }
+                }
                 Section("data") {
                     Button("export_json") { Task { await exportAll() } }
                     Button("import_json") { showingImporter = true }
@@ -129,8 +149,28 @@ struct SettingsView: View {
             isSubscriber = await purchases.isSubscriber()
             planId = await purchases.currentPlanIdentifier()
             devOverride = purchases.developerOverrideEnabled()
+            lastSyncedAt = UserDefaults.standard.object(forKey: "sync.last") as? Date
         }
         .sheet(isPresented: $showPaywall) { PaywallView() }
+        .sheet(isPresented: $showMigrationSheet) {
+            MigrationSheet(progress: migrationProgress, onCancel: {
+                migrationToken?.cancel()
+                isMigrating = false
+                migrationProgress = nil
+                showMigrationSheet = false
+            })
+        }
+        .alert("icloud_disable_confirm", isPresented: $showDisableConfirm) {
+            Button("disable", role: .destructive) { Task { await toggleICloudSync(false) } }
+            Button("cancel", role: .cancel) {}
+        } message: {
+            Text("icloud_disable_explainer")
+        }
+        .alert("icloud_unavailable", isPresented: $showICloudUnavailableAlert) {
+            Button("ok", role: .cancel) {}
+        } message: {
+            Text("icloud_unavailable_message")
+        }
         .sheet(isPresented: $showExporter) {
             VStack(spacing: 16) {
                 Text("share_your_export").font(.headline)
@@ -231,6 +271,85 @@ struct SettingsView: View {
         // 5) App state defaults (freeCount, review cadence hints, deep links)
         let defaults = UserDefaults.standard
         ["freeCount", "deeplink.targetTab", "deeplink.showLastEntry", "deeplink.searchRequest", "deeplink.searchURL", "recording.inProgress"].forEach { defaults.removeObject(forKey: $0) }
+    }
+}
+
+// MARK: - iCloud Sync Toggle
+
+extension SettingsView {
+    @MainActor
+    private func toggleICloudSync(_ enabled: Bool) async {
+        guard let settings = settingsRows.first else { return }
+        if enabled == settings.iCloudSyncEnabled { return }
+        // Preflight
+        if enabled {
+            let available = await cloudSync.isICloudAvailable()
+            if !available {
+                // Surface helpful error (use simple alert for now)
+                await MainActor.run {
+                    settings.iCloudSyncEnabled = false
+                    showICloudUnavailableAlert = true
+                }
+                return
+            }
+        }
+
+        // Grab current container from manager, run migration if enabling, and switch containers
+        do {
+            let token = CloudSyncMigrationService.CancellationToken()
+            migrationToken = token
+            let stream = try await cloudSync.setSyncEnabled(enabled, lastKnownWasCloud: settings.iCloudSyncEnabled, token: token)
+            if let stream {
+                isMigrating = true
+                migrationProgress = (0, 1)
+                showMigrationSheet = true
+                Task {
+                    for await p in stream {
+                        migrationProgress = (p.migrated, p.total)
+                    }
+                    isMigrating = false
+                    migrationProgress = nil
+                    showMigrationSheet = false
+                    lastSyncedAt = Date()
+                    UserDefaults.standard.set(lastSyncedAt, forKey: "sync.last")
+                }
+            } else {
+                lastSyncedAt = Date()
+                UserDefaults.standard.set(lastSyncedAt, forKey: "sync.last")
+            }
+            // Flip the setting last so UI reflects reality
+            settings.iCloudSyncEnabled = enabled
+            try? modelContext.save()
+        } catch {
+            // Rollback UI
+            settings.iCloudSyncEnabled = false
+            try? modelContext.save()
+        }
+    }
+}
+
+private struct MigrationSheet: View {
+    let progress: (current: Int, total: Int)?
+    var onCancel: () -> Void
+    var body: some View {
+        VStack(spacing: 16) {
+            Text("icloud_migration_title").font(.title2.bold())
+            Text("icloud_migration_explainer").foregroundStyle(.secondary)
+            if let p = progress {
+                ProgressView(value: Double(p.current), total: Double(max(p.total, 1)))
+                    .progressViewStyle(.linear)
+                Text("\(p.current) / \(p.total)")
+                    .font(.footnote).foregroundStyle(.secondary)
+            } else {
+                ProgressView().progressViewStyle(.linear)
+            }
+            HStack {
+                Spacer()
+                Button("cancel") { onCancel() }
+                    .buttonStyle(.bordered)
+            }
+        }
+        .padding()
     }
 }
 

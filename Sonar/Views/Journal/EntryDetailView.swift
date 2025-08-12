@@ -18,7 +18,7 @@ struct EntryDetailView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
                 // Editable title
-                TextField("title_optional", text: Binding(get: { entry.title ?? "" }, set: { newVal in entry.title = newVal.isEmpty ? nil : newVal; try? modelContext.save() }))
+                TextField("title_optional", text: Binding(get: { entry.title ?? "" }, set: { newVal in entry.title = newVal.isEmpty ? nil : newVal; entry.updatedAt = .now; try? modelContext.save() }))
                     .font(.title3.weight(.semibold))
                     .textInputAutocapitalization(.sentences)
                     .disableAutocorrection(false)
@@ -63,7 +63,7 @@ struct EntryDetailView: View {
                     TextEditor(text: Binding(get: { entry.notes ?? "" }, set: { newVal in entry.notes = newVal.isEmpty ? nil : newVal }))
                         .frame(minHeight: 120)
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(.quaternary))
-                        .onChange(of: entry.notes ?? "") { try? modelContext.save() }
+                        .onChange(of: entry.notes ?? "") { entry.updatedAt = .now; try? modelContext.save() }
                 }
                 Spacer(minLength: 12)
                 HStack {
@@ -81,6 +81,7 @@ struct EntryDetailView: View {
                 Menu {
                     Button {
                         entry.isPinned.toggle()
+                        entry.updatedAt = .now
                         try? modelContext.save()
                     } label: { Label(entry.isPinned ? "unpin" : "pin", systemImage: entry.isPinned ? "pin.slash" : "pin.fill") }
                     Button(role: .destructive) { confirmDelete = true } label: { Label("delete", systemImage: "trash") }

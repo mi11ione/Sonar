@@ -18,6 +18,17 @@
     "%lld" : {
       "shouldTranslate" : false
     },
+    "%lld / %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld / %2$lld"
+          }
+        }
+      },
+      "shouldTranslate" : false
+    },
     "%lld %@" : {
       "localizations" : {
         "en" : {
@@ -1224,6 +1235,14 @@
         }
       }
     },
+    "disable" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Disable" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Desactivar" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Отключить" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "停用" } }
+      }
+    },
     "discard" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1819,34 +1838,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "导出 JSON"
-          }
-        }
-      }
-    },
-    "import_json" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Import JSON"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Importar JSON"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Импорт JSON"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "导入 JSON"
           }
         }
       }
@@ -2919,6 +2910,118 @@
         }
       }
     },
+    "icloud_disable_confirm" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn off iCloud sync?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Desactivar la sincronización con iCloud?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отключить синхронизацию iCloud?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要关闭 iCloud 同步吗？"
+          }
+        }
+      }
+    },
+    "icloud_disable_explainer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can keep using Sonar locally. Your cloud copy remains intact until you remove it."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puedes seguir usando Sonar localmente. Tu copia en la nube seguirá intacta hasta que la elimines."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы можете продолжить использовать Sonar локально. Облачная копия останется нетронутой, пока вы её не удалите."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你仍可在本地使用 Sonar。你的云端副本会保留，直到你将其删除。"
+          }
+        }
+      }
+    },
+    "icloud_migration_explainer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moving your existing data to iCloud. This may take a moment."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moviendo tus datos existentes a iCloud. Esto puede tardar un momento."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переносим ваши данные в iCloud. Это может занять некоторое время."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在将你现有的数据移至 iCloud，这可能需要一点时间。"
+          }
+        }
+      }
+    },
+    "icloud_migration_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preparing iCloud Sync"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preparando sincronización con iCloud"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подготовка синхронизации iCloud"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在准备 iCloud 同步"
+          }
+        }
+      }
+    },
     "icloud_sync" : {
       "localizations" : {
         "en" : {
@@ -2943,6 +3046,118 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "iCloud 同步"
+          }
+        }
+      }
+    },
+    "icloud_unavailable" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud not available"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud no disponible"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud недоступен"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud 不可用"
+          }
+        }
+      }
+    },
+    "icloud_unavailable_message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in to iCloud and enable iCloud Drive in Settings to use sync."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicia sesión en iCloud y activa iCloud Drive en Ajustes para usar la sincronización."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Войдите в iCloud и включите iCloud Drive в Настройках, чтобы использовать синхронизацию."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请登录 iCloud 并在设置中启用 iCloud Drive 以使用同步。"
+          }
+        }
+      }
+    },
+    "import_json" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import JSON"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importar JSON"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Импорт JSON"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入 JSON"
+          }
+        }
+      }
+    },
+    "import_success" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import complete"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importación completada"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Импорт завершён"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入完成"
           }
         }
       }
@@ -3259,6 +3474,34 @@
         }
       }
     },
+    "last_synced" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last synced"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Última sincronización"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Последняя синхронизация"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上次同步"
+          }
+        }
+      }
+    },
     "live_waveform" : {
       "localizations" : {
         "en" : {
@@ -3367,6 +3610,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "管理主题"
+          }
+        }
+      }
+    },
+    "migrating" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Migrating…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Migrando…"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перенос…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在迁移…"
           }
         }
       }
@@ -3996,34 +4267,6 @@
         }
       }
     },
-    "import_success" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Import complete"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Importación completada"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Импорт завершён"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "导入完成"
-          }
-        }
-      }
-    },
     "no_highlights_yet" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -4279,6 +4522,14 @@
             "value" : "备注"
           }
         }
+      }
+    },
+    "ok" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "OK" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "OK" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "ОК" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "好" } }
       }
     },
     "on_device_only" : {
@@ -6709,6 +6960,14 @@
             "value" : "摘要样式"
           }
         }
+      }
+    },
+    "sync_status" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sync status" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Estado de sincronización" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Статус синхронизации" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "同步状态" } }
       }
     },
     "tag" : {

@@ -15,21 +15,16 @@ internal import AVFAudio
 @main
 struct SonarApp: App {
     @State private var mxObserver = MXObserver()
-    private var container: ModelContainer = {
+    @State private var container: ModelContainer = {
         // Ensure Application Support directory exists before initializing the persistent store
         if let appSupportURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
             try? FileManager.default.createDirectory(at: appSupportURL, withIntermediateDirectories: true)
         }
-        let schema = Schema([
-            JournalEntry.self,
-            AudioAsset.self,
-            Tag.self,
-            PromptStyle.self,
-            UserSettings.self,
-            MemoryThread.self,
-        ])
-        let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-        return try! ModelContainer(for: schema, configurations: [configuration])
+        // Initialize via the container manager (local by default)
+        let manager = ModelContainerManager.shared
+        // Wire your iCloud container identifier here after capability is enabled.
+        manager.cloudKitContainerIdentifier = Bundle.main.object(forInfoDictionaryKey: "ICloudContainerIdentifier") as? String
+        return manager.currentContainer
     }()
 
     var body: some Scene {
@@ -57,6 +52,24 @@ struct SonarApp: App {
                     }
                 }
                 .privacySensitive()
+                .task {
+                    // Honor user's sync preference at launch
+                    let manager = ModelContainerManager.shared
+                    do {
+                        let context = ModelContext(manager.currentContainer)
+                        let settings = (try? context.fetch(FetchDescriptor<UserSettings>()))?.first
+                        if settings?.iCloudSyncEnabled == true {
+                            try await manager.switchTo(.cloud)
+                            container = manager.currentContainer
+                        }
+                    } catch {
+                        // If cloud container creation fails, stay on local and continue; avoid crash
+                        Logger.sync.error("Container switch at launch failed: \(error.localizedDescription, privacy: .public)")
+                    }
+                }
+                .onReceive(NotificationCenter.default.publisher(for: ModelContainerManager.didChangeNotification)) { _ in
+                    container = ModelContainerManager.shared.currentContainer
+                }
                 .task {
                     // Preload default prompt styles on first launch
                     let context = ModelContext(container)

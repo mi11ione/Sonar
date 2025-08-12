@@ -11,6 +11,7 @@ private struct InsightsKey: EnvironmentKey { static let defaultValue: any Insigh
 private struct PromptsKey: EnvironmentKey { static let defaultValue: any PromptsService = DefaultPromptsService() }
 private struct ReviewKey: EnvironmentKey { static let defaultValue: any ReviewRequestService = DefaultReviewRequestService() }
 private struct BackupKey: EnvironmentKey { static let defaultValue: any BackupService = DefaultBackupService() }
+private struct CloudSyncKey: EnvironmentKey { static let defaultValue: CloudSyncService = .init() }
 
 extension EnvironmentValues {
     var transcription: any SpeechTranscriptionService {
@@ -61,5 +62,10 @@ extension EnvironmentValues {
     var backup: any BackupService {
         get { self[BackupKey.self] }
         set { self[BackupKey.self] = newValue }
+    }
+
+    var cloudSync: CloudSyncService {
+        get { self[CloudSyncKey.self] }
+        set { self[CloudSyncKey.self] = newValue }
     }
 }

@@ -141,6 +141,7 @@ struct EntriesListView: View {
         .swipeActions(edge: .trailing) {
             Button {
                 entry.isPinned.toggle()
+                entry.updatedAt = .now
                 try? modelContext.save()
             } label: {
                 Label(entry.isPinned ? "unpin" : "pin", systemImage: entry.isPinned ? "pin.slash" : "pin.fill")
@@ -160,7 +161,7 @@ struct EntriesListView: View {
         }
         .contextMenu {
             Button {
-                entry.isPinned.toggle(); try? modelContext.save()
+                entry.isPinned.toggle(); entry.updatedAt = .now; try? modelContext.save()
             } label: { Label(entry.isPinned ? "unpin" : "pin", systemImage: entry.isPinned ? "pin.slash" : "pin.fill") }
             ShareLink(item: entry.summary ?? entry.transcript) { Label("share", systemImage: "square.and.arrow.up") }
             Button(role: .destructive) {
