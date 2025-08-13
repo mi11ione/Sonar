@@ -26,6 +26,7 @@ struct OnboardingFlow: View {
             progress
         }
         .padding()
+        .vibeCard()
         .task { hydrateFromStore() }
     }
 
@@ -76,6 +77,7 @@ struct OnboardingFlow: View {
                 .font(.footnote)
                 .foregroundStyle(.secondary)
         }
+        .vibeCard()
     }
 
     private var permissions: some View {
@@ -103,6 +105,7 @@ struct OnboardingFlow: View {
                     .buttonStyle(.borderedProminent)
             }
         }
+        .vibeCard()
     }
 
     private var personalization: some View {
@@ -130,6 +133,7 @@ struct OnboardingFlow: View {
                     .buttonStyle(.borderedProminent)
             }
         }
+        .vibeCard()
     }
 
     private var progress: some View {

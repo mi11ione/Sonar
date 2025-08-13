@@ -131,10 +131,7 @@ struct EntriesListView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 6) {
                                 ForEach(entry.tags.prefix(3), id: \.id) { tag in
-                                    Text(tag.name)
-                                        .font(.caption2)
-                                        .padding(.horizontal, 6).padding(.vertical, 2)
-                                        .background(Color.secondary.opacity(0.15), in: Capsule())
+                                    Text(tag.name).vibeTag(tint: .secondary)
                                 }
                             }
                         }
@@ -142,15 +139,11 @@ struct EntriesListView: View {
                     }
                 }
             }
+            .vibeCard()
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(AccessibleRowLabel(entry: entry, query: query))
         }
         .swipeActions(edge: .trailing) {
-            Button {
-                entry.isPinned.toggle()
-                entry.updatedAt = .now
-                try? modelContext.save()
-            } label: {
-                Label(entry.isPinned ? "unpin" : "pin", systemImage: entry.isPinned ? "pin.slash" : "pin.fill")
-            }.tint(.orange)
             Button(role: .destructive) {
                 let id = entry.id
                 modelContext.delete(entry)
@@ -159,10 +152,17 @@ struct EntriesListView: View {
             } label: {
                 Label("delete", systemImage: "trash")
             }
-        }
-        .swipeActions(edge: .leading, allowsFullSwipe: false) {
             ShareLink(item: entry.summary ?? entry.transcript) { Label("share", systemImage: "square.and.arrow.up") }
                 .tint(.blue)
+        }
+        .swipeActions(edge: .leading, allowsFullSwipe: false) {
+            Button {
+                entry.isPinned.toggle()
+                entry.updatedAt = .now
+                try? modelContext.save()
+            } label: {
+                Label(entry.isPinned ? "unpin" : "pin", systemImage: entry.isPinned ? "pin.slash" : "pin.fill")
+            }.tint(.orange)
         }
         .contextMenu {
             Button {
@@ -176,6 +176,18 @@ struct EntriesListView: View {
                 Task { await indexing.deleteIndex(for: id) }
             } label: { Label("delete", systemImage: "trash") }
         }
+    }
+
+    private func AccessibleRowLabel(entry: JournalEntry, query: String) -> Text {
+        var parts: [Text] = []
+        let summary = displayText(for: entry, matchedBy: query)
+        parts.append(Text(summary))
+        if let label = entry.moodLabel, let score = entry.moodScore {
+            parts.append(Text(", ") + Text("mood_prefix ") + Text(label) + Text(", score ") + Text(String(format: "%.2f", score)))
+        }
+        if entry.isPinned { parts.append(Text(", ") + Text("pinned")) }
+        parts.append(Text(", ") + Text(entry.createdAt, style: .date))
+        return parts.dropFirst().reduce(parts.first ?? Text(""), +)
     }
 
     private func highlightedText(_ text: String, query: String) -> Text {

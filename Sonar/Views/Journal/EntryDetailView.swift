@@ -38,6 +38,7 @@ struct EntryDetailView: View {
                         } label: {
                             Image(systemName: "info.circle")
                         }.buttonStyle(.plain)
+                        .accessibilityLabel("more_about_mood")
                     }
                 }
                 if let audio = entry.audio {
@@ -75,6 +76,7 @@ struct EntryDetailView: View {
                 }
             }
             .padding()
+            .vibeCard()
         }
         .navigationTitle(entry.createdAt.formatted(date: .abbreviated, time: .shortened))
         .toolbar {
@@ -390,11 +392,13 @@ private struct AudioPlayerView: View {
                     Image(systemName: isPlaying ? "pause.fill" : "play.fill")
                         .font(.title3)
                 }
+                .accessibilityLabel(isPlaying ? "pause" : "play")
                 Stepper("Speed: \(String(format: "%.1fx", rate))", value: $rate, in: 0.5 ... 2.0, step: 0.25)
                     .onChange(of: rate) { _, newRate in
                         player?.enableRate = true
                         player?.rate = newRate
                     }
+                    .accessibilityLabel("playback_speed")
             }
             Slider(value: Binding(get: { progress }, set: { newVal in
                 progress = newVal

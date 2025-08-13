@@ -12,6 +12,7 @@ struct RecordView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.purchases) private var purchases
     @Environment(\.review) private var review
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Query private var settingsRows: [UserSettings]
 
     enum ViewState: Equatable { case idle, recording, recordingAudioOnly, review, processing, saved, error(String) }
@@ -69,8 +70,10 @@ struct RecordView: View {
                         .frame(minHeight: 160)
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(.quaternary))
                 }
+                .vibeCard()
             } else {
                 ScrollView { Text(liveTranscript).frame(maxWidth: .infinity, alignment: .leading) }
+                    .vibeCard()
             }
 
             micControl
@@ -111,12 +114,14 @@ struct RecordView: View {
         } message: {
             Text("recovered_recording_message")
         }
+        .animation(.spring(duration: 0.25), value: state)
     }
 
     @ViewBuilder private var micControl: some View {
         switch state {
         case .idle:
             MicButton(title: "start_recording") { Task { await startRecording() } }
+                .keyboardShortcut("r", modifiers: [.command])
         case .recording:
             HStack(spacing: 12) {
                 MicButton(title: isPaused ? "resume" : "pause", systemImageName: isPaused ? "play.fill" : "pause.fill", tint: .orange) { togglePause() }
@@ -130,6 +135,7 @@ struct RecordView: View {
                         await RecordingActivityCoordinator.shared.end(entryId: nil)
                     }
                 }
+                .keyboardShortcut("r", modifiers: [.command])
             }
         case .recordingAudioOnly:
             HStack(spacing: 12) {
@@ -154,6 +160,7 @@ struct RecordView: View {
                         await RecordingActivityCoordinator.shared.end(entryId: nil)
                     }
                 }
+                .keyboardShortcut("r", modifiers: [.command])
             }
         case .review:
             HStack(spacing: 12) {
@@ -182,6 +189,7 @@ struct RecordView: View {
             MicButton(title: "processing_ellipsis", systemImageName: "hourglass", tint: .gray, isDisabled: true) {}
         case .saved:
             MicButton(title: "start_recording") { Task { await startRecording() } }
+                .keyboardShortcut("r", modifiers: [.command])
         case .error:
             VStack(spacing: 8) {
                 Text(errorMessage)
@@ -196,6 +204,7 @@ struct RecordView: View {
                     if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
                 }
                 .buttonStyle(.bordered)
+                .keyboardShortcut(",", modifiers: [.command])
             }
         }
     }

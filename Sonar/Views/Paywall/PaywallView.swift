@@ -142,8 +142,7 @@ struct PaywallView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
-                .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12))
+                .vibeCard()
             }
 
             if let lifetime = products.first(where: { $0.id == "sonar.lifetime" }) {
@@ -161,8 +160,7 @@ struct PaywallView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
-                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
+                .vibeCard()
             }
             if let offerJWS = UserDefaults.standard.string(forKey: "promo.offer.jws"),
                UserDefaults.standard.bool(forKey: "promo.winback.eligible"),

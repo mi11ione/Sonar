@@ -22,7 +22,15 @@ struct InsightsView: View {
             }
             Section("top_themes") { section(requiredPlan: .pro) { if weekly.topThemes.isEmpty { Text("no_themes_yet") } else { ForEach(weekly.topThemes, id: \.self, content: Text.init) } } }
             Section("average_mood") { section(requiredPlan: .premium) { if let m = weekly.avgMood { Text(String(format: "%.2f", m)) } else { Text("dash_placeholder") } } }
-            Section("mood_trend") { section(requiredPlan: .premium) { Sparkline(values: moodAverages(lastFourWeeks)).frame(height: 44).foregroundStyle(.blue) } }
+            Section("mood_trend") { section(requiredPlan: .premium) {
+                let avgs = moodAverages(lastFourWeeks)
+                let current = avgs.last ?? 0
+                Sparkline(values: avgs)
+                    .frame(height: 44)
+                    .foregroundStyle(.blue)
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel(Text("Mood trend, average \(String(format: "%.2f", current)) this week"))
+            } }
             Section("highlights") {
                 section(requiredPlan: .premium) {
                     if weekly.highlightSummaries.isEmpty { Text("no_highlights_yet") } else { ForEach(weekly.highlightSummaries, id: \.self, content: Text.init) }

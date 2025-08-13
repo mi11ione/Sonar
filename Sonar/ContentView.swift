@@ -26,10 +26,25 @@ struct ContentView: View {
                         .tabItem { Label("settings_tab", systemImage: "gear") }
                         .tag(2)
                 }
+                // Invisible keyboard shortcuts to switch tabs on hardware keyboards (iPad)
+                .overlay(
+                    HStack { EmptyView() }
+                        .allowsHitTesting(false)
+                        .opacity(0.001)
+                        .background(Color.clear)
+                        .overlay(
+                            HStack(spacing: 0) {
+                                Button("") { selectedTab = 0 }.keyboardShortcut("r", modifiers: [.command]).opacity(0.001)
+                                Button("") { selectedTab = 1 }.keyboardShortcut("f", modifiers: [.command]).opacity(0.001)
+                                Button("") { selectedTab = 2 }.keyboardShortcut(",", modifiers: [.command]).opacity(0.001)
+                            }
+                        )
+                )
             } else {
                 OnboardingFlow()
             }
         }
+        .vibeBackground()
         .onOpenURL { url in
             guard url.scheme == "sonarai" else { return }
             switch url.host {

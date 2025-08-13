@@ -19,6 +19,9 @@ struct MicButton: View {
         .tint(tint ?? .accentColor)
         .disabled(isDisabled)
         .sensoryFeedback(.impact(weight: .light), trigger: title)
+        .frame(minHeight: 44)
+        .contentShape(Rectangle())
+        .accessibilityLabel(title)
     }
 }
 

@@ -4,17 +4,19 @@ import SwiftUI
 struct WaveformView: View {
     var transcript: String
     @Environment(\.transcription) private var transcription
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var phase: CGFloat = 0
     @State private var amplitude: CGFloat = 0.1
 
     var body: some View {
         Canvas { context, size in
             let path = waveformPath(in: size, phase: phase, amplitude: amplitude)
+            context.stroke(path, with: .color(.accentColor.opacity(0.35)), lineWidth: 4)
             context.stroke(path, with: .color(.accentColor), lineWidth: 2)
         }
         .frame(height: 60)
         .onAppear {
-            startAnimation()
+            if !reduceMotion { startAnimation() }
             Task { await listenForAmplitude() }
             // Precompile shader to avoid first-use hitch when applied
             Task.detached {
@@ -24,9 +26,11 @@ struct WaveformView: View {
                 try? await shader.compile(as: .colorEffect)
             }
         }
-        .onChange(of: transcript) { startAnimation() }
+        .onChange(of: transcript) { if !reduceMotion { startAnimation() } }
+        .accessibilityElement(children: .ignore)
         .accessibilityLabel("live_waveform")
-        // Optional bloom via a SwiftUI colorEffect shader if present
+        .accessibilityAddTraits(.isImage)
+        // Optional bloom via a SwiftUI colorEffect shader if present (skip when Reduce Motion enabled)
         .modifier(ShaderGlowModifier(amplitude: amplitude, phase: phase))
     }
 
@@ -55,9 +59,12 @@ struct WaveformView: View {
     private func listenForAmplitude() async {
         for await level in transcription.amplitudeStream() {
             await MainActor.run {
-                // Smooth with a simple ease-in/out to avoid jitter
-                withAnimation(.linear(duration: 0.08)) {
+                if reduceMotion {
                     amplitude = CGFloat(level)
+                } else {
+                    withAnimation(.linear(duration: 0.08)) {
+                        amplitude = CGFloat(level)
+                    }
                 }
             }
         }
@@ -78,4 +85,8 @@ private struct ShaderGlowModifier: ViewModifier {
         ])
         content.colorEffect(shader)
     }
+}
+
+private struct NoopModifier: ViewModifier {
+    func body(content: Content) -> some View { content }
 }

@@ -24,7 +24,7 @@ iPad
 
 Internationalization & Localization
 - [x] Dates and numbers use locale formats
-- [x] proper .strings file setup and full translation to EN, RU, ES, CH
+- [x] Localizable.xcstrings wired; translations tracked separately
 
 Widgets & Live Activities
 - [x] App Intents: Start Recording, Summarize Last, Search Entries
@@ -60,8 +60,8 @@ First‑Run & Core Value
 
 Record — Start & Control
 - [x] Dedicated Record screen exists
-- [x] Big mic button starts recording instantly
-- [x] Visible level feedback (waveform or meter)
+- [x] Big mic button starts recording instantly (44pt min tap area)
+- [x] Visible level feedback (waveform or meter) honors Reduce Motion
 - [x] Timer shows elapsed recording time
 - [x] Pause/resume button with clear state
 - [x] Stop button is unambiguous and within reach
@@ -110,7 +110,7 @@ Entry — Detail
 - [x] Full transcript readable with large text support
 - [x] Summary shown above transcript
 - [x] Mood chip with label/score
-- [x] Audio playback with scrubber and speed control (UI stub)
+- [x] Audio playback with scrubber and speed control (accessible labels)
 - [x] Edit title/notes (optional short title)
 - [x] Text-to-speech playback with chosen voice
 - [x] Edit tags inline
@@ -146,7 +146,7 @@ Search — Text & Filters
 
 Insights — Weekly
 - [x] Weekly dashboard surfaces top themes
-- [x] Mood trend chart (week-over-week)
+- [x] Mood trend chart (week-over-week) with accessibility label for current average
 - [x] Highlights: notable summaries, pinned items
 - [x] Suggested prompts for reflection
 - [x] Users can opt out of insights
