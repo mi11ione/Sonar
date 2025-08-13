@@ -1,4 +1,5 @@
 import AVFoundation
+import StoreKit
 import SwiftData
 import SwiftUI
 
@@ -7,6 +8,7 @@ struct EntryDetailView: View {
     @Environment(\.indexing) private var indexing
     @Environment(\.tts) private var tts
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.purchases) private var purchases
 
     @State var entry: JournalEntry
     @State private var confirmDelete: Bool = false
@@ -68,7 +70,7 @@ struct EntryDetailView: View {
                 Spacer(minLength: 12)
                 HStack {
                     ShareLink(item: entry.summary ?? entry.transcript) { Label("share", systemImage: "square.and.arrow.up") }
-                    Button { speakSummary() } label: { Label("read_aloud", systemImage: "speaker.wave.2.fill") }
+                    Button { Task { await gateOrSpeakSummary() } } label: { Label("read_aloud", systemImage: "speaker.wave.2.fill") }
                         .buttonStyle(.bordered)
                 }
             }
@@ -93,6 +95,7 @@ struct EntryDetailView: View {
         } message: {
             Text("cannot_undo")
         }
+        .sheet(isPresented: $showPaywall) { PaywallView(source: "entry_detail") }
         .sheet(isPresented: $showingMoodInfo) {
             NavigationStack {
                 VStack(alignment: .leading, spacing: 12) {
@@ -129,12 +132,29 @@ struct EntryDetailView: View {
     }
 
     @Query private var settingsRows: [UserSettings]
+    @State private var showPaywall: Bool = false
+    private func speakSummaryDefault() {
+        // System default voice; neutral rate/pitch
+        tts.speak(entry.summary ?? entry.transcript, voice: nil, rate: 0.5, pitch: 1.0)
+    }
+
     private func speakSummary() {
         let s = settingsRows.first
         let voice = tts.availableVoices().first { $0.identifier == s?.ttsVoiceIdentifier }
         let rate = Float(s?.ttsRate ?? 0.5)
         let pitch = Float(s?.ttsPitch ?? 1.0)
         tts.speak(entry.summary ?? entry.transcript, voice: voice, rate: rate, pitch: pitch)
+    }
+
+    private func gateOrSpeakSummary() async {
+        // Free: allow default voice only; Pro/Premium: allow configured voice/rate (and pitch)
+        let plan = await purchases.currentPlan()
+        switch plan {
+        case .free:
+            speakSummaryDefault()
+        case .pro, .premium, .lifetime:
+            speakSummary()
+        }
     }
 }
 

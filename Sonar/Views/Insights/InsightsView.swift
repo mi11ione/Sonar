@@ -1,12 +1,18 @@
+import OSLog
+import StoreKit
 import SwiftData
 import SwiftUI
 
 struct InsightsView: View {
     @Environment(\.insights) private var insights
+    @Environment(\.purchases) private var purchases
     @Query(sort: \JournalEntry.createdAt, order: .reverse) private var entries: [JournalEntry]
     @Query private var settingsRows: [UserSettings]
     @State private var weekly: WeeklyInsights = .init(topThemes: [], avgMood: nil, highlightSummaries: [])
     @State private var lastFourWeeks: [[JournalEntry]] = []
+    @State private var isSubscriber: Bool = false
+    @State private var showPaywall: Bool = false
+    @State private var plan: PurchasesPlan = .free
     var body: some View {
         List {
             Section("privacy") {
@@ -14,27 +20,21 @@ struct InsightsView: View {
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
-            Section("top_themes") {
-                if weekly.topThemes.isEmpty { Text("no_themes_yet") } else { ForEach(weekly.topThemes, id: \.self, content: Text.init) }
-            }
-            Section("average_mood") {
-                if let m = weekly.avgMood { Text(String(format: "%.2f", m)) } else { Text("dash_placeholder") }
-            }
-            Section("mood_trend") {
-                Sparkline(values: moodAverages(lastFourWeeks))
-                    .frame(height: 44)
-                    .foregroundStyle(.blue)
-            }
+            Section("top_themes") { section(requiredPlan: .pro) { if weekly.topThemes.isEmpty { Text("no_themes_yet") } else { ForEach(weekly.topThemes, id: \.self, content: Text.init) } } }
+            Section("average_mood") { section(requiredPlan: .premium) { if let m = weekly.avgMood { Text(String(format: "%.2f", m)) } else { Text("dash_placeholder") } } }
+            Section("mood_trend") { section(requiredPlan: .premium) { Sparkline(values: moodAverages(lastFourWeeks)).frame(height: 44).foregroundStyle(.blue) } }
             Section("highlights") {
-                if weekly.highlightSummaries.isEmpty { Text("no_highlights_yet") } else { ForEach(weekly.highlightSummaries, id: \.self, content: Text.init) }
-                if !weekly.highlightSummaries.isEmpty {
-                    let header = String(localized: "weekly_highlights_header")
-                    let content = weekly.highlightSummaries.map { "• \($0)" }.joined(separator: "\n")
-                    let range = dateRangeOfCurrentWeek()
-                    let title = range.map { "\($0.0) – \($0.1)" } ?? String(localized: "this_week")
-                    let payload = "\(title)\n\n" + header + content
-                    ShareLink(item: payload) { Label("share_weekly_highlights", systemImage: "square.and.arrow.up") }
-                        .buttonStyle(.bordered)
+                section(requiredPlan: .premium) {
+                    if weekly.highlightSummaries.isEmpty { Text("no_highlights_yet") } else { ForEach(weekly.highlightSummaries, id: \.self, content: Text.init) }
+                    if !weekly.highlightSummaries.isEmpty {
+                        let header = String(localized: "weekly_highlights_header")
+                        let content = weekly.highlightSummaries.map { "• \($0)" }.joined(separator: "\n")
+                        let range = dateRangeOfCurrentWeek()
+                        let title = range.map { "\($0.0) – \($0.1)" } ?? String(localized: "this_week")
+                        let payload = "\(title)\n\n" + header + content
+                        ShareLink(item: payload) { Label("share_weekly_highlights", systemImage: "square.and.arrow.up") }
+                            .buttonStyle(.bordered)
+                    }
                 }
             }
             Section("suggested_prompts") {
@@ -45,8 +45,9 @@ struct InsightsView: View {
             }
         }
         .navigationTitle("nav_insights")
-        .task { await computeIfEnabled() }
-        .refreshable { await computeIfEnabled() }
+        .task { await hydrateEntitlements(); await computeIfEnabled(); Logger.purchase.log("insights_viewed") }
+        .refreshable { await hydrateEntitlements(); await computeIfEnabled() }
+        .sheet(isPresented: $showPaywall) { PaywallView(source: "insights") }
     }
 }
 
@@ -104,6 +105,33 @@ private func moodAverages(_ weeks: [[JournalEntry]]) -> [Double] {
 }
 
 private extension InsightsView {
+    @MainActor
+    func hydrateEntitlements() async {
+        isSubscriber = await purchases.isSubscriber()
+        plan = await purchases.currentPlan()
+    }
+
+    @ViewBuilder
+    func section(requiredPlan: PurchasesPlan, @ViewBuilder content: () -> some View) -> some View {
+        let allowed: Bool = switch requiredPlan {
+        case .free: true
+        case .pro: plan == .pro || plan == .premium || plan == .lifetime
+        case .premium, .lifetime: plan == .premium || plan == .lifetime
+        }
+        if allowed {
+            content()
+        } else {
+            VStack(alignment: .leading, spacing: 6) {
+                Rectangle().fill(Color.secondary.opacity(0.15)).frame(height: 32).cornerRadius(6)
+                Text("Unlock Premium to see more insights.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                Button("Unlock Premium") { showPaywall = true }
+                    .buttonStyle(.borderedProminent)
+            }
+        }
+    }
+
     @MainActor
     func computeIfEnabled() async {
         let enabled = settingsRows.first?.weeklyInsightsEnabled ?? true

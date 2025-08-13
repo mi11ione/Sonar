@@ -84,13 +84,13 @@ struct RecordView: View {
         .sensoryFeedback(.impact(weight: .light), trigger: didDiscardToggle)
         .task(id: state) { await handleStateChange() }
         .task(id: lastResumeAt) { await enforceLongSessionGuardIfNeeded() }
-        .sheet(isPresented: $showPaywall) { PaywallView() }
+        .sheet(isPresented: $showPaywall) { PaywallView(source: "gate") }
         .sheet(isPresented: $showFirstRunTeach) { FirstRunTeachSheet() }
         .onChange(of: showPaywall) { if showPaywall { review.recordPaywallShown(now: .now) } }
         .task {
             if deepLinkStart {
                 deepLinkStart = false
-                await startRecordingOrGate()
+                await startRecording() // do not gate on start; gating happens on save
             }
             if deepLinkStop {
                 deepLinkStop = false
@@ -114,7 +114,7 @@ struct RecordView: View {
     @ViewBuilder private var micControl: some View {
         switch state {
         case .idle:
-            MicButton(title: "start_recording") { Task { await startRecordingOrGate() } }
+            MicButton(title: "start_recording") { Task { await startRecording() } }
         case .recording:
             HStack(spacing: 12) {
                 MicButton(title: isPaused ? "resume" : "pause", systemImageName: isPaused ? "play.fill" : "pause.fill", tint: .orange) { togglePause() }
@@ -154,8 +154,12 @@ struct RecordView: View {
         case .review:
             HStack(spacing: 12) {
                 MicButton(title: "save", systemImageName: "checkmark", tint: .green, font: .title3.bold()) {
-                    liveTranscript = reviewText
-                    state = .processing
+                    Task {
+                        if await guardCanSaveOrPresentPaywall() {
+                            liveTranscript = reviewText
+                            state = .processing
+                        }
+                    }
                 }
                 MicButton(title: "discard", systemImageName: "xmark", tint: .gray, font: .title3.bold()) {
                     // Remove any temporary recording file created during this session
@@ -172,7 +176,7 @@ struct RecordView: View {
         case .processing:
             MicButton(title: "processing_ellipsis", systemImageName: "hourglass", tint: .gray, isDisabled: true) {}
         case .saved:
-            MicButton(title: "start_recording") { state = .recording }
+            MicButton(title: "start_recording") { Task { await startRecording() } }
         case .error:
             VStack(spacing: 8) {
                 Text(errorMessage)
@@ -326,8 +330,21 @@ struct RecordView: View {
                 let styleId = settings?.selectedPromptStyleId
                 let allStyles: [PromptStyle] = (try? modelContext.fetch(FetchDescriptor<PromptStyle>())) ?? []
                 let preferred = allStyles.first { $0.id == styleId } ?? allStyles.first
-                let maxSentences = preferred?.maxSentences ?? 3
-                let tone = preferred?.toneHint
+                // Enforce plan-based gating on styles and length
+                let plan = await purchases.currentPlan()
+                let maxSentences: Int
+                let tone: String?
+                switch plan {
+                case .free:
+                    maxSentences = 3
+                    tone = nil
+                case .pro:
+                    maxSentences = min((preferred?.maxSentences ?? 4), 5)
+                    tone = preferred?.toneHint
+                case .premium, .lifetime:
+                    maxSentences = min(max((preferred?.maxSentences ?? 5), 5), 7)
+                    tone = preferred?.toneHint
+                }
                 let summary = await summarization.summarize(text: transcript, maxSentences: maxSentences, toneHint: tone)
                 let result = await mood.analyze(text: transcript)
                 await MainActor.run {
@@ -384,27 +401,70 @@ struct RecordView: View {
         state = .review
     }
 
-    private func startRecordingOrGate() async {
-        // Gate if free tier exhausted and not subscribed
-        let subscribed = await purchases.isSubscriber()
-        if !subscribed, freeCount >= 3 {
-            showPaywall = true
-            return
-        }
+    private func startRecording() async {
         isPaused = false
         state = .recording
     }
 
     private func gateUsagePostSave() async {
-        let subscribed = await purchases.isSubscriber()
-        if !subscribed {
+        // Update counters post-save and trigger paywall if limits crossed
+        let plan = await purchases.currentPlan()
+        switch plan {
+        case .free:
             freeCount += 1
             if freeCount >= 3 { showPaywall = true }
+        case .pro:
+            incrementDailySaveCounter()
+            if dailySaveCount().count >= 5 { showPaywall = true }
+        case .premium, .lifetime:
+            break
         }
     }
 
+    private func guardCanSaveOrPresentPaywall() async -> Bool {
+        let plan = await purchases.currentPlan()
+        switch plan {
+        case .free:
+            if freeCount >= 3 { showPaywall = true; return false }
+            return true
+        case .pro:
+            let today = dailySaveCount()
+            if today.count >= 5 { showPaywall = true; return false }
+            return true
+        case .premium, .lifetime:
+            return true
+        }
+    }
+
+    private func dailySaveCount() -> (token: String, count: Int) {
+        let day = dayIdentifier(for: Date())
+        let token = UserDefaults.standard.string(forKey: "saveCount.day")
+        let count = UserDefaults.standard.integer(forKey: "saveCount.value")
+        if token == day { return (day, count) }
+        return (day, 0)
+    }
+
+    private func incrementDailySaveCounter() {
+        let day = dayIdentifier(for: Date())
+        let current = dailySaveCount()
+        if current.token != day {
+            UserDefaults.standard.set(day, forKey: "saveCount.day")
+            UserDefaults.standard.set(1, forKey: "saveCount.value")
+        } else {
+            UserDefaults.standard.set(day, forKey: "saveCount.day")
+            UserDefaults.standard.set(current.count + 1, forKey: "saveCount.value")
+        }
+    }
+
+    private func dayIdentifier(for date: Date) -> String {
+        let comps = Calendar.current.dateComponents([.year, .month, .day], from: date)
+        return String(format: "%04d-%02d-%02d", comps.year ?? 0, comps.month ?? 0, comps.day ?? 0)
+    }
+
+    // MARK: - Review request cadence wrapper
+
     private func requestReviewIfAppropriate() async {
-        review.recordAppActive(now: .now)
+        review.record(event: .entrySaved, now: .now)
         if review.shouldRequestReview(after: .entrySaved, now: .now) {
             await MainActor.run { requestReview() }
         }

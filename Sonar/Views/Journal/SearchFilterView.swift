@@ -1,12 +1,17 @@
+import StoreKit
 import SwiftData
 import SwiftUI
 
 struct SearchFilterView: View {
+    @Environment(\.purchases) private var purchases
     @State private var query = ""
     @State private var moodBin: Int? = nil
     @State private var datePreset: Int? = nil // 0: Today, 1: Last 7 days
     @State private var selectedTags: Set<String> = []
     @State private var selectedThreadId: UUID? = nil
+    @State private var isSubscriber: Bool = false
+    @State private var showPaywall: Bool = false
+    @State private var plan: PurchasesPlan = .free
     @Query(sort: \MemoryThread.title) private var threads: [MemoryThread]
 
     @Query(sort: \JournalEntry.createdAt, order: .reverse) private var entries: [JournalEntry]
@@ -36,6 +41,9 @@ struct SearchFilterView: View {
                 ContentUnavailableView("no_results", systemImage: "magnifyingglass", description: Text("try_broadening_or_clear_filters"))
             }
         }
+        .task { plan = await purchases.currentPlan() }
+        .task { isSubscriber = await purchases.isSubscriber() }
+        .sheet(isPresented: $showPaywall) { PaywallView(source: "search") }
     }
 
     private var filterMenu: some View {
@@ -67,6 +75,13 @@ struct SearchFilterView: View {
                     Text(thread.title).tag(Optional(thread.id))
                 }
             }
+            Divider()
+            Button {
+                if !isSubscriber { showPaywall = true }
+            } label: {
+                Label("Advanced filters (Premium)", systemImage: "lock")
+            }
+            .disabled(isSubscriber)
             Button("clear_filters") { moodBin = nil; datePreset = nil; selectedTags.removeAll() }
         } label: {
             Label("filters", systemImage: "line.3.horizontal.decrease.circle")
@@ -79,6 +94,11 @@ struct SearchFilterView: View {
         case 1: Calendar.current.date(byAdding: .day, value: -7, to: .now)! ... Date()
         default: nil
         }
+        let entRange: ClosedRange<Date>? = switch plan {
+        case .free: Calendar.current.date(byAdding: .day, value: -7, to: .now)! ... Date()
+        case .pro: Calendar.current.date(byAdding: .day, value: -30, to: .now)! ... Date()
+        case .premium, .lifetime: nil
+        }
         return all.filter { entry in
             var include = true
             if !query.isEmpty {
@@ -87,6 +107,7 @@ struct SearchFilterView: View {
             }
             if let moodBin { include = include && moodMatches(entry.moodScore, bin: moodBin) }
             if let range { include = include && range.contains(entry.createdAt) }
+            if let entRange { include = include && entRange.contains(entry.createdAt) }
             if !selectedTags.isEmpty { include = include && !Set(entry.tags.map(\.name)).intersection(selectedTags).isEmpty }
             if let threadId = selectedThreadId {
                 include = include && threads.first(where: { $0.id == threadId })?.entries.contains(where: { $0.id == entry.id }) == true

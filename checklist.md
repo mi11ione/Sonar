@@ -197,14 +197,15 @@ Settings — Control & Confidence
 - [x] Contact support (mailto:)
 
 Paywall — Clear & Honest
-- [x] Fast, clear comparison: Free vs paid
-- [x] Plan cards: Pro, Premium, Max + annuals
+- [x] Fast, clear comparison: Free vs paid (Monthly/Annual toggle; default Annual)
+- [x] Plan cards: Pro, Premium (annual emphasized) + Lifetime chip
 - [x] No free trials anywhere in the app
-- [x] Benefits explained in plain language
+- [x] Benefits explained in plain language and trust badges
 - [x] Restore Purchases visible
 - [x] Links to Terms/Privacy from paywall
 - [x] Exit affordance (X) and no dark patterns
-- [x] Paywall shown post-onboarding or on gate
+- [x] Paywall shown post-onboarding or on gate (save/feature gates)
+- [x] OSLog events: paywall_shown, purchase_tap/success, restore_tap/success
 
 Privacy — Local First
 - [x] On-device processing stated and honored
@@ -249,4 +250,14 @@ Already Completed (snapshot)
 - [x] Saving entries locally with summary and mood
 - [x] Baseline on-device summary and mood signal foundation
 - [x] Mic button with haptic feedback
+
+Monetization Gates — Entitlements
+- [x] Free: 3 total saves; basic summarization (Concise ≤ 3 sentences)
+- [x] Pro: 5 saves/day; all styles without action items; ≤ 5 sentences; 30‑day history via filters
+- [x] Premium/Lifetime: Unlimited saves and history; full insights unblurred; advanced filters; bulk export
+- [x] Lifetime: Non‑consumable entitlement; treated as Premium forever
+- [x] Insights: Blurred previews with "Unlock Premium" CTA for locked sections
+- [x] Entry Detail: TTS advanced controls gated for non‑subscribers
+- [x] Search: Advanced filters CTA for non‑subscribers
+- [x] Gates never interrupt in‑progress recording; enforced at save/idle moments
 

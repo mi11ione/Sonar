@@ -31,6 +31,7 @@ struct SettingsView: View {
     @State private var showICloudUnavailableAlert: Bool = false
     @AppStorage("widgets.showPromptsOnLock") private var showPromptsOnLock: Bool = false
     @AppStorage("widgets.showSummaryOnLock") private var showSummaryOnLock: Bool = false
+    @State private var plan: PurchasesPlan = .free
 
     var body: some View {
         List {
@@ -42,7 +43,7 @@ struct SettingsView: View {
             Section("subscription") {
                 if isSubscriber { LabeledContent("status", value: planId ?? String(localized: "active")) }
                 Button(isSubscriber ? "change_plan" : "view_plans") { showPaywall = true }
-                Button("restore_purchases") { Task { try? await purchases.restore() } }
+                Button("restore_purchases") { Task { try? await purchases.restore(); await refreshEntitlements() } }
             }
             Section("tags") { NavigationLink("manage_tags") { ManageTagsView() } }
             Section("threads") { NavigationLink("manage_threads") { ManageThreadsView() } }
@@ -53,8 +54,7 @@ struct SettingsView: View {
                         devOverride = newValue
                         purchases.setDeveloperOverrideEnabled(newValue)
                         Task {
-                            isSubscriber = await purchases.isSubscriber()
-                            planId = await purchases.currentPlanIdentifier()
+                            await refreshEntitlements()
                         }
                     }
                 ))
@@ -136,7 +136,12 @@ struct SettingsView: View {
                     }
                 }
                 Section("data") {
-                    Button("export_json") { Task { await exportAll() } }
+                    if plan == .premium || plan == .lifetime {
+                        Button("export_json") { Task { await exportAll() } }
+                    } else {
+                        Button("export_json — Premium") { showPaywall = true }
+                            .buttonStyle(.bordered)
+                    }
                     Button("import_json") { showingImporter = true }
                     Button("delete_all_data", role: .destructive) { confirmDeleteAll = true }
                 }
@@ -151,12 +156,10 @@ struct SettingsView: View {
         }
         .navigationTitle("nav_settings")
         .task {
-            isSubscriber = await purchases.isSubscriber()
-            planId = await purchases.currentPlanIdentifier()
-            devOverride = purchases.developerOverrideEnabled()
+            await refreshEntitlements()
             lastSyncedAt = UserDefaults.standard.object(forKey: "sync.last") as? Date
         }
-        .sheet(isPresented: $showPaywall) { PaywallView() }
+        .sheet(isPresented: $showPaywall) { PaywallView(source: "settings") }
         .sheet(isPresented: $showMigrationSheet) {
             MigrationSheet(progress: migrationProgress, onCancel: {
                 migrationToken?.cancel()
@@ -207,6 +210,7 @@ struct SettingsView: View {
         } message: {
             Text("delete_all_data_message")
         }
+        .onAppear { Task { await refreshEntitlements() } }
     }
 
     private func open(url: String) { if let u = URL(string: url) { openURL(u) } }
@@ -276,6 +280,13 @@ struct SettingsView: View {
         // 5) App state defaults (freeCount, review cadence hints, deep links)
         let defaults = UserDefaults.standard
         ["freeCount", "deeplink.targetTab", "deeplink.showLastEntry", "deeplink.searchRequest", "deeplink.searchURL", "recording.inProgress"].forEach { defaults.removeObject(forKey: $0) }
+    }
+
+    @MainActor
+    private func refreshEntitlements() async {
+        isSubscriber = await purchases.isSubscriber()
+        planId = await purchases.currentPlanIdentifier()
+        plan = await purchases.currentPlan()
     }
 }
 

@@ -1,9 +1,11 @@
+import StoreKit
 import SwiftData
 import SwiftUI
 
 struct EntriesListView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.indexing) private var indexing
+    @Environment(\.purchases) private var purchases
     @Query(sort: \JournalEntry.sortRank, order: .reverse) private var entries: [JournalEntry]
     @State private var selection: Set<UUID> = []
     @State private var query: String = ""
@@ -14,6 +16,7 @@ struct EntriesListView: View {
     @State private var selectedThreadTitle: String? = nil
     @State private var selectedTags: Set<String> = []
     @State private var presentLastEntry: Bool = false
+    @State private var plan: PurchasesPlan = .free
 
     var body: some View { content }
 
@@ -104,6 +107,8 @@ struct EntriesListView: View {
                 }
                 UserDefaults.standard.removeObject(forKey: "deeplink.searchURL")
             }
+            // Hydrate current plan for history window
+            plan = await purchases.currentPlan()
         }
     }
 
@@ -339,6 +344,13 @@ struct EntriesListView: View {
         default: nil
         }
 
+        // Apply entitlement window for historical visibility
+        let allowedRange: ClosedRange<Date>? = switch plan {
+        case .free: Calendar.current.date(byAdding: .day, value: -7, to: .now)! ... Date()
+        case .pro: Calendar.current.date(byAdding: .day, value: -30, to: .now)! ... Date()
+        case .premium, .lifetime: nil
+        }
+
         let filtered = list.filter { entry in
             var include = true
             if !query.isEmpty {
@@ -347,6 +359,7 @@ struct EntriesListView: View {
             }
             if let moodBin { include = include && moodMatches(entry.moodScore, bin: moodBin) }
             if let range = activeRange { include = include && range.contains(entry.createdAt) }
+            if let window = allowedRange { include = include && window.contains(entry.createdAt) }
             if !selectedTags.isEmpty { include = include && !Set(entry.tags.map(\.name)).intersection(selectedTags).isEmpty }
             if let thread = selectedThreadTitle {
                 let ctx = modelContext

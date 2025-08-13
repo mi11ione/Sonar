@@ -106,6 +106,16 @@ struct SonarApp: App {
                     // Reload widgets on day rollover for Daily Prompt
                     await WidgetReloader.shared.reloadIfNewDay()
                 }
+                .task {
+                    // Monitor churn heuristically: if previously subscribed and now not
+                    let was = UserDefaults.standard.bool(forKey: "entitlement.wasSubscribed")
+                    let isNow = await DefaultPurchasesService().isSubscriber()
+                    if was, !isNow {
+                        Logger.purchase.log("churn_detected reason=expired")
+                        UserDefaults.standard.set(true, forKey: "promo.winback.eligible")
+                    }
+                    UserDefaults.standard.set(isNow, forKey: "entitlement.wasSubscribed")
+                }
         }
     }
 }
