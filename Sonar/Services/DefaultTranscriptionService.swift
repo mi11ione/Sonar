@@ -261,9 +261,7 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
     func amplitudeStream() -> AsyncStream<Float> {
         AsyncStream<Float> { continuation in
             self.amplitudeContinuation = continuation
-            continuation.onTermination = { [weak self] _ in
-                Task { @MainActor in self?.amplitudeContinuation = nil }
-            }
+            continuation.onTermination = { _ in }
         }
     }
 

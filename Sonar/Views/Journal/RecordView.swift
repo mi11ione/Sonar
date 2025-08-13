@@ -124,10 +124,10 @@ struct RecordView: View {
                     if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
                     Task {
                         await transcription.stop()
-                        await RecordingActivityCoordinator.shared.end(entryId: nil)
                         UserDefaults.standard.set(false, forKey: "recording.inProgress")
                         restoreBackgroundTaskIfAny()
                         state = .review
+                        await RecordingActivityCoordinator.shared.end(entryId: nil)
                     }
                 }
             }
@@ -148,10 +148,10 @@ struct RecordView: View {
                     if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
                     Task {
                         await transcription.stop()
-                        await RecordingActivityCoordinator.shared.end(entryId: nil)
                         UserDefaults.standard.set(false, forKey: "recording.inProgress")
                         restoreBackgroundTaskIfAny()
                         state = .review
+                        await RecordingActivityCoordinator.shared.end(entryId: nil)
                     }
                 }
             }
@@ -175,6 +175,7 @@ struct RecordView: View {
                     isPaused = false
                     lastResumeAt = nil
                     elapsedBeforePause = 0
+                    Task { await RecordingActivityCoordinator.shared.end(entryId: nil) }
                 }
             }
         case .processing:
@@ -218,8 +219,11 @@ struct RecordView: View {
                 lastResumeAt = Date()
                 elapsedBeforePause = 0
                 beginBackgroundAudioAllowance()
-                RecordingActivityCoordinator.shared.start()
-                RecordingActivityCoordinator.shared.bindLevelStream(transcription.amplitudeStream())
+                let plan = await purchases.currentPlan()
+                if plan == .pro || plan == .premium || plan == .lifetime {
+                    RecordingActivityCoordinator.shared.start()
+                    RecordingActivityCoordinator.shared.bindLevelStream(transcription.amplitudeStream())
+                }
                 await streamTranscription()
             } catch {
                 state = .error(error.localizedDescription)
@@ -258,6 +262,7 @@ struct RecordView: View {
             await MainActor.run {
                 state = .review
             }
+            await RecordingActivityCoordinator.shared.end(entryId: nil)
         }
     }
 
@@ -400,10 +405,10 @@ struct RecordView: View {
     private func stopFromExternalTrigger() async {
         if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
         await transcription.stop()
-        await RecordingActivityCoordinator.shared.end(entryId: nil)
         UserDefaults.standard.set(false, forKey: "recording.inProgress")
         restoreBackgroundTaskIfAny()
         state = .review
+        await RecordingActivityCoordinator.shared.end(entryId: nil)
     }
 
     private func startRecording() async {
