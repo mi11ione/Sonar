@@ -16,147 +16,142 @@ struct CloudSyncMigrationService: Sendable {
     func migrate(from source: ModelContainer, to destination: ModelContainer, token: CancellationToken? = nil) -> AsyncStream<Progress> {
         AsyncStream { continuation in
             Task {
-                do {
-                    logger.log("sync_migrate_started")
-                    let sourceContext = ModelContext(source)
-                    let destContext = ModelContext(destination)
+                logger.log("sync_migrate_started")
+                let sourceContext = ModelContext(source)
+                let destContext = ModelContext(destination)
 
-                    // Fetch all models from source
-                    let allEntries: [JournalEntry] = (try? sourceContext.fetch(FetchDescriptor<JournalEntry>())) ?? []
-                    let allTags: [Tag] = (try? sourceContext.fetch(FetchDescriptor<Tag>())) ?? []
-                    let allThreads: [MemoryThread] = (try? sourceContext.fetch(FetchDescriptor<MemoryThread>())) ?? []
-                    let allStyles: [PromptStyle] = (try? sourceContext.fetch(FetchDescriptor<PromptStyle>())) ?? []
-                    let allSettings: [UserSettings] = (try? sourceContext.fetch(FetchDescriptor<UserSettings>())) ?? []
+                // Fetch all models from source
+                let allEntries: [JournalEntry] = (try? sourceContext.fetch(FetchDescriptor<JournalEntry>())) ?? []
+                let allTags: [Tag] = (try? sourceContext.fetch(FetchDescriptor<Tag>())) ?? []
+                let allThreads: [MemoryThread] = (try? sourceContext.fetch(FetchDescriptor<MemoryThread>())) ?? []
+                let allStyles: [PromptStyle] = (try? sourceContext.fetch(FetchDescriptor<PromptStyle>())) ?? []
+                let allSettings: [UserSettings] = (try? sourceContext.fetch(FetchDescriptor<UserSettings>())) ?? []
 
-                    // Pre-insert static-like tables first (styles), then tags/threads, then entries
-                    var migratedCount = 0
-                    let total = allStyles.count + allTags.count + allThreads.count + allEntries.count + allSettings.count
-                    let chunkSize = 200
+                // Pre-insert static-like tables first (styles), then tags/threads, then entries
+                var migratedCount = 0
+                let total = allStyles.count + allTags.count + allThreads.count + allEntries.count + allSettings.count
+                let chunkSize = 200
 
-                    // Styles
+                // Styles
+                if token?.isCancelled == true { continuation.finish(); return }
+                for style in allStyles {
+                    upsert(style, into: destContext)
+                }
+                try? destContext.save()
+                migratedCount += allStyles.count
+                continuation.yield(.init(total: total, migrated: migratedCount))
+
+                // Tags
+                if token?.isCancelled == true { continuation.finish(); return }
+                for tag in allTags {
+                    upsert(tag, into: destContext)
+                }
+                try? destContext.save()
+                migratedCount += allTags.count
+                continuation.yield(.init(total: total, migrated: migratedCount))
+
+                // Threads (without entries first)
+                if token?.isCancelled == true { continuation.finish(); return }
+                for thread in allThreads {
+                    upsert(thread, into: destContext, includeEntries: false)
+                }
+                try? destContext.save()
+                migratedCount += allThreads.count
+                continuation.yield(.init(total: total, migrated: migratedCount))
+
+                // Entries (without audio)
+                var buffer: [JournalEntry] = []
+                buffer.reserveCapacity(chunkSize)
+                for entry in allEntries {
                     if token?.isCancelled == true { continuation.finish(); return }
-                    for style in allStyles {
-                        upsert(style, into: destContext)
-                    }
-                    try? destContext.save()
-                    migratedCount += allStyles.count
-                    continuation.yield(.init(total: total, migrated: migratedCount))
-
-                    // Tags
-                    if token?.isCancelled == true { continuation.finish(); return }
-                    for tag in allTags {
-                        upsert(tag, into: destContext)
-                    }
-                    try? destContext.save()
-                    migratedCount += allTags.count
-                    continuation.yield(.init(total: total, migrated: migratedCount))
-
-                    // Threads (without entries first)
-                    if token?.isCancelled == true { continuation.finish(); return }
-                    for thread in allThreads {
-                        upsert(thread, into: destContext, includeEntries: false)
-                    }
-                    try? destContext.save()
-                    migratedCount += allThreads.count
-                    continuation.yield(.init(total: total, migrated: migratedCount))
-
-                    // Entries (without audio)
-                    var buffer: [JournalEntry] = []
-                    buffer.reserveCapacity(chunkSize)
-                    for entry in allEntries {
-                        if token?.isCancelled == true { continuation.finish(); return }
-                        let copy = JournalEntry(id: entry.id, createdAt: entry.createdAt, transcript: entry.transcript)
-                        copy.updatedAt = entry.updatedAt
-                        copy.sortRank = entry.sortRank
-                        copy.title = entry.title
-                        copy.notes = entry.notes
-                        copy.summary = entry.summary
-                        copy.moodScore = entry.moodScore
-                        copy.moodLabel = entry.moodLabel
-                        copy.isPinned = entry.isPinned
-                        // Relationships will be re-linked after inserts
-                        buffer.append(copy)
-                        if buffer.count >= chunkSize {
-                            for e in buffer {
-                                destContext.insert(e)
-                            }
-                            try? destContext.save()
-                            migratedCount += buffer.count
-                            continuation.yield(.init(total: total, migrated: migratedCount))
-                            buffer.removeAll(keepingCapacity: true)
-                        }
-                    }
-                    if !buffer.isEmpty {
+                    let copy = JournalEntry(id: entry.id, createdAt: entry.createdAt, transcript: entry.transcript)
+                    copy.updatedAt = entry.updatedAt
+                    copy.sortRank = entry.sortRank
+                    copy.title = entry.title
+                    copy.notes = entry.notes
+                    copy.summary = entry.summary
+                    copy.moodScore = entry.moodScore
+                    copy.moodLabel = entry.moodLabel
+                    copy.isPinned = entry.isPinned
+                    // Relationships will be re-linked after inserts
+                    buffer.append(copy)
+                    if buffer.count >= chunkSize {
                         for e in buffer {
                             destContext.insert(e)
                         }
                         try? destContext.save()
                         migratedCount += buffer.count
                         continuation.yield(.init(total: total, migrated: migratedCount))
+                        buffer.removeAll(keepingCapacity: true)
                     }
-
-                    // Rebuild relationships (tags, threads → entries). Use unions to avoid duplicates.
-                    // Build lookups in destination
-                    if token?.isCancelled == true { continuation.finish(); return }
-                    let destEntries: [UUID: JournalEntry] = {
-                        let arr: [JournalEntry] = (try? destContext.fetch(FetchDescriptor<JournalEntry>())) ?? []
-                        return Dictionary(uniqueKeysWithValues: arr.map { ($0.id, $0) })
-                    }()
-                    let destTags: [UUID: Tag] = {
-                        let arr: [Tag] = (try? destContext.fetch(FetchDescriptor<Tag>())) ?? []
-                        return Dictionary(uniqueKeysWithValues: arr.map { ($0.id, $0) })
-                    }()
-                    let destThreads: [UUID: MemoryThread] = {
-                        let arr: [MemoryThread] = (try? destContext.fetch(FetchDescriptor<MemoryThread>())) ?? []
-                        return Dictionary(uniqueKeysWithValues: arr.map { ($0.id, $0) })
-                    }()
-
-                    for tag in allTags {
-                        if token?.isCancelled == true { continuation.finish(); return }
-                        guard let t = destTags[tag.id] else { continue }
-                        for entry in tag.entries {
-                            if let de = destEntries[entry.id], !t.entries.contains(where: { $0.id == de.id }) {
-                                t.entries.append(de)
-                            }
-                        }
-                    }
-                    for thread in allThreads {
-                        if token?.isCancelled == true { continuation.finish(); return }
-                        guard let th = destThreads[thread.id] else { continue }
-                        for entry in thread.entries {
-                            if let de = destEntries[entry.id], !th.entries.contains(where: { $0.id == de.id }) {
-                                th.entries.append(de)
-                            }
-                        }
+                }
+                if !buffer.isEmpty {
+                    for e in buffer {
+                        destContext.insert(e)
                     }
                     try? destContext.save()
-
-                    // UserSettings (single row) – carry across basic flags only
-                    if let srcSettings = allSettings.first {
-                        if token?.isCancelled == true { continuation.finish(); return }
-                        let copy = UserSettings(id: srcSettings.id)
-                        copy.hasCompletedOnboarding = srcSettings.hasCompletedOnboarding
-                        copy.iCloudSyncEnabled = true
-                        copy.dailyReminderHour = srcSettings.dailyReminderHour
-                        copy.selectedPromptStyleId = srcSettings.selectedPromptStyleId
-                        copy.allowOnDeviceOnly = srcSettings.allowOnDeviceOnly
-                        copy.ttsVoiceIdentifier = srcSettings.ttsVoiceIdentifier
-                        copy.ttsRate = srcSettings.ttsRate
-                        copy.ttsPitch = srcSettings.ttsPitch
-                        copy.weeklyInsightsEnabled = srcSettings.weeklyInsightsEnabled
-                        copy.spotlightIndexingEnabled = srcSettings.spotlightIndexingEnabled
-                        destContext.insert(copy)
-                        try? destContext.save()
-                        migratedCount += 1
-                        continuation.yield(.init(total: total, migrated: migratedCount))
-                    }
-
-                    logger.log("sync_migrate_completed")
-                    continuation.finish()
-                } catch {
-                    Logger.sync.error("sync_migrate_failed: \(error.localizedDescription, privacy: .public)")
-                    continuation.finish()
+                    migratedCount += buffer.count
+                    continuation.yield(.init(total: total, migrated: migratedCount))
                 }
+
+                // Rebuild relationships (tags, threads → entries). Use unions to avoid duplicates.
+                // Build lookups in destination
+                if token?.isCancelled == true { continuation.finish(); return }
+                let destEntries: [UUID: JournalEntry] = {
+                    let arr: [JournalEntry] = (try? destContext.fetch(FetchDescriptor<JournalEntry>())) ?? []
+                    return Dictionary(uniqueKeysWithValues: arr.map { ($0.id, $0) })
+                }()
+                let destTags: [UUID: Tag] = {
+                    let arr: [Tag] = (try? destContext.fetch(FetchDescriptor<Tag>())) ?? []
+                    return Dictionary(uniqueKeysWithValues: arr.map { ($0.id, $0) })
+                }()
+                let destThreads: [UUID: MemoryThread] = {
+                    let arr: [MemoryThread] = (try? destContext.fetch(FetchDescriptor<MemoryThread>())) ?? []
+                    return Dictionary(uniqueKeysWithValues: arr.map { ($0.id, $0) })
+                }()
+
+                for tag in allTags {
+                    if token?.isCancelled == true { continuation.finish(); return }
+                    guard let t = destTags[tag.id] else { continue }
+                    for entry in tag.entries {
+                        if let de = destEntries[entry.id], !t.entries.contains(where: { $0.id == de.id }) {
+                            t.entries.append(de)
+                        }
+                    }
+                }
+                for thread in allThreads {
+                    if token?.isCancelled == true { continuation.finish(); return }
+                    guard let th = destThreads[thread.id] else { continue }
+                    for entry in thread.entries {
+                        if let de = destEntries[entry.id], !th.entries.contains(where: { $0.id == de.id }) {
+                            th.entries.append(de)
+                        }
+                    }
+                }
+                try? destContext.save()
+
+                // UserSettings (single row) – carry across basic flags only
+                if let srcSettings = allSettings.first {
+                    if token?.isCancelled == true { continuation.finish(); return }
+                    let copy = UserSettings(id: srcSettings.id)
+                    copy.hasCompletedOnboarding = srcSettings.hasCompletedOnboarding
+                    copy.iCloudSyncEnabled = true
+                    copy.dailyReminderHour = srcSettings.dailyReminderHour
+                    copy.selectedPromptStyleId = srcSettings.selectedPromptStyleId
+                    copy.allowOnDeviceOnly = srcSettings.allowOnDeviceOnly
+                    copy.ttsVoiceIdentifier = srcSettings.ttsVoiceIdentifier
+                    copy.ttsRate = srcSettings.ttsRate
+                    copy.ttsPitch = srcSettings.ttsPitch
+                    copy.weeklyInsightsEnabled = srcSettings.weeklyInsightsEnabled
+                    copy.spotlightIndexingEnabled = srcSettings.spotlightIndexingEnabled
+                    destContext.insert(copy)
+                    try? destContext.save()
+                    migratedCount += 1
+                    continuation.yield(.init(total: total, migrated: migratedCount))
+                }
+
+                logger.log("sync_migrate_completed")
+                continuation.finish()
             }
         }
     }

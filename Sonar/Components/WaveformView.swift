@@ -18,11 +18,10 @@ struct WaveformView: View {
             Task { await listenForAmplitude() }
             // Precompile shader to avoid first-use hitch when applied
             Task.detached {
-                if let shader = try? await Shader(function: .init(library: .default, name: "sonar_color_wave"), arguments: [
+                let shader = await Shader(function: .init(library: .default, name: "sonar_color_wave"), arguments: [
                     .float(Float(amplitude)), .float(Float(phase)),
-                ]) {
-                    try? await shader.compile(as: .colorEffect)
-                }
+                ])
+                try? await shader.compile(as: .colorEffect)
             }
         }
         .onChange(of: transcript) { startAnimation() }
@@ -73,15 +72,10 @@ private struct ShaderGlowModifier: ViewModifier {
     var amplitude: CGFloat
     var phase: CGFloat
     func body(content: Content) -> some View {
-        // Try to load our shader; if unavailable (e.g., older OS or no library), show plain content
-        if let shader = try? Shader(function: .init(library: .default, name: "sonar_color_wave"), arguments: [
+        let shader = Shader(function: .init(library: .default, name: "sonar_color_wave"), arguments: [
             .float(Float(amplitude)),
             .float(Float(phase)),
-        ]) {
-            // Apply as a color effect
-            content.colorEffect(shader)
-        } else {
-            content
-        }
+        ])
+        content.colorEffect(shader)
     }
 }

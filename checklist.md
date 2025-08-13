@@ -37,7 +37,7 @@ Widgets & Live Activities
 - [x] Recording Live Activity attributes and coordinator
 - [x] Live Activity timer alignment and level hint throttling
 - [x] Pause/Resume/Stop intent flags for deep link handling
-- [x] End activity on save/stop/app termination path
+- [x] End activity on save/stop/app termination path (UI stop, audio-only stop, external intent) with immediate dismissal
 - [x] Widget extension embedded in app bundle (Copy Files → Destination: PlugIns)
 - [x] Widget debug scheme configured with `_XCWidgetKind`/`_XCWidgetFamily` for on-device testing
 

@@ -28,10 +28,7 @@ struct EntriesListView: View {
         // Deep link to open search with parameters via custom URL
         // e.g., sonarai://search?query=...&mood=positive&tag=...
         // Handled via .onOpenURL in ContentView; we mirror via UserDefaults already
-        // Hidden programmatic navigation to last entry when requested
-        NavigationLink(isActive: $presentLastEntry) {
-            if let first = entries.first { EntryDetailView(entry: first) }
-        } label: { EmptyView() }
+        // Hidden programmatic navigation to last entry when requested (via navigationDestination)
 
         List(selection: $selection) {
             if !pinned.isEmpty {
@@ -51,6 +48,9 @@ struct EntriesListView: View {
             }
         }
         .navigationTitle("nav_journal")
+        .navigationDestination(isPresented: $presentLastEntry) {
+            if let first = entries.first { EntryDetailView(entry: first) }
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) { filterMenu }
             ToolbarItemGroup(placement: .topBarTrailing) {

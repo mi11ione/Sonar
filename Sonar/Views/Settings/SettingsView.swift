@@ -198,7 +198,7 @@ struct SettingsView: View {
                 break
             }
         }
-        .onChange(of: showExporter) { isPresented in
+        .onChange(of: showExporter) { _, isPresented in
             if !isPresented, let url = exportURL {
                 try? FileManager.default.removeItem(at: url)
                 exportURL = nil

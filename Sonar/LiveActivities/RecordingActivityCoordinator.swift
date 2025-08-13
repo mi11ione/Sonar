@@ -85,7 +85,7 @@ final class RecordingActivityCoordinator {
         // Cap to 23:59:59 visually by clamping seconds used in UI; content still uses exact value
         if state.elapsedSeconds > 86399 { state.elapsedSeconds = 86399 }
         let finalContent = ActivityContent(state: state, staleDate: nil, relevanceScore: 1.0)
-        await activity.end(finalContent, dismissalPolicy: .default)
+        await activity.end(finalContent, dismissalPolicy: .immediate)
         self.activity = nil
         startedAt = nil
     }

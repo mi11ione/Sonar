@@ -92,6 +92,8 @@ struct DefaultPurchasesService: PurchasesService, Sendable {
                 logger.log("purchase_cancelled plan=\(productId, privacy: .public)")
             case .pending:
                 logger.log("purchase_pending plan=\(productId, privacy: .public)")
+            @unknown default:
+                logger.error("purchase_result_unknown plan=\(productId, privacy: .public)")
             }
         } catch {
             logger.error("purchase_error plan=\(productId, privacy: .public) error=\(String(describing: error), privacy: .public)")

@@ -391,7 +391,7 @@ private struct AudioPlayerView: View {
                         .font(.title3)
                 }
                 Stepper("Speed: \(String(format: "%.1fx", rate))", value: $rate, in: 0.5 ... 2.0, step: 0.25)
-                    .onChange(of: rate) { newRate in
+                    .onChange(of: rate) { _, newRate in
                         player?.enableRate = true
                         player?.rate = newRate
                     }

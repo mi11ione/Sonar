@@ -86,7 +86,9 @@ struct RecordView: View {
         .task(id: lastResumeAt) { await enforceLongSessionGuardIfNeeded() }
         .sheet(isPresented: $showPaywall) { PaywallView(source: "gate") }
         .sheet(isPresented: $showFirstRunTeach) { FirstRunTeachSheet() }
-        .onChange(of: showPaywall) { if showPaywall { review.recordPaywallShown(now: .now) } }
+        .onChange(of: showPaywall) {
+            if showPaywall { review.recordPaywallShown(now: .now) }
+        }
         .task {
             if deepLinkStart {
                 deepLinkStart = false
@@ -122,6 +124,7 @@ struct RecordView: View {
                     if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
                     Task {
                         await transcription.stop()
+                        await RecordingActivityCoordinator.shared.end(entryId: nil)
                         UserDefaults.standard.set(false, forKey: "recording.inProgress")
                         restoreBackgroundTaskIfAny()
                         state = .review
@@ -145,6 +148,7 @@ struct RecordView: View {
                     if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
                     Task {
                         await transcription.stop()
+                        await RecordingActivityCoordinator.shared.end(entryId: nil)
                         UserDefaults.standard.set(false, forKey: "recording.inProgress")
                         restoreBackgroundTaskIfAny()
                         state = .review
@@ -396,6 +400,7 @@ struct RecordView: View {
     private func stopFromExternalTrigger() async {
         if let last = lastResumeAt { elapsedBeforePause += Date().timeIntervalSince(last) }
         await transcription.stop()
+        await RecordingActivityCoordinator.shared.end(entryId: nil)
         UserDefaults.standard.set(false, forKey: "recording.inProgress")
         restoreBackgroundTaskIfAny()
         state = .review

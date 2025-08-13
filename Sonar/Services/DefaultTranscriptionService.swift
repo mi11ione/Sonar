@@ -36,9 +36,9 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
             }
         }
 
-        // Microphone authorization
+        // Microphone authorization (AVAudioApplication in iOS 17+)
         let _ = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Bool, Error>) in
-            AVAudioSession.sharedInstance().requestRecordPermission { granted in
+            AVAudioApplication.requestRecordPermission { granted in
                 if granted { continuation.resume(returning: true) }
                 else { continuation.resume(throwing: CaptureError.micDenied) }
             }
@@ -224,12 +224,16 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
                 switch type {
                 case .began:
                     // Pause engine but keep recognition alive in case it resumes
-                    if audioEngine.isRunning {
-                        audioEngine.pause()
+                    Task { @MainActor in
+                        if self.audioEngine.isRunning {
+                            self.audioEngine.pause()
+                        }
                     }
                 case .ended:
                     // Attempt to resume engine after interruption ends
-                    do { try audioEngine.start() } catch {}
+                    Task { @MainActor in
+                        do { try self.audioEngine.start() } catch {}
+                    }
                 @unknown default:
                     break
                 }
@@ -257,7 +261,9 @@ final class DefaultTranscriptionService: SpeechTranscriptionService {
     func amplitudeStream() -> AsyncStream<Float> {
         AsyncStream<Float> { continuation in
             self.amplitudeContinuation = continuation
-            continuation.onTermination = { @MainActor [weak self] _ in self?.amplitudeContinuation = nil }
+            continuation.onTermination = { [weak self] _ in
+                Task { @MainActor in self?.amplitudeContinuation = nil }
+            }
         }
     }
 
