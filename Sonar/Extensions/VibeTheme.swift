@@ -52,8 +52,7 @@ extension View {
     func vibeCard() -> some View { modifier(VibeCardModifier()) }
 
     func vibeTag(tint: Color = .accentColor) -> some View {
-        self
-            .font(.caption)
+        font(.caption)
             .padding(.horizontal, 8)
             .padding(.vertical, 4)
             .background(tint.opacity(VibeTheme.chipBackgroundOpacity), in: Capsule())
@@ -64,5 +63,3 @@ extension View {
         background(VibeBackground().ignoresSafeArea())
     }
 }
-
-

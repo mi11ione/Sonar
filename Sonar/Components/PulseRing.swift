@@ -13,8 +13,8 @@ struct PulseRing: View {
                     .opacity(animate ? 0.0 : 1.0)
                     .animation(
                         .easeOut(duration: 1.6)
-                        .repeatForever(autoreverses: false)
-                        .delay(Double(i) * 0.25),
+                            .repeatForever(autoreverses: false)
+                            .delay(Double(i) * 0.25),
                         value: animate
                     )
             }
@@ -26,5 +26,3 @@ struct PulseRing: View {
 }
 
 #Preview { PulseRing() }
-
-

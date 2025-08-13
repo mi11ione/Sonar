@@ -38,7 +38,7 @@ struct EntryDetailView: View {
                         } label: {
                             Image(systemName: "info.circle")
                         }.buttonStyle(.plain)
-                        .accessibilityLabel("more_about_mood")
+                            .accessibilityLabel("more_about_mood")
                     }
                 }
                 if let audio = entry.audio {
