@@ -30,7 +30,7 @@ struct PaywallView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    Text("Unlock Sonar").font(.largeTitle.bold())
+                    Text("unlock_sonar").font(.largeTitle.bold())
                     Text(contextMessage)
                         .multilineTextAlignment(.center)
                         .foregroundStyle(.secondary)
@@ -64,9 +64,9 @@ struct PaywallView: View {
                             .buttonStyle(.plain)
                         HStack(spacing: 6) {
                             Image(systemName: "lock.shield").foregroundStyle(.secondary)
-                            Text("Private. On-device processing.").foregroundStyle(.secondary)
+                            Text("privacy_promise_on_device").foregroundStyle(.secondary)
                         }
-                        Text("Cancel anytime in Settings.")
+                        Text("cancel_anytime_in_settings")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
                     }
@@ -84,13 +84,13 @@ struct PaywallView: View {
 
     private var termToggle: some View {
         HStack {
-            Picker("Billing", selection: Binding(get: {
+            Picker("billing", selection: Binding(get: {
                 preferredTerm
             }, set: { newValue in
                 preferredTerm = newValue
             })) {
-                Text("Monthly").tag("monthly")
-                Text("Annual").tag("annual")
+                Text("monthly").tag("monthly")
+                Text("annual").tag("annual")
             }
             .pickerStyle(.segmented)
             .onAppear {
@@ -100,7 +100,7 @@ struct PaywallView: View {
         }
         .overlay(alignment: .bottomTrailing) {
             if preferredTerm == "annual" {
-                Text("Save ~46% vs monthly").font(.caption2).foregroundStyle(.secondary)
+                Text("save_vs_monthly").font(.caption2).foregroundStyle(.secondary)
             }
         }
     }
@@ -118,10 +118,10 @@ struct PaywallView: View {
                         Text(product.displayName).font(.headline)
                         Spacer()
                         if product.id.contains("premium") {
-                            Text("Most Popular").font(.caption2).padding(.horizontal, 6).padding(.vertical, 2).background(Color.accentColor.opacity(0.15), in: Capsule())
+                            Text("most_popular").font(.caption2).padding(.horizontal, 6).padding(.vertical, 2).background(Color.accentColor.opacity(0.15), in: Capsule())
                         }
                         if product.id.contains("annual") {
-                            Text("Best Value").font(.caption2).padding(.horizontal, 6).padding(.vertical, 2).background(Color.green.opacity(0.15), in: Capsule())
+                            Text("best_value").font(.caption2).padding(.horizontal, 6).padding(.vertical, 2).background(Color.green.opacity(0.15), in: Capsule())
                         }
                     }
                     ProductView(id: product.id, prefersPromotionalIcon: true) {
@@ -149,9 +149,9 @@ struct PaywallView: View {
             if let lifetime = products.first(where: { $0.id == "sonar.lifetime" }) {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
-                        Text("Lifetime").font(.headline)
+                        Text("lifetime").font(.headline)
                         Spacer()
-                        Text("Pay once — keep Premium forever").font(.caption).foregroundStyle(.secondary)
+                        Text("lifetime_copy").font(.caption).foregroundStyle(.secondary)
                     }
                     HStack {
                         Text(lifetime.displayPrice).bold()
@@ -169,8 +169,8 @@ struct PaywallView: View {
                let premiumMonthly = products.first(where: { $0.id == "sonar.premium.monthly" })
             {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Win-back offer: 50% off 1 month").font(.subheadline.bold())
-                    Button("Redeem offer") { Task { try? await purchases.purchase(productId: premiumMonthly.id, promotionalOfferID: "winback50", compactJWS: offerJWS) } }
+                    Text("winback_offer_title").font(.subheadline.bold())
+                    Button("redeem_offer") { Task { try? await purchases.purchase(productId: premiumMonthly.id, promotionalOfferID: "winback50", compactJWS: offerJWS) } }
                         .buttonStyle(.borderedProminent)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -219,18 +219,18 @@ struct PaywallView: View {
         }
     }
 
-    private var contextMessage: String {
+    private var contextMessage: LocalizedStringKey {
         let closes = UserDefaults.standard.integer(forKey: "paywall.closeCount")
         if closes >= 2 {
-            return "Unlimited entries, deeper insights, and search that remembers. Save ~46% with annual."
+            return "paywall_context_default_savings"
         }
         switch source {
         case "gate":
-            return "Keep unlimited entries, deeper insights, and search your history."
+            return "paywall_context_gate"
         case "insights":
-            return "Unlock trends, weekly highlights, and smart filters."
+            return "paywall_context_insights"
         default:
-            return "Unlimited entries, deeper insights, and search that remembers."
+            return "paywall_context_default"
         }
     }
 

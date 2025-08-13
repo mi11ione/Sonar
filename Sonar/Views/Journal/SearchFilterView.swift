@@ -79,7 +79,7 @@ struct SearchFilterView: View {
             Button {
                 if !isSubscriber { showPaywall = true }
             } label: {
-                Label("Advanced filters (Premium)", systemImage: "lock")
+                Label("advanced_filters_premium", systemImage: "lock")
             }
             .disabled(isSubscriber)
             Button("clear_filters") { moodBin = nil; datePreset = nil; selectedTags.removeAll() }

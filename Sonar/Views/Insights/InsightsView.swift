@@ -123,10 +123,10 @@ private extension InsightsView {
         } else {
             VStack(alignment: .leading, spacing: 6) {
                 Rectangle().fill(Color.secondary.opacity(0.15)).frame(height: 32).cornerRadius(6)
-                Text("Unlock Premium to see more insights.")
+                Text("unlock_premium_more_insights")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
-                Button("Unlock Premium") { showPaywall = true }
+                Button("unlock_premium_cta") { showPaywall = true }
                     .buttonStyle(.borderedProminent)
             }
         }

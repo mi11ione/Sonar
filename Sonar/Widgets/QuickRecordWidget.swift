@@ -35,7 +35,7 @@ private struct QuickRecordWidgetView: View {
         case .systemMedium:
             HStack {
                 VStack(alignment: .leading) {
-                    Text("sonar").font(.headline)
+                    Text("app_name").font(.headline)
                     Text("on_device_private").font(.footnote).foregroundStyle(.secondary)
                 }
                 Spacer()

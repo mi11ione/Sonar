@@ -17,7 +17,7 @@ struct DailyPromptWidget: Widget {
     struct Provider: TimelineProvider {
         typealias Entry = DailyPromptWidget.Entry
 
-        func placeholder(in _: Context) -> Entry { Entry(date: .now, prompt: "Take a minute to reflect.", redacted: true) }
+        func placeholder(in _: Context) -> Entry { Entry(date: .now, prompt: String(localized: "prompt_placeholder_reflect"), redacted: true) }
 
         func getSnapshot(in _: Context, completion: @escaping (Entry) -> Void) {
             let d = groupDefaults()
@@ -42,33 +42,25 @@ struct DailyPromptWidget: Widget {
         private func groupDefaults() -> UserDefaults { UserDefaults(suiteName: "group.com.mi11ion.Sonar") ?? .standard }
         private func promptOfDay(locale: Locale, seed: Int) -> String {
             let list = prompts(locale: locale)
-            if list.isEmpty { return "Take a minute to reflect." }
+            if list.isEmpty { return String(localized: "prompt_placeholder_reflect") }
             let dayIndex = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1
             return list[(dayIndex + seed) % list.count]
         }
 
-        private func prompts(locale: Locale) -> [String] {
-            if locale.language.languageCode?.identifier == "es" {
-                return [
-                    "¿Qué momento de hoy quieres recordar?",
-                    "¿Cómo te sientes ahora mismo?",
-                    "¿Qué te dio energía hoy? ¿Qué te la quitó?",
-                    "Si pudieras dejar una nota a tu yo futuro, ¿qué diría?",
-                    "¿Qué te sorprendió hoy?",
-                ]
-            }
-            return [
-                "What's one moment from today you want to remember?",
-                "How are you feeling right now?",
-                "What energized you today? What drained you?",
-                "If you could give your future self one note from today, what would it be?",
-                "What surprised you today?",
-                "What's one small win worth noting?",
-                "Who or what are you grateful for right now?",
-                "What's one thing you'd like to do differently tomorrow?",
-                "What trend have you noticed in your mood this week?",
-                "What matters most to you today, and why?",
+        private func prompts(locale _: Locale) -> [String] {
+            let keys: [LocalizedStringResource] = [
+                "prompt_bank_1",
+                "prompt_bank_2",
+                "prompt_bank_3",
+                "prompt_bank_4",
+                "prompt_bank_5",
+                "prompt_bank_6",
+                "prompt_bank_7",
+                "prompt_bank_8",
+                "prompt_bank_9",
+                "prompt_bank_10",
             ]
+            return keys.map { String(localized: $0) }
         }
     }
 }
@@ -107,7 +99,7 @@ private struct DailyPromptView: View {
         case .accessoryRectangular:
             HStack { Image(systemName: "lightbulb"); Text(entry.redacted ? "prompt_available" : String(entry.prompt.prefix(30))) }
         case .accessoryInline:
-            Text(entry.redacted ? "prompt_available" : "Prompt: \(entry.prompt)")
+            Text(entry.redacted ? "prompt_available" : "prompt_inline_format \(entry.prompt)")
         default:
             EmptyView()
         }

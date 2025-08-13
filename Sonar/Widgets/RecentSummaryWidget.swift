@@ -17,7 +17,7 @@ struct RecentSummaryWidget: Widget {
     struct Provider: TimelineProvider {
         typealias Entry = RecentSummaryWidget.Entry
         private var defaults: UserDefaults { UserDefaults(suiteName: "group.com.mi11ion.Sonar") ?? .standard }
-        func placeholder(in _: Context) -> Entry { Entry(date: .now, text: "No entries yet.", mood: nil, redacted: true) }
+        func placeholder(in _: Context) -> Entry { Entry(date: .now, text: String(localized: "no_entries_yet"), mood: nil, redacted: true) }
         func getSnapshot(in _: Context, completion: @escaping (Entry) -> Void) { completion(load()) }
         func getTimeline(in _: Context, completion: @escaping (Timeline<Entry>) -> Void) {
             completion(Timeline(entries: [load()], policy: .atEnd))
@@ -29,7 +29,7 @@ struct RecentSummaryWidget: Widget {
             let ts = defaults.double(forKey: "widget.lastDate")
             let date = ts > 0 ? Date(timeIntervalSince1970: ts) : .now
             let redacted = !UserDefaults.standard.bool(forKey: "widgets.showSummaryOnLock")
-            let fallback = text.isEmpty ? "No entries yet." : text
+            let fallback = text.isEmpty ? String(localized: "no_entries_yet") : text
             return Entry(date: date, text: fallback, mood: mood, redacted: redacted)
         }
     }
@@ -71,7 +71,7 @@ private struct RecentSummaryView: View {
                 Text(entry.redacted ? "latest_summary" : String(entry.text.prefix(30)))
             }
         case .accessoryInline:
-            Text(entry.redacted ? "latest_summary" : "Latest: \(entry.text)")
+            Text(entry.redacted ? "latest_summary" : "latest_inline_format \(entry.text)")
         default:
             EmptyView()
         }

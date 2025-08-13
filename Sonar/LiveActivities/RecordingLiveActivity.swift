@@ -20,7 +20,7 @@ struct RecordingActivityLockScreenView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Recording…")
+            Text("recording_ellipsis")
                 .font(.headline)
             HStack(alignment: .center, spacing: 8) {
                 Image(systemName: "mic.fill")
@@ -33,17 +33,17 @@ struct RecordingActivityLockScreenView: View {
                 .tint(.accentColor)
             HStack {
                 Button(role: .destructive) { Task { try? await StopRecordingIntent().perform() } } label: {
-                    Label("Stop", systemImage: "stop.fill")
+                    Label("stop", systemImage: "stop.fill")
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.red)
                 if context.state.isPaused {
                     Button { Task { try? await TogglePauseRecordingIntent().perform() } } label: {
-                        Label("Resume", systemImage: "play.fill")
+                        Label("resume", systemImage: "play.fill")
                     }
                 } else {
                     Button { Task { try? await TogglePauseRecordingIntent().perform() } } label: {
-                        Label("Pause", systemImage: "pause.fill")
+                        Label("pause", systemImage: "pause.fill")
                     }
                 }
             }

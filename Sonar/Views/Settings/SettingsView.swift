@@ -218,7 +218,7 @@ struct SettingsView: View {
     private func contactSupport() {
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-"
         let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
-        let subject = "Sonar Support"
+        let subject = String(localized: "support_email_subject")
         let body = "\n\n—\nApp Version: \(appVersion)\nOS: \(osVersion)\n"
         let query = "subject=\(subject)&body=\(body)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "subject=Sonar"
         let urlString = "mailto:support@example.com?\(query)"
