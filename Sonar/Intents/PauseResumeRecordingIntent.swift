@@ -8,6 +8,10 @@ struct TogglePauseRecordingIntent: AppIntent {
     func perform() async throws -> some IntentResult {
         UserDefaults.standard.set(true, forKey: "deeplink.startRecording")
         UserDefaults.standard.set(true, forKey: "deeplink.togglePause")
+        if let d = UserDefaults(suiteName: "group.com.mi11ion.Sonar") {
+            d.set(true, forKey: "deeplink.startRecording")
+            d.set(true, forKey: "deeplink.togglePause")
+        }
         return .result()
     }
 }

@@ -8,7 +8,12 @@ struct StartRecordingIntent: AppIntent {
 
     func perform() async throws -> some IntentResult {
         UserDefaults.standard.set(true, forKey: "deeplink.startRecording")
-        return .result(dialog: IntentDialog("intent_starting_recording"))
+        if let d = UserDefaults(suiteName: "group.com.mi11ion.Sonar") {
+            d.set(true, forKey: "deeplink.startRecording")
+        }
+        // When invoked from a widget/Live Activity, presenting a dialog is unsupported and can assert.
+        // Open the app (per openAppWhenRun) and let the app handle UI.
+        return .result()
     }
 }
 

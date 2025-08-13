@@ -29,6 +29,8 @@ Internationalization & Localization
 Widgets & Live Activities
 - [x] App Intents: Start Recording, Summarize Last, Search Entries
 - [x] Quick action plumbing for widgets (AppIntent-based, in-app deep links)
+- [x] Widget intent safety: no dialogs returned from intents invoked by widgets
+- [x] App Group bridging for deep-link flags between widget extension and app
 - [x] Daily Prompt source wired to `DefaultPromptsService`
 - [x] Widget reload throttler added; day roll-over reload
 - [x] Settings toggles for Lock Screen redaction (Prompts/Summary)

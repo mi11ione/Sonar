@@ -75,7 +75,6 @@ struct EntryDetailView: View {
             .padding()
         }
         .navigationTitle(entry.createdAt.formatted(date: .abbreviated, time: .shortened))
-        .privacySensitive() // Hide sensitive content in app switcher per SwiftUI API
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Menu {

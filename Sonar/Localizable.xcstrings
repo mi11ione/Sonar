@@ -3218,6 +3218,7 @@
 
     },
     "intent_opening_latest_entry" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3246,6 +3247,7 @@
       }
     },
     "intent_opening_search" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3305,6 +3307,7 @@
       }
     },
     "intent_searching_prefix" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3361,6 +3364,7 @@
       }
     },
     "intent_starting_recording" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3389,9 +3393,6 @@
       }
     },
     "intent_stop_recording_desc" : {
-
-    },
-    "intent_stopping_recording" : {
 
     },
     "intent_summarize_last_desc" : {

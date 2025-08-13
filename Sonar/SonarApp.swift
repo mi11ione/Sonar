@@ -37,6 +37,8 @@ struct SonarApp: App {
                     MXMetricManager.shared.add(mxObserver)
                     UNUserNotificationCenter.current().delegate = NotificationResponder.shared
                     Task { await NotificationResponder.shared.registerCategories() }
+                    // Bridge any AppIntent flags from the widget extension's App Group defaults
+                    bridgeGroupDeepLinksToStandard()
                     // Review: track active days for cadence heuristics
                     DefaultReviewRequestService().recordAppActive(now: .now)
                     // Safety: ensure audio session/engine are not left running from a prior crash
@@ -46,6 +48,10 @@ struct SonarApp: App {
                     cleanupTemporaryExports()
                 }
                 .task {
+                    // Merge any deep-link flags written by the widget extension (App Group)
+                    bridgeGroupDeepLinksToStandard()
+                }
+                .task {
                     // Schedule daily prompt notification content if enabled
                     let context = ModelContext(container)
                     let settings = (try? context.fetch(FetchDescriptor<UserSettings>()))?.first
@@ -53,7 +59,6 @@ struct SonarApp: App {
                         await NotificationResponder.shared.scheduleDailyPrompt(atHour: hour)
                     }
                 }
-                .privacySensitive()
                 .task {
                     // Honor user's sync preference at launch
                     let manager = ModelContainerManager.shared
@@ -117,6 +122,27 @@ private func cleanupTemporaryExports() {
     for name in candidates {
         let url = tmp.appendingPathComponent(name)
         if fm.fileExists(atPath: url.path) { try? fm.removeItem(at: url) }
+    }
+}
+
+/// Pulls deep-link flags written by the widget extension via App Group defaults into the main defaults,
+/// then clears them in the group store to avoid repeated triggers.
+private func bridgeGroupDeepLinksToStandard() {
+    guard let d = UserDefaults(suiteName: "group.com.mi11ion.Sonar") else { return }
+    let keys = [
+        "deeplink.startRecording",
+        "deeplink.stopNow",
+        "deeplink.togglePause",
+        "deeplink.showLastEntry",
+        "deeplink.searchRequest",
+        "deeplink.targetTab",
+    ]
+    for key in keys {
+        let value = d.object(forKey: key)
+        if let value {
+            UserDefaults.standard.set(value, forKey: key)
+            d.removeObject(forKey: key)
+        }
     }
 }
 

@@ -101,7 +101,6 @@ struct RecordView: View {
                 if state == .recording { togglePause() }
             }
         }
-        .privacySensitive()
         .task { await checkForOrphanAudioToRecover() }
         .onDisappear { restoreBackgroundTaskIfAny() }
         .alert("recovered_recording_found", isPresented: $showRecoveryAlert) {
@@ -159,6 +158,8 @@ struct RecordView: View {
                     state = .processing
                 }
                 MicButton(title: "discard", systemImageName: "xmark", tint: .gray, font: .title3.bold()) {
+                    // Remove any temporary recording file created during this session
+                    deleteCurrentRecordingFileIfAny()
                     didDiscardToggle.toggle()
                     state = .idle
                     liveTranscript = ""
@@ -351,6 +352,15 @@ struct RecordView: View {
         }
     }
 
+    /// Deletes the temporary audio file created by the current capture session, if any.
+    private func deleteCurrentRecordingFileIfAny() {
+        if let url = (transcription as? DefaultTranscriptionService)?.currentRecordingFileURL() {
+            if FileManager.default.fileExists(atPath: url.path) {
+                try? FileManager.default.removeItem(at: url)
+            }
+        }
+    }
+
     private func togglePause() {
         if !isPaused {
             committedTranscript = liveTranscript
@@ -470,14 +480,20 @@ struct RecordView: View {
             let r = (try? rhs.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? .distantPast
             return l > r
         }).first else { return }
-        recoveryURL = url
-        showRecoveryAlert = true
+        // Show once per file; remember last prompted filename
+        let lastPrompted = UserDefaults.standard.string(forKey: "recovery.lastPromptedFilename")
+        if lastPrompted != url.lastPathComponent {
+            UserDefaults.standard.set(url.lastPathComponent, forKey: "recovery.lastPromptedFilename")
+            recoveryURL = url
+            showRecoveryAlert = true
+        }
     }
 
     private func discardRecovered() {
         guard let url = recoveryURL else { return }
         try? FileManager.default.removeItem(at: url)
         recoveryURL = nil
+        UserDefaults.standard.removeObject(forKey: "recovery.lastPromptedFilename")
     }
 
     private func saveRecovered() async {
@@ -499,6 +515,7 @@ struct RecordView: View {
             // ignore
         }
         recoveryURL = nil
+        UserDefaults.standard.removeObject(forKey: "recovery.lastPromptedFilename")
     }
 }
 

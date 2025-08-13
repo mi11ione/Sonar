@@ -26,11 +26,10 @@ struct SearchEntriesIntent: AppIntent {
         payload["mood"] = mood.rawValue
         UserDefaults.standard.set(payload, forKey: "deeplink.searchRequest")
         UserDefaults.standard.set(1, forKey: "deeplink.targetTab") // Journal tab
-        var pieces: [String] = []
-        if let q = query, !q.isEmpty { pieces.append("\"\(q)\"") }
-        if tag?.isEmpty == false { pieces.append("#\(tag!)") }
-        if mood != .any { pieces.append(mood.rawValue) }
-        let summary = pieces.isEmpty ? String(localized: "intent_opening_search") : String(localized: "intent_searching_prefix") + pieces.joined(separator: ", ")
-        return .result(dialog: IntentDialog(stringLiteral: summary))
+        if let d = UserDefaults(suiteName: "group.com.mi11ion.Sonar") {
+            d.set(payload, forKey: "deeplink.searchRequest")
+            d.set(1, forKey: "deeplink.targetTab")
+        }
+        return .result()
     }
 }
